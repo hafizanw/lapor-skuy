@@ -1,0 +1,24 @@
+/* Card pilih aduan */
+.card-options .card {
+transition: box-shadow 0.3s ease, transform 0.3s ease;
+box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+border: none;
+border-radius: 16px;
+margin: 0 12px;
+width: 300px;
+}
+.card-options .card:hover {
+box-shadow: 0 8px 32px rgba(132,47,227,0.25), 0 2px 8px rgba(0,0,0,0.10);
+transform: translateY(-6px) scale(1.03);
+z-index: 2;
+}
+.card-options .card img {
+border-top-left-radius: 16px;
+border-top-right-radius: 16px;
+width: 100%;
+height: 180px;
+object-fit: cover;
+}
+.card-options .card-content {
+padding: 18px 16px 16px 16px;
+}
