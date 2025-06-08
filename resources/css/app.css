@@ -1,0 +1,63 @@
+
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Login Form */
+body.login-page-background {
+    background: linear-gradient(to right, #f0f4f8, #e0e7ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: #ffffff;
+}
+
+/* Judul Login */
+.login-container h2 {
+    color: #333;
+}
+.login-container .textbox {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.login-container .textbox:focus {
+    border-color: #581c87;
+    box-shadow: 0 0 0 0.2rem rgba(88, 28, 135, 0.25);
+}
+
+
+.login-container .btn-login {
+    background-color: #581c87;
+    color: white;
+}
+
+.login-container .btn-login:hover {
+    background-color: #43116a;
+}
+
+ 
+.login-container .mt-3 a {
+    color: #581c87;
+    text-decoration: none;
+}
+
+.login-container .mt-3 a:hover {
+    text-decoration: underline;
+}

@@ -1,36 +1,40 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/aduan-umum', function() {
-    return view('lihat_aduan_umum');
+Route::get('/aduan-umum', function () {
+    return view('layouts.lihat_aduan_umum');
 });
 
-Route::get('/aduan-anda', function() {
-    return view('lihat_aduan_anda');
+Route::get('/aduan-anda', function () {
+    return view('layouts.lihat_aduan_anda');
 });
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('layouts.dashboard');
 });
 
+Route::get('/login', [UserController::class, 'index'])->name('login');
+Route::post('/login', [UserController::class, 'login']);
+
 Route::get('/about', function () {
-    return view('about');
+    return view('layouts.about');
 });
 
 Route::get('/panduan', function () {
-    return view('panduan');
+    return view('layouts.panduan');
 });
 
 Route::get('/reports', function () {
-    return view('reports');
+    return view('layouts.reports');
 
 });
 
-Route::get('/aduan-detail', function() {
-    return view('lihat_aduan_detail');
+Route::get('/aduan-detail', function () {
+    return view('layouts.lihat_aduan_detail');
 });
 
-Route::get('/user-profile', function() {
-    return view('user_profile');
+Route::get('/user-profile', function () {
+    return view('layouts.user_profile');
 });

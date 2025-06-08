@@ -1,3 +1,4 @@
+@csrf
 <nav class="navbar navbar-expand-lg absolut" style="background-color: #581c87">
     <div class="container d-flex">
         <div class="col-4 col-md-3 col-lg-2">
@@ -30,10 +31,7 @@
         </div>
 
         <div class="d-flex">
-            <a href="">
-                <i></i>
-            </a>
-            <a class="nav-link text-white d-none d-lg-inline" href="#panduan">
+            <a class="nav-link text-white" href="/login">
                 Login
             </a>
         </div>
