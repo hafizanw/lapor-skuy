@@ -10,6 +10,12 @@
 </head>
 
 <body>
+
+    @auth
+        
+    @else
+        {{-- Jika user belum login, maka akan diarahkan ke halaman login --}}
+    @endauth
     {{-- Memanggil component navbar --}}
     <x-navbar></x-navbar>
 

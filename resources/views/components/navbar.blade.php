@@ -24,7 +24,15 @@
                 <li class="nav-item"><a class="nav-link text-white" href="{{ url('/kirim-aduan') }}">KIRIM ADUAN</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="{{ url('/aduan-umum') }}">LIHAT ADUAN</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="#">FAQ</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="#">LOGIN</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{{ route('login') }}">LOGIN</a></li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="route('logout')"
+                        onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </a>
+                </form>
             </ul>
         </div>
     </div>

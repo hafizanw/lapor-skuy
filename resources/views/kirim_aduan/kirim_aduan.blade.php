@@ -61,7 +61,7 @@
             <div class="border-top p-2 d-flex align-items-center bg-light">
                 <img src="https://via.placeholder.com/40" alt="User" class="rounded-circle me-2">
                 <div class="flex-grow-1">
-                    <small class="fw-bold">Naufal Latif</small><br>
+                    <small class="fw-bold">{{ Auth::user()->name }}</small><br>
                     <small class="text-muted">Mahasiswa</small>
                 </div>
                 <a href="#" class="text-dark fs-5">
