@@ -101,7 +101,7 @@
                         <p class="mt-2 mb-0">
                             Saya mendapati AC di ruang 5.3.2 tidak berfungsi saat digunakan dalam kegiatan perkuliahan.
                             Kondisi ruangan menjadi panas dan tidak nyaman, sehingga mengganggu konsentrasi mahasiswa dan
-                            dosen selama proses belajar mengajar.
+                            dosen selama Proses belajar mengajar.
                             Saya berharap kerusakan ini dapat segera ditindaklanjuti agar aktivitas di ruang tersebut
                             kembali berjalan dengan optimal.
                         </p>

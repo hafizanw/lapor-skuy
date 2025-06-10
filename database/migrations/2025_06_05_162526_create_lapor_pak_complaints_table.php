@@ -17,11 +17,11 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('User_ID')->index();       // Direferensikan ke users.id
-            $table->unsignedBigInteger('Category_ID')->index();   // Direferensikan ke complaint_category.id
-            $table->unsignedBigInteger('Attachment_ID')->index(); // Contoh jika nullable
-            $table->string('Complaint_Title', 255);
-            $table->text('Complaint_Content');
+            $table->unsignedBigInteger('user_id')->index();       // Direferensikan ke users.id
+            $table->unsignedBigInteger('category_id')->index();   // Direferensikan ke complaint_category.id
+            $table->unsignedBigInteger('attachment_id')->index(); // Contoh jika nullable
+            $table->string('complaint_title', 255);
+            $table->text('complaint_content');
             $table->enum('Proses', array_column(Proses::cases(), 'value'))->default('diajukan'); // Gunakan nilai default dari Enum
             $table->timestamps();
         });
@@ -36,7 +36,7 @@ return new class extends Migration
 
         Schema::create('complaint_attachment', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Complaint_ID')->index();
+            $table->unsignedBigInteger('complaint_id')->index();
             $table->string('Real_Name_File', 255);
             $table->string('Path_File', 255);
             $table->string('Type_File', 50)->nullable();
@@ -45,9 +45,9 @@ return new class extends Migration
 
         Schema::create('complaint_response', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Complaint_ID')->index();
+            $table->unsignedBigInteger('complaint_id')->index();
             $table->unsignedBigInteger('Department_ID')->index();
-            $table->unsignedBigInteger('User_ID')->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->text('Response');
             $table->text('Descriptions')->nullable();
             $table->timestamps();
@@ -55,78 +55,78 @@ return new class extends Migration
 
         Schema::create('complaint_vote', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('User_ID')->index();
-            $table->unsignedBigInteger('Complaint_ID')->index();
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('complaint_id')->index();
             $table->enum('Vote_Type', array_column(Vote_Type::cases(), 'value'));
             $table->timestamps();
-            $table->unique(['User_ID', 'Complaint_ID']);
+            $table->unique(['user_id', 'complaint_id']);
         });
 
         Schema::create('complaint_history', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Complaint_ID')->index();
-            $table->unsignedBigInteger('User_ID')->index();
+            $table->unsignedBigInteger('complaint_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('Department_ID')->index();
-            $table->unsignedBigInteger('Response_ID')->index();
-            $table->string('Action_Description', 255);
+            $table->unsignedBigInteger('response_id')->index();
+            $table->string('action_description', 255);
             $table->timestamps();
         });
 
         Schema::create('comment', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Complaint_ID')->index();
-            $table->unsignedBigInteger('User_ID')->index();
+            $table->unsignedBigInteger('complaint_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->text('Description'); // Dihilangkan parameter panjang yang salah
             $table->timestamps();
         });
 
         Schema::create('rating', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Complaint_ID')->index();
-            $table->unsignedBigInteger('User_ID')->index();
+            $table->unsignedBigInteger('complaint_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->unsignedTinyInteger('Rating');
             $table->text('comment')->nullable();
             $table->timestamps();
-            $table->unique(['Complaint_ID', 'User_ID']);
+            $table->unique(['complaint_id', 'user_id']);
         });
 
         Schema::table('complaints', function ($table) {
-            $table->foreign('User_ID')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // Contoh jika nama tabelnya lapor_pak_users
-            $table->foreign('Category_ID')->references('id')->on('complaint_category')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade'); // Contoh jika nama tabelnya lapor_pak_users
+            $table->foreign('category_id')->references('id')->on('complaint_category')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->foreign('Attachment_ID')->references('id')->on('complaint_attachment')->onUpdate('cascade')->onDelete('cascade'); // atau cascade jika perlu
+            $table->foreign('attachment_id')->references('id')->on('complaint_attachment')->onUpdate('cascade')->onDelete('cascade'); // atau cascade jika perlu
         });
 
         Schema::table('complaint_attachment', function ($table) {
-            $table->foreign('Complaint_ID')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::table('complaint_response', function ($table) {
-            $table->foreign('Complaint_ID')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('Department_ID')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade'); // Contoh jika nama tabelnya lapor_pak_departments dan foreign key bisa null
-            $table->foreign('User_ID')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');             // Contoh jika nama tabelnya lapor_pak_users dan foreign key bisa null
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');             // Contoh jika nama tabelnya lapor_pak_users dan foreign key bisa null
         });
 
         Schema::table('complaint_vote', function ($table) {
-            $table->foreign('User_ID')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('Complaint_ID')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::table('complaint_history', function ($table) {
-            $table->foreign('Complaint_ID')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('User_ID')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('Department_ID')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('Response_ID')->references('id')->on('complaint_response')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('response_id')->references('id')->on('complaint_response')->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::table('comment', function ($table) {
-            $table->foreign('Complaint_ID')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('User_ID')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::table('rating', function ($table) {
-            $table->foreign('Complaint_ID')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('User_ID')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -138,84 +138,84 @@ return new class extends Migration
         // Drop tables in reverse order of creation, considering foreign keys
         // atau drop foreign keys dulu jika ada masalah
         Schema::table('complaints', function (Blueprint $table) {
-            if (Schema::hasColumn('complaints', 'User_ID')) {
-                $table->dropForeign(['User_ID']);
+            if (Schema::hasColumn('complaints', 'user_id')) {
+                $table->dropForeign(['user_id']);
             }
 
-            if (Schema::hasColumn('complaints', 'Category_ID')) {
-                $table->dropForeign(['Category_ID']);
+            if (Schema::hasColumn('complaints', 'category_id')) {
+                $table->dropForeign(['category_id']);
             }
 
-            if (Schema::hasColumn('complaints', 'Attachment_ID')) {
-                $table->dropForeign(['Attachment_ID']);
+            if (Schema::hasColumn('complaints', 'attachment_id')) {
+                $table->dropForeign(['attachment_id']);
             }
 
         });
         Schema::table('complaint_attachment', function (Blueprint $table) {
-            if (Schema::hasColumn('complaint_attachment', 'Complaint_ID')) {
-                $table->dropForeign(['Complaint_ID']);
+            if (Schema::hasColumn('complaint_attachment', 'complaint_id')) {
+                $table->dropForeign(['complaint_id']);
             }
 
         });
         Schema::table('complaint_response', function (Blueprint $table) {
-            if (Schema::hasColumn('complaint_response', 'Complaint_ID')) {
-                $table->dropForeign(['Complaint_ID']);
+            if (Schema::hasColumn('complaint_response', 'complaint_id')) {
+                $table->dropForeign(['complaint_id']);
             }
 
             if (Schema::hasColumn('complaint_response', 'Department_ID')) {
                 $table->dropForeign(['Department_ID']);
             }
 
-            if (Schema::hasColumn('complaint_response', 'User_ID')) {
-                $table->dropForeign(['User_ID']);
+            if (Schema::hasColumn('complaint_response', 'user_id')) {
+                $table->dropForeign(['user_id']);
             }
 
         });
         Schema::table('complaint_vote', function (Blueprint $table) {
-            if (Schema::hasColumn('complaint_vote', 'User_ID')) {
-                $table->dropForeign(['User_ID']);
+            if (Schema::hasColumn('complaint_vote', 'user_id')) {
+                $table->dropForeign(['user_id']);
             }
 
-            if (Schema::hasColumn('complaint_vote', 'Complaint_ID')) {
-                $table->dropForeign(['Complaint_ID']);
+            if (Schema::hasColumn('complaint_vote', 'complaint_id')) {
+                $table->dropForeign(['complaint_id']);
             }
 
         });
         Schema::table('complaint_history', function (Blueprint $table) {
-            if (Schema::hasColumn('complaint_history', 'Complaint_ID')) {
-                $table->dropForeign(['Complaint_ID']);
+            if (Schema::hasColumn('complaint_history', 'complaint_id')) {
+                $table->dropForeign(['complaint_id']);
             }
 
-            if (Schema::hasColumn('complaint_history', 'User_ID')) {
-                $table->dropForeign(['User_ID']);
+            if (Schema::hasColumn('complaint_history', 'user_id')) {
+                $table->dropForeign(['user_id']);
             }
 
             if (Schema::hasColumn('complaint_history', 'Department_ID')) {
                 $table->dropForeign(['Department_ID']);
             }
 
-            if (Schema::hasColumn('complaint_history', 'Response_ID')) {
-                $table->dropForeign(['Response_ID']);
+            if (Schema::hasColumn('complaint_history', 'response_id')) {
+                $table->dropForeign(['response_id']);
             }
 
         });
         Schema::table('comment', function (Blueprint $table) {
-            if (Schema::hasColumn('comment', 'Complaint_ID')) {
-                $table->dropForeign(['Complaint_ID']);
+            if (Schema::hasColumn('comment', 'complaint_id')) {
+                $table->dropForeign(['complaint_id']);
             }
 
-            if (Schema::hasColumn('comment', 'User_ID')) {
-                $table->dropForeign(['User_ID']);
+            if (Schema::hasColumn('comment', 'user_id')) {
+                $table->dropForeign(['user_id']);
             }
 
         });
         Schema::table('rating', function (Blueprint $table) {
-            if (Schema::hasColumn('rating', 'Complaint_ID')) {
-                $table->dropForeign(['Complaint_ID']);
+            if (Schema::hasColumn('rating', 'complaint_id')) {
+                $table->dropForeign(['complaint_id']);
             }
 
-            if (Schema::hasColumn('rating', 'User_ID')) {
-                $table->dropForeign(['User_ID']);
+            if (Schema::hasColumn('rating', 'user_id')) {
+                $table->dropForeign(['user_id']);
             }
 
         });
