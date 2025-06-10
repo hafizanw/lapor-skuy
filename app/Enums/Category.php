@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-enum Category: string
-{
+enum Category: string {
+
     case Test                      = 'test';
     case DAAK                      = 'daak';
     case Administrasi_Keuangan     = 'administrasi_keuangan';

@@ -2,8 +2,7 @@
 
 namespace App\Enums;
 
-enum Role: string
-{
+enum Role: string {
     case Test                      = 'test';
     case DAAK                      = 'daak';
     case Administrasi_Keuangan     = 'administrasi_keuangan';

@@ -69,6 +69,7 @@
 </div>
 @endsection
 
+
 {{-- Isi Konten --}}
 @section('content')
     <div class="container py-4">
@@ -120,10 +121,27 @@
         </div>
     </div>
 
+
+    @foreach($comments as $comment)
+    <div class="card mb-4">
+        <div class="card-body d-flex">
+            <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="User">
+            <div>
+                <h6 class="mb-1 fw-bold">Hafiz Anwar</h6>
+                <small class="text-muted">{{ $comment->created_at }}</small>
+                <p class="mb-0 mt-2">
+                    {{ $comment->Description }}
+                </p>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
     <!-- Tambah Komentar -->
     <h6 class="fw-bold">Tambah Komentar</h6>
     <form>
         <div class="mb-3">
+
             <textarea class="form-control" rows="4" placeholder="Tulis komentar"></textarea>
         </div>
         <button type="submit" class="btn btn-primary px-4">Kirim</button>
@@ -131,3 +149,12 @@
 
 </div>
 @endsection
+
+            <textarea id="description" class="form-control" rows="4" placeholder="Tulis komentar"></textarea>
+        </div>
+        <button id="kirimData" type="" class="btn btn-primary px-4">Kirim</button>
+    </form>
+
+</div>
+@endsection
+

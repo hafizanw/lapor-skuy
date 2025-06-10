@@ -2,8 +2,7 @@
 
 namespace App\Enums;
 
-enum Proses: string
-{
+enum Proses: string {
     case Diajukan = 'diajukan';
     case Diproses = 'diproses';
     case Selesai  = 'selesai';
