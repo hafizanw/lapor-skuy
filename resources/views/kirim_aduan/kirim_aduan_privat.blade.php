@@ -76,26 +76,28 @@
 @section('content')
     <section id="formLapor" class="container-lg my-5">
         <div class="alert text-center" role="alert" style="background-color: rgb(224, 224, 224);">
-            Aduan privat bersifat rahasia dan hanya diakses oleh pihak berwenang. dan akan dihubungi secara private apabila pengadu berkenan
+            Aduan privat bersifat rahasia dan hanya diakses oleh pihak berwenang dan akan dihubungi secara private apabila pengadu berkenan
         </div>
         <h1 class="text-center mb-1 mt-lg-4 fw-bold" style="color: #842FE3">Mari Buat Aduanmu!</h1>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('complaints.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama" required>
+                <label for="name" class="form-label">nama</label>
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="mb-3">
-                <label for="judul" class="form-label">Judul Aduan</label>
-                <input type="text" class="form-control" id="judul" name="judul" required>
+                <label for="title" class="form-label">Judul Aduan</label>
+                <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="mb-3">
-                <label for="deskripsi" class="form-label">Deskripsi Aduan</label>
-                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" required></textarea>
+                <label for="description" class="form-label">Deskripsi Aduan</label>
+                <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="lampiran" class="form-label">Lampiran (Opsional)</label>
-                <input type="file" class="form-control" id="lampiran" name="lampiran">
+                <label for="image" class="form-label">Lampiran (Opsional)</label>
+                <input type="text" class="form-control" id="image" name="image">
             </div>
+            <input type="hidden" id="type" name="type" value="privat">
             <button type="submit" class="btn btn-primary">Kirim Aduan</button>
         </form>
     </section>
