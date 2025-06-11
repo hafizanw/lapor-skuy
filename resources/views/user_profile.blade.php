@@ -9,7 +9,7 @@
 
             <!-- Foto Profil -->
             <div class="text-center mb-4 position-relative">
-                <img src="{{ asset('assets/logo.png') }}" alt="Foto Profil" class="rounded-circle border border-2 border-secondary-subtle" width="120" height="120">
+                <img src="{{ asset('assets/logo.png') }}" alt="Foto Profil" class="rounded-circle border-2 border-secondary-subtle" width="120" height="120">
             </div>
 
             <!-- Info User -->
