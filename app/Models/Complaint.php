@@ -1,22 +1,13 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Complaint extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'complaints';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'user_id',
         'category_id',
@@ -28,6 +19,7 @@ class Complaint extends Model
         'updated_at',
     ];
 
+}
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -58,3 +50,4 @@ class Complaint extends Model
         return $this->votes->count();
     }
 }
+

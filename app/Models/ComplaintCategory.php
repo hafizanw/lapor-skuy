@@ -37,4 +37,5 @@ class ComplaintCategory extends Model
     {
         return $this->hasMany(Complaint::class, 'category_id', 'id');
     }
+
 }

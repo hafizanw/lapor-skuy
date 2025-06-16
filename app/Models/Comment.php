@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $table = 'Comment';
+    protected $table = 'comment';
     protected $fillable = [
-        'Complaint_ID',
-        'User_ID',
-        'Description',
+        'complaint_id',
+        'user_id',
+        'description',
         'created_at',
         'updated_at',
     ];
