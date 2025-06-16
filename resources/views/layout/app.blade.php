@@ -47,11 +47,13 @@
                         <li class="nav-item"><a class="nav-link text-white" href="{{ route('faq') }}">FAQ</a></li>
                     </ul>
                     <div class="d-flex align-items-center bg-light rounded px-2 py-1">
-                        <img src="https://via.placeholder.com/35" class="rounded-circle me-2" alt="User">
-                        <div class="ms-2">
-                            <small class="fw-bold">Naufal Latif</small><br>
-                            <small class="text-muted">Mahasiswa</small>
-                        </div>
+                        <a href="{{ route('user-profile') }}" class="d-flex align-items-center text-decoration-none text-dark">
+                            <img src="{{ asset($profile_picture) }}" class=" profileImg rounded-circle me-2" alt="User">
+                            <div class="ms-2">
+                                <small class="fw-bold">{{ $username }}</small><br>
+                                <small class="text-muted">Mahasiswa</small>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

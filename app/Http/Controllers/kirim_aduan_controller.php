@@ -3,13 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complaint;
-use App\Models\ComplaintAttachment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\ComplaintAttachment;
+use Illuminate\Support\Facades\Auth;
 
 class kirim_aduan_controller extends Controller
 {
+    public function index_umum() {
+        $userId = Auth::id();
+        $profile = DB::select('CALL select_user(?)', [$userId])[0];
+
+        return view('kirim_aduan.kirim_aduan_umum', [
+            'titlePage' => 'Kirim Aduan Umum',
+            'username' => $profile->name,
+            'profile_picture' => $profile->profile_picture 
+                ? ('profile_uploads/'. $profile->profile_picture) 
+                : 'profile_uploads/profile_default.png'
+        ]);
+    }
+    public function index_privat() {
+        $userId = Auth::id();
+        $profile = DB::select('CALL select_user(?)', [$userId])[0];
+
+        return view('kirim_aduan.kirim_aduan_privat', [
+            'titlePage' => 'Kirim Aduan Umum',
+            'username' => $profile->name,
+            'profile_picture' => $profile->profile_picture 
+                ? ('profile_uploads/'. $profile->profile_picture) 
+                : 'profile_uploads/profile_default.png'
+        ]);
+    }
+
     public function index() {
+        $userId = Auth::id();
+        $profile = DB::select('CALL select_user(?)', [$userId])[0];
+
         return view('kirim_aduan.kirim_aduan', [
+        'titlePage' => 'Kirim Aduan',
+        'username' => $profile->name,
+        'profile_picture' => $profile->profile_picture 
+        ? ('profile_uploads/'. $profile->profile_picture) 
+        : 'profile_uploads/profile_default.png'
         ]);
     }
 

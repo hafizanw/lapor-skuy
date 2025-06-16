@@ -19,7 +19,7 @@ class Complaint extends Model
         'updated_at',
     ];
 
-}
+
     /**
      * The attributes that should be hidden for serialization.
      *

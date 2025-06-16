@@ -18,13 +18,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
-            ComplaintCategorySeeder::class,
+            VisibilitySeeder::class,
             ComplaintAttachmentSeeder::class,
             ComplaintSeeder::class,
             CommentSeeder::class,
             DepartmentSeeder::class,
             AdminSeeder::class,
-            VisibilitySeeder::class,
         ]);
     }
 }
