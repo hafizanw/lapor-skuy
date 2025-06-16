@@ -2,6 +2,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\ComplaintAttachment;
+use App\Models\ComplaintCategory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +18,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
+            ComplaintCategorySeeder::class,
+            ComplaintAttachmentSeeder::class,
+            ComplaintSeeder::class,
+            CommentSeeder::class
         ]);
     }
 }

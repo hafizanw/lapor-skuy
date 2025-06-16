@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class ComplaintCategory extends Model
 {
-    protected $table = 'comment';
+    protected $table = 'complaint_category';
     protected $fillable = [
-        'complaint_id',
-        'user_id',
         'description',
+        'visibility_type',
         'created_at',
         'updated_at',
     ];

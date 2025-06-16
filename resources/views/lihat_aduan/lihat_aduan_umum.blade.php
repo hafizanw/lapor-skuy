@@ -30,34 +30,54 @@
     <h5 class="fw-bold">Aduan Umum</h5>
 
     <!-- Aduan Cards -->
-    @for($i = 0; $i < 5; $i++)
-    <div class="card mb-3">
-        <div class="row g-0 align-items-center">
-            <div class="col-2 col-md-1 text-center py-3">
-                <div>
-                    <i data-feather="chevrons-up" class="text-primary"></i>
+    @foreach ($datas as $data)
+        <div class="card mb-3 shadow-sm">
+            <div class="row g-0 align-items-center">
+    
+                <!-- Kolom Voting -->
+                <div class="col-auto text-center py-3 px-2 border-end">
+                    <i data-feather="chevrons-up" id="upvote" class="text-warning"></i>
+                    <div class="fw-bold">4</div>
+                    <i data-feather="chevrons-down" id="downvote" class="text-warning"></i>
                 </div>
-                <div class="text-black fw-bold">4</div>
-                <div>
-                   <i data-feather="chevrons-down" class="text-primary"></i>
+    
+                <!-- Kolom Gambar Profil -->
+                <div class="col-auto px-3 py-3 align-self-start">
+                    <img src="{{ $data->profile_picture 
+                                ? asset('profile_uploads/' . $data->profile_picture) 
+                                : asset('profile_uploads/profile_default.png') }}" 
+                         class="rounded-circle" 
+                         style="width: 48px; height: 48px; object-fit: cover;" 
+                         alt="User">
                 </div>
-            </div>
-            <div class="col-10 col-md-11">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-2">
-                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
-                        <h6 class="mb-0 fw-bold">Saya mendapati AC ruang 5.3.2 tidak berfungsi</h6>
-                    </div>
-                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-                        <small class="text-muted">23-05-2025</small>
-                        <span class="badge bg-primary">on progress</span>
-                        <span class="badge bg-warning text-dark">sarpras</span>
-                        <small><i class="bi bi-chat-left-text"></i> 3</small>
-                    </div>
+    
+                <!-- Kolom Konten Utama -->
+                <div class="col">
+                    <a href="{{ route('aduan-detail', $data->complaint_complaint_id) }}" class="text-decoration-none">
+                        <div class="card-body py-3 px-2">
+                            <!-- Judul / isi aduan -->
+                            <h6 class="fw-bold text-dark mb-1">
+                                {{ $data->complaint_title }}
+                            </h6>
+        
+                            <!-- Tanggal, Status, dan Komentar -->
+                            <div class="d-flex flex-column gap-1">
+                                <small class="text-muted">@datetime($data->complaint_created_at)</small>
+                            
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    <span id="complaintStatus" class="badge bg-primary">{{ $data->proses }}</span>
+                                    <span class="badge bg-warning text-dark">sarpras</span>
+                                    <small class="text-muted">
+                                        <i class="bi bi-chat-left-text me-1"></i>3
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
-    @endfor
+    @endforeach
 </div>
 @endsection
+

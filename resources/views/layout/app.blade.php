@@ -9,6 +9,15 @@
     @stack('styles')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .profileImg {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+        }
+    </style>
 </head>
 <body>
         <nav class="navbar navbar-expand-md navbar-dark px-3" style="background: linear-gradient(to right, #531DAB, #842FE3);">
@@ -18,7 +27,7 @@
                     <img src="{{ asset('assets/logo.png') }}">
                 </div>
                 <div class="d-flex align-items-center d-md-none">
-                    <a class="fw-bold text-light" href="">
+                    <a class="fw-bold text-light" href="{{ url()->previous() }}">
                     <i data-feather="chevron-left"></i>
                     </a>
                     <h3 class="my-0 mx-2 text-light">{{ $titlePage }}</h3>
@@ -61,14 +70,24 @@
                 </div>
                 <!-- User Info -->
                 <div class="border-top p-2 d-flex align-items-center bg-light">
-                    <img src="https://via.placeholder.com/40" alt="User" class="rounded-circle me-2">
-                    <div class="flex-grow-1">
-                        <small class="fw-bold">Naufal Latif</small><br>
-                        <small class="text-muted">Mahasiswa</small>
-                    </div>
-                    <a href="#" class="text-dark fs-5">
+                    <a href="{{ route('user-profile') }}" class="d-flex align-items-center text-decoration-none text-dark">
+                        <img src="{{ asset($profile_picture) }}" 
+                             alt="User" 
+                             class="profileImg rounded-circle mx-2" 
+                             style="width: 40px; height: 40px; object-fit: cover;">
+                        
+                        <div class="flex-grow-1">
+                            <small class="fw-bold">{{ $username }}</small><br>
+                            <small class="text-muted">Mahasiswa</small>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="text-dark fs-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i data-feather="log-out"></i>
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>
