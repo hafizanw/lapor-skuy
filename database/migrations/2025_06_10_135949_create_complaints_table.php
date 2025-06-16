@@ -1,11 +1,12 @@
 <?php
 
 use App\Enums\Proses;
-use App\Enums\Visibility_Type;
 use App\Enums\Vote_Type;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\Visibility_Type;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -21,14 +22,25 @@ return new class extends Migration
             $table->unsignedBigInteger('attachment_id')->index(); // Contoh jika nullable
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
-            $table->enum('proses', array_column(Proses::cases(), 'value'))->default('diajukan'); // Gunakan nilai default dari Enum
+            $table->enum('proses', array_column(Proses::cases(), 'value'))->default('draft'); // Gunakan nilai default dari Enum
+            $table->timestamps();
+        });
+
+        Schema::create('complaints_department', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id')->index();       // Direferensikan ke users.id
+            $table->unsignedBigInteger('category_id')->index();   // Direferensikan ke complaint_category.id
+            $table->unsignedBigInteger('attachment_id')->index(); // Contoh jika nullable
+            $table->unsignedBigInteger('department_id')->index()->nullable(); // Direferensikan ke departments.id
+            $table->string('complaint_title', 255);
+            $table->text('complaint_content');
+            $table->enum('proses', array_column(Proses::cases(), 'value')); // Gunakan nilai default dari Enum
             $table->timestamps();
         });
 
         Schema::create('complaint_category', function (Blueprint $table) {
             $table->id();
-            $table->text('description')->nullable();
-            $table->enum('visibility_Type', array_column(Visibility_Type::cases(), 'value'));
+            $table->enum('visibility_type', array_column(Visibility_Type::cases(), 'value'));
             $table->timestamps();
         });
 
@@ -93,6 +105,13 @@ return new class extends Migration
 
             $table->foreign('attachment_id')->references('id')->on('complaint_attachment')->onUpdate('cascade')->onDelete('cascade');
         });
+        
+        Schema::table('complaints_department', function ($table) {
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('complaint_category')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('attachment_id')->references('id')->on('complaint_attachment')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
+        });
 
         Schema::table('complaint_response', function ($table) {
             $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
@@ -121,6 +140,18 @@ return new class extends Migration
             $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
+
+        DB::unprepared("
+            CREATE TRIGGER throw_complaint_department
+            BEFORE DELETE 
+            ON complaints
+            FOR EACH ROW
+                IF OLD.proses = 'diajukan' THEN
+                    INSERT INTO complaints_department (user_id, category_id, attachment_id, department_id, complaint_title, complaint_content, proses, created_at, updated_at)
+                    VALUES (OLD.user_id, OLD.category_id, OLD.attachment_id, NULL, OLD.complaint_title, OLD.complaint_content, 'diajukan', NOW(), NOW());
+                END IF;
+            ");
+
     }
 
     /**
@@ -142,8 +173,26 @@ return new class extends Migration
             if (Schema::hasColumn('complaints', 'attachment_id')) {
                 $table->dropForeign(['attachment_id']);
             }
-
         });
+            
+        Schema::table('complaints_department', function (Blueprint $table) {
+            if (Schema::hasColumn('complaints_department', 'user_id')) {
+                $table->dropForeign(['user_id']);
+            }
+
+            if (Schema::hasColumn('complaints_department', 'category_id')) {
+                $table->dropForeign(['category_id']);
+            }
+
+            if (Schema::hasColumn('complaints_department', 'attachment_id')) {
+                $table->dropForeign(['attachment_id']);
+            }
+
+            if (Schema::hasColumn('complaints_department', 'department_id')) {
+                $table->dropForeign(['department_id']);
+            }
+        });
+
         Schema::table('complaint_attachment', function (Blueprint $table) {
             if (Schema::hasColumn('complaint_attachment', 'complaint_id')) {
                 $table->dropForeign(['complaint_id']);

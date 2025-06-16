@@ -4,26 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ComplaintCategory extends Model
+class ComplaintVote extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'complaint_category';
-
+    protected $table = 'complaint_vote';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'visibility_type',
+        'user_id',
+        'complaint_id',
+        'vote_type', // 'upvote' or 'downvote'
         'created_at',
         'updated_at',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -32,10 +27,12 @@ class ComplaintCategory extends Model
     protected $hidden = [
         'updated_at',
     ];
-
-    public function complaints()
+    public function user()
     {
-        return $this->hasMany(Complaint::class, 'category_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
+    public function complaint()
+    {
+        return $this->belongsTo(Complaint::class, 'complaint_id', 'id');
+    }
 }

@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ComplaintCategory extends Model
+class Department extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'complaint_category';
+    protected $table = 'departments';
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,11 @@ class ComplaintCategory extends Model
      * @var array
      */
     protected $fillable = [
-        'visibility_type',
+        'name',
+        'description',
+        'email',
+        'phone_number',
+        'role',
         'created_at',
         'updated_at',
     ];
@@ -33,9 +37,12 @@ class ComplaintCategory extends Model
         'updated_at',
     ];
 
-    public function complaints()
+    // public function users()
+    // {
+    //     return $this->hasMany(User::class, 'department_id', 'id');
+    // }
+    public function complaintDepartment()
     {
-        return $this->hasMany(Complaint::class, 'category_id', 'id');
+        return $this->hasMany(ComplaintDepartment::class, 'department_id', 'id');
     }
-
 }

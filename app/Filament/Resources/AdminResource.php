@@ -17,13 +17,36 @@ class AdminResource extends Resource
 {
     protected static ?string $model = Admin::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
+
+    protected static ?string $navigationGroup = 'Manajemen Akun';
+    protected static ?string $slug = 'admins';
+    protected static ?string $navigationLabel = 'Admin';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->label('Nama Admin')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->label('Email Admin')
+                    ->email()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('password')
+                    ->label('Kata Sandi')
+                    ->password()
+                    ->required()
+                    ->dehydrateStateUsing(fn ($state) => bcrypt($state))
+                    ->visibleOn('create'),
+            ])->columns([
+                'sm' => 1,
+                'md' => 2,
             ]);
     }
 
@@ -31,7 +54,18 @@ class AdminResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Admin')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email Admin')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Tanggal Dibuat')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //

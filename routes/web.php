@@ -7,8 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-
-use App\Http\Controllers\lihat_aduan_detail_controller;
+use App\Http\Controllers\kirim_aduan_controller;
+use App\Http\Controllers\Lihat_aduan_detail_controller;
 use App\Http\Controllers\lihat_aduan_umum_controller;
 use App\Http\Controllers\user_profile_controller;
 
@@ -20,34 +20,10 @@ Route::get('/', function () {
 
 // Route Kirim Aduan
 Route::get('/kirim-aduan', function () {
-    return view('kirim_aduan.kirim_aduan');
+    return view('kirim_aduan.kirim_aduan', [
+        'titlePage' => 'Kirim Aduan'
+    ]);
 })->name('kirim-aduan');
-
-Route::get('/kirim-aduan-umum', function () {
-    return view('kirim_aduan.kirim_aduan_umum');
-});
-
-Route::get('/kirim-aduan-privat', function () {
-    return view('kirim_aduan.kirim_aduan_privat');
-});
-
-// Route Lihat Aduan
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/panduan', function () {
-    return view('panduan');
-});
-
-Route::get('/reports', function () {
-    return view('reports');
-
-});
-
-// Route::get('/user-profile', function () {
-//     return view('user_profile');
-// });
 
 // Membuat route untuk ComplaintsController dengan beberapa rute
 Route::resource('complaints', ComplaintsController::class);
@@ -72,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
         return view('home');
     })->name('home');
 
+
     Route::post('/aduan-umum', [lihat_aduan_umum_controller::class, 'store'])->name('aduan-umum');
     
     Route::get('/aduan-umum', [lihat_aduan_umum_controller::class, 'index'])->name('aduan-umum');
@@ -86,11 +63,29 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/user-profile', [user_profile_controller::class, 'store'])->name('user-profile');
 
+  Route::get('/kirim-aduan-umum', function () {
+        return view('kirim_aduan.kirim_aduan_umum',
+            [
+                'titlePage' => 'Kirim Aduan Umum'
+            ]);
+    })->name('kirim-aduan-umum');
+    Route::post('/kirim-aduan-umum', [kirim_aduan_controller::class, 'store'])->name('kirim-aduan-umum.store');
+    
+    Route::get('/kirim-aduan-privat', function () {
+        return view('kirim_aduan.kirim_aduan_privat',
+        [
+            'titlePage' => 'Kirim Aduan Privat'
+        ]);
+    })->name('kirim-aduan-privat');
+    Route::post('/kirim-aduan-privat', [kirim_aduan_controller::class, 'store'])->name('kirim-aduan-privat.store');
+  
 });
 
 
 Route::get('/faq', [faq_controller::class, 'index'])->name('faq');
 Route::get('/about', function () {return view('about');});
 Route::get('/panduan', function () {return view('panduan');});
+
+    
 
 

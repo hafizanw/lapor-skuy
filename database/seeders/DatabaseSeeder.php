@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             ComplaintAttachmentSeeder::class,
             ComplaintSeeder::class,
             CommentSeeder::class
+            DepartmentSeeder::class,
+            AdminSeeder::class,
+            VisibilitySeeder::class,
         ]);
     }
 }
