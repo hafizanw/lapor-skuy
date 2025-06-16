@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             ComplaintCategorySeeder::class,
             ComplaintAttachmentSeeder::class,
             ComplaintSeeder::class,
-            CommentSeeder::class
+            CommentSeeder::class,
             DepartmentSeeder::class,
             AdminSeeder::class,
             VisibilitySeeder::class,
