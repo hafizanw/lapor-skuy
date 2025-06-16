@@ -2,29 +2,28 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ComplaintResource\Pages;
-use App\Filament\Resources\ComplaintResource\RelationManagers;
-use App\Models\Complaint;
-use Filament\Forms\FormsComponents;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use App\Models\ComplaintDepartment;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ComplaintDepartmentResource\Pages;
+use App\Filament\Resources\ComplaintDepartmentResource\RelationManagers;
 
-class ComplaintResource extends Resource
+class ComplaintDepartmentResource extends Resource
 {
-    protected static ?string $model = Complaint::class;
+    protected static ?string $model = ComplaintDepartment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Kelola Aduan';
-    protected static ?int $navigationSort = 1;
-    protected static ?string $slug = 'under-review';
-    protected static ?string $navigationLabel = 'Under Review';
+    protected static ?int $navigationSort = 2;
+    protected static ?string $slug = 'list-aduan';
+    protected static ?string $navigationLabel = 'List Complaint';
     protected static ?string $modelLabel = 'List Aduan';
 
     public static function form(Form $form): Form
@@ -70,20 +69,13 @@ class ComplaintResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->columns([
-            Tables\Columns\ImageColumn::make('attachment.path_file')
+            ->columns([
+                Tables\Columns\ImageColumn::make('attachment.path_file')
                 ->label('Lampiran Aduan')
                 ->url(fn ($record) => $record->attachment ? asset('storage/' . $record->attachment->path_file) : null)
                 ->circular()
                 ->size(50)
                 ->alignCenter(),
-            Tables\Columns\TextColumn::make('voteCount')
-                ->counts('votes')
-                ->label('Jumlah Upvote')
-                ->sortable()
-                ->badge()
-                ->alignCenter()
-                ->icon('heroicon-o-user'),
             Tables\Columns\TextColumn::make('complaint_title')
                 ->label('Judul Pengaduan')
                 ->searchable()
@@ -106,50 +98,48 @@ class ComplaintResource extends Resource
                 ->badge() // mengubah kolom menjadi badge
                 ->color(fn (string $state): string => match ($state) {
                     'draft' => 'gray', // Warna abu-abu untuk status 'draft'
-                    'diajukan' => 'info', // Warna biru muda untuk 'diajukan' 
+                    'diajukan' => 'info', // Warna biru muda untuk 'diajukan'
                     'diproses' => 'warning', // Warna kuning untuk 'diproses'
                     'selesai' => 'success', // Warna hijau untuk 'selesai'
                     'ditolak' => 'danger', // Warna merah untuk 'ditolak'
                     default => 'gray', // Warna default jika status tidak dikenal
                 }),
-            Tables\Columns\TextColumn::make('created_at')
-                ->label('Tanggal Dibuat')
-                ->dateTime()
-                ->sortable(),
+            Tables\Columns\SelectColumn::make('department_id')
+                ->label('Penangung Jawab')
+                ->options([
+                    '1' => 'Test',
+                    '2' => 'DAAK',
+                    '3' => 'Keuangan',
+                ])
+                ->sortable()
+                ->searchable(),
             ])
             ->filters([
+                SelectFilter::make('department_id')
+                    ->label('Department')
+                    ->options([
+                        '1' => 'Test',
+                        '2' => 'DAAK',
+                        '3' => 'Keuangan',
+                    ]),
                 SelectFilter::make('category.visibility_type')
                     ->label('Kategori Pengaduan')
                     ->relationship('category', 'visibility_type')
                     ->options([
-                        'public' => 'Public',
-                        'private' => 'Private',
+                        'Umum' => 'Umum',
+                        'Privat' => 'Privat',
+                    ]),
+                SelectFilter::make('proses')
+                    ->label('Status')
+                    ->options([
+                        'diajukan' => 'Diajukan',
+                        'diproses' => 'Diproses',
+                        'selesai' => 'Selesai',
+                        'ditolak' => 'Ditolak',
                     ]),
             ])
             ->actions([
-                Tables\Actions\Action::make('throw')
-                    ->label('Throw')
-                    ->icon('heroicon-o-arrow-up-on-square-stack')
-                    ->color('success')
-                    ->visible(fn (Complaint $record): bool => $record->proses === 'draft') // Hanya terlihat jika status 'draft'
-                    ->requiresConfirmation() // Minta konfirmasi sebelum aksi
-                    ->action(function (Complaint $record) {
-                        // 1. Ubah status menjadi 'diproses'
-                        $record->update(['proses' => 'diajukan']);
-
-                        // 2. Hapus data pada baris tersebut
-                        $record->delete();
-
-                        // Opsional: Berikan notifikasi
-                        \Filament\Notifications\Notification::make()
-                            ->title('Berhasil')
-                            ->body('Aduan telah diajukan')
-                            ->success()
-                            ->send();
-                    }),
-
-                Tables\Actions\DeleteAction::make(),
-
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -168,9 +158,9 @@ class ComplaintResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListComplaints::route('/'),
-            'create' => Pages\CreateComplaint::route('/create'),
-            'edit' => Pages\EditComplaint::route('/{record}/edit'),
+            'index' => Pages\ListComplaintDepartments::route('/'),
+            'create' => Pages\CreateComplaintDepartment::route('/create'),
+            'edit' => Pages\EditComplaintDepartment::route('/{record}/edit'),
         ];
     }
 }

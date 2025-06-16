@@ -24,7 +24,6 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        'role',
         'profile_picture',
         'faculty',
         'major',
@@ -39,6 +38,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function complaints()
+    {
+        return $this->hasMany(Complaint::class, 'user_id', 'id');
+    }
 
     /**
      * Get the attributes that should be cast.

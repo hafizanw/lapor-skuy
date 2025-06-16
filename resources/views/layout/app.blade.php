@@ -33,7 +33,7 @@
                 <div class="collapse navbar-collapse justify-content-end d-none d-md-flex">
                     <ul class="navbar-nav me-3">
                         <li class="nav-item"><a class="nav-link text-white" href="#">HOME</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#">KIRIM ADUAN</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{{ route('kirim-aduan') }}">KIRIM ADUAN</a></li>
                         <li class="nav-item"><a class="nav-link text-white" href="{{ route('aduan-umum') }}">LIHAT ADUAN</a></li>
                         <li class="nav-item"><a class="nav-link text-white" href="{{ route('faq') }}">FAQ</a></li>
                     </ul>
