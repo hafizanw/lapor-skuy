@@ -1,16 +1,17 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Complaint extends Model
+class ComplaintDepartment extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'complaints';
+    protected $table = 'complaints_department';
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,7 @@ class Complaint extends Model
         'user_id',
         'category_id',
         'attachment_id',
+        'department_id',
         'complaint_title',
         'complaint_content',
         'proses',
@@ -49,12 +51,8 @@ class Complaint extends Model
     {
         return $this->belongsTo(ComplaintAttachment::class, 'attachment_id', 'id');
     }
-    public function votes()
+    public function department()
     {
-        return $this->hasMany(ComplaintVote::class, 'complaint_id', 'id');
-    }
-    public function getVoteCountAttribute()
-    {
-        return $this->votes->count();
+        return $this->belongsTo(ComplaintDepartment::class, 'department_id', 'id');
     }
 }

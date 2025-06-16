@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-
+use App\Http\Controllers\kirim_aduan_controller;
 use App\Http\Controllers\Lihat_aduan_detail_controller;
 use App\Http\Controllers\lihat_aduan_umum_controller;
 use App\Http\Controllers\user_profile_controller;
@@ -20,39 +20,13 @@ Route::get('/', function () {
 
 // Route Kirim Aduan
 Route::get('/kirim-aduan', function () {
-    return view('kirim_aduan.kirim_aduan');
+    return view('kirim_aduan.kirim_aduan', [
+        'titlePage' => 'Kirim Aduan'
+    ]);
 })->name('kirim-aduan');
 
-Route::get('/kirim-aduan-umum', function () {
-    return view('kirim_aduan.kirim_aduan_umum');
-});
 
-Route::get('/kirim-aduan-privat', function () {
-    return view('kirim_aduan.kirim_aduan_privat');
-});
-
-// Route Lihat Aduan
-Route::get('/aduan-umum', function () {
-    return view('lihat_aduan_umum');
-});
-
-Route::get('/aduan-anda', function () {
-    return view('lihat_aduan_anda');
-});
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/panduan', function () {
-    return view('panduan');
-});
-
-Route::get('/reports', function () {
-    return view('reports');
-
-});
-
+// Route untuk melihat aduan
 Route::get('/aduan-umum', [lihat_aduan_umum_controller::class, 'index'])->name('aduan-umum');
 
 Route::get('/aduan-anda', [lihat_aduan_anda_controller::class, 'index'])->name('aduan-anda');
@@ -95,6 +69,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {
         return view('home');
     })->name('home');
+
+    Route::get('/kirim-aduan-umum', function () {
+        return view('kirim_aduan.kirim_aduan_umum',
+            [
+                'titlePage' => 'Kirim Aduan Umum'
+            ]);
+    })->name('kirim-aduan-umum');
+    Route::post('/kirim-aduan-umum', [kirim_aduan_controller::class, 'store'])->name('kirim-aduan-umum.store');
+    
+    Route::get('/kirim-aduan-privat', function () {
+        return view('kirim_aduan.kirim_aduan_privat',
+        [
+            'titlePage' => 'Kirim Aduan Privat'
+        ]);
+    })->name('kirim-aduan-privat');
+    Route::post('/kirim-aduan-privat', [kirim_aduan_controller::class, 'store'])->name('kirim-aduan-privat.store');
+    
     Route::get('/aduan-anda', function () {
         return view('lihat_aduan.lihat_aduan_anda');
     })->name('aduan-anda');
@@ -102,9 +93,4 @@ Route::middleware(['auth'])->group(function () {
         return view('user_profile');
     })->name('user-profile');
 });
-
-Route::get('/aduan-umum', function () {return view('lihat_aduan.lihat_aduan_umum');});
-Route::get('/about', function () {return view('about');});
-Route::get('/panduan', function () {return view('panduan');});
-Route::get('/aduan-detail', function () {return view('lihat_aduan.lihat_aduan_detail');});
 
