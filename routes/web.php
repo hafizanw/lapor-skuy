@@ -4,7 +4,6 @@ use App\Http\Controllers\faq_controller;
 use App\Http\Controllers\lihat_aduan_anda_controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\kirim_aduan_controller;
@@ -24,9 +23,6 @@ Route::get('/kirim-aduan', function () {
         'titlePage' => 'Kirim Aduan'
     ]);
 })->name('kirim-aduan');
-
-// Membuat route untuk ComplaintsController dengan beberapa rute
-Route::resource('complaints', ComplaintsController::class);
 
 // Grup Rute Autentikasi
 Route::get('/login', [UserController::class, 'index']);
@@ -63,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/user-profile', [user_profile_controller::class, 'store'])->name('user-profile');
 
-  Route::get('/kirim-aduan-umum', function () {
+    Route::get('/kirim-aduan-umum', function () {
         return view('kirim_aduan.kirim_aduan_umum',
             [
                 'titlePage' => 'Kirim Aduan Umum'
