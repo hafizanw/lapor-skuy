@@ -36,7 +36,7 @@ class ComplaintSeeder extends Seeder
             ],
             [
                 'user_id' => 3,
-                'category_id' => 3,
+                'category_id' => 1,
                 'attachment_id' => 3,
                 'complaint_title' => 'ffefcewce',
                 'complaint_content' => 'efvwegwhgrhreherheh',
