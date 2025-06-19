@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\dashboard_controller;
 use App\Http\Controllers\faq_controller;
+use App\Http\Controllers\home_controller;
 use App\Http\Controllers\kirim_aduan_controller;
 use App\Http\Controllers\lihat_aduan_anda_controller;
 use App\Http\Controllers\Lihat_aduan_detail_controller;
@@ -13,6 +14,7 @@ use App\Http\Controllers\user_profile_controller;
 use Illuminate\Support\Facades\Route;
 
 // Route untuk halaman utama tanpa login
+Route::get('/', [home_controller::class, 'index']);
 
 // Grup Rute Autentikasi
 Route::get('/login', [UserController::class, 'index']);
@@ -32,7 +34,7 @@ Route::post('/reset', [ResetPasswordController::class, 'reset'])
 // Route untuk halaman utama after login
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dashboard', [dashboard_controller::class, 'index'])->name('home');
+    Route::get('/dashboard', [dashboard_controller::class, 'index'])->name('dashboard');
 
     Route::post('/aduan-umum', [lihat_aduan_umum_controller::class, 'store'])->name('aduan-umum');
 
