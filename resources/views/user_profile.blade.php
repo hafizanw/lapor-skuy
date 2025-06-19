@@ -27,50 +27,63 @@
 
             <!-- Info User -->
             <table class="table table-borderless">
+
                 <tr>
-                    <th scope="row" style="width: 30%;">NIM</th>
+                    <th scope="row" style="width: 20%;">NIM</th>
+                    <td style="width: 10%;">:</td>
                     <td>
                         <input value="{{ $data->nim }}" class="border border-secondary-subtle rounded p-2" readonly>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row" style="width: 30%;">Nama</th>
+                    <th scope="row" style="width: 20%;">Nama</th>
+                    <td style="width: 10%;">:</td>
                     <td>
                         <input value="{{ $data->name }}" class="border border-secondary-subtle rounded p-2" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">Email</th>
+                    <td style="width: 10%;">:</td>
                     <td>
                         <input value="{{ $data->email }}" class="border border-secondary-subtle rounded p-2" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">No.Telp</th>
+                    <td style="width: 10%;">:</td>
                     <td>
                         <input value="{{ $data->phone_number }}" class="border border-secondary-subtle rounded p-2" readonly>
                     </td>
                 </tr>
-            </table>
-
-            <!-- Button -->
-            <div class="text-center mt-4">
-                <button class="btn btn-primary px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#editModal">
-                    Edit Profil
-                </button>
-            </div>
-
-            <!-- Button -->
-            <div class="text-center mt-4">
-                <a href="#" class="text-dark fs-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <button class="btn btn-danger px-4 fw-bold" type="submit">
-                        Logout
-                    </button>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td>
+                        <div class="mt-4">
+                            <button class="btn btn-primary px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#editModal">
+                                Edit Profil
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td>
+                        <div class="mt-4">
+                            <a href="#" class="text-dark fs-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <button class="btn btn-danger px-4 fw-bold" type="submit">
+                                    Logout
+                                </button>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </table>   
 
             <!-- Modal -->
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">

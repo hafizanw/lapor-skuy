@@ -5,24 +5,37 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <section id="#">
-        <div class="position-relative overflow-hidden vh-100">
-            <div class="position-absolute w-100 z-n1">
-                <img src="images/background.jpg" width="100%" height="auto" class="img-fluid object-fit-cover vh-100"
-                    alt="background.jpg" />
-            </div>
-
-            <div class="container-lg d-flex flex-column align-items-center justify-content-center text-center vh-100">
-                <img src="images/logo2.png" alt="Logo" width="50%" height="50%" class="mb-4 object-fit-scale" />
-                <p class="h1 text-light mt-lg-5 fw-bold">Halo, <strong>{{ Auth::user()->name }}</p>
-                <p class="h1 text-light mt-lg-5 fw-bold">Welcome to Lapor Skuy</p>
-                <a href="#formLapor">
-                    <button type="button" class="btn btn-light btn-outline-warning btn-lg mt-3 text-dark">Lapor
-                        Yuk!</button>
-                </a>
-            </div>
-        </div>
-    </section>
+<section id="home">
+    <div class="position-relative overflow-hidden vh-100">
+      <!-- Background image -->
+      <div class="position-absolute top-0 start-0 w-100 h-100 z-n1">
+        <img
+          src="images/background.jpg"
+          alt="Background"
+          class="w-100 h-100 object-fit-cover"
+          style="filter: brightness(0.5);"
+        />
+      </div>
+  
+      <!-- Content -->
+      <div class="container d-flex flex-column align-items-center justify-content-center text-center vh-100">
+        <img src="images/logo2.png" alt="Logo" class="mb-5" style="width: 250px; max-width: 80%;" />
+  
+        <h1 class="text-white fw-bold animate__animated animate__fadeInDown mt-5">
+          Halo, {{ Auth::user()->name }}
+        </h1>
+        <h2 class="text-white fw-normal mb-3 animate__animated animate__fadeInUp animate__delay-1s">
+          Welcome to <span class="fw-bold text-warning">Lapor Skuy</span>
+        </h2>
+  
+        <a href="#formLapor" class="mt-3 animate__animated animate__fadeInUp animate__delay-2s">
+          <button type="button" class="btn btn-warning btn-lg fw-bold shadow-sm px-4 py-2 text-dark">
+            Lapor Yuk!
+          </button>
+        </a>
+      </div>
+    </div>
+  </section>
 
     {{-- Layanan --}}
     <section>
@@ -157,14 +170,14 @@
 @endsection
 
 @section('footer')
-    <footer class="bg-dark text-light text-center py-3">
-        <div class="container">
-            <p class="mb-1 fw-semibold">
-                @LaporSkuy Universitas Amikom Yogyakarta
-            </p>
-            <p class="mb-0 text-white-50">
-                Copyright @2025 All Right Reserved
-            </p>
-        </div>
-    </footer>
+<footer class="text-white text-center py-4" style="background-color: #531DAB;">
+    <div class="container">
+      <p class="mb-1 fw-semibold">
+        @Lapor Skuy Universitas Amikom Yogyakarta
+      </p>
+      <p class="mb-0 text-white-50">
+        Copyright @2025 All Right Reserved
+      </p>
+    </div>
+  </footer>
 @endsection

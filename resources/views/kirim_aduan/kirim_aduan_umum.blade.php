@@ -32,10 +32,3 @@
     </section>
 @endsection
 
-{{-- Footer --}}
-@section('footer')
-    <footer class="bg-dark text-light text-center py-3 position-fixed-bottom w-100">
-        <p class="mb-0">&copy; 2023 Lapor Skuy. All rights reserved.</p>
-        <p class="mb-0">Developed by <a href="">Lapor Skuy Team</a></p>
-    </footer>
-@endsection

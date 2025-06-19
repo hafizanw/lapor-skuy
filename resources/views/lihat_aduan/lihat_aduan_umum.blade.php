@@ -31,52 +31,55 @@
 
     <!-- Aduan Cards -->
     @foreach ($datas as $data)
-        <div class="card mb-3 shadow-sm">
-            <div class="row g-0 align-items-center">
-    
-                <!-- Kolom Voting -->
-                <div class="col-auto text-center py-3 px-2 border-end">
-                    <i data-feather="chevrons-up" id="upvote" class="text-warning"></i>
-                    <div class="fw-bold">4</div>
-                    <i data-feather="chevrons-down" id="downvote" class="text-warning"></i>
-                </div>
-    
-                <!-- Kolom Gambar Profil -->
-                <div class="col-auto px-3 py-3 align-self-start">
-                    <img src="{{ $data->profile_picture 
-                                ? asset('profile_uploads/' . $data->profile_picture) 
-                                : asset('profile_uploads/profile_default.png') }}" 
-                         class="rounded-circle" 
-                         style="width: 48px; height: 48px; object-fit: cover;" 
-                         alt="User">
-                </div>
-    
-                <!-- Kolom Konten Utama -->
-                <div class="col">
-                    <a href="{{ route('aduan-detail', $data->complaint_complaint_id) }}" class="text-decoration-none">
-                        <div class="card-body py-3 px-2">
-                            <!-- Judul / isi aduan -->
-                            <h6 class="fw-bold text-dark mb-1">
-                                {{ $data->complaint_title }}
-                            </h6>
-        
-                            <!-- Tanggal, Status, dan Komentar -->
-                            <div class="d-flex flex-column gap-1">
-                                <small class="text-muted">@datetime($data->complaint_created_at)</small>
-                            
-                                <div class="d-flex align-items-center gap-2 flex-wrap">
-                                    <span id="complaintStatus" class="badge bg-primary">{{ $data->proses }}</span>
-                                    <span class="badge bg-warning text-dark">sarpras</span>
-                                    <small class="text-muted">
-                                        <i class="bi bi-chat-left-text me-1"></i>3
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+    <div class="card mb-3 shadow-sm border-0 rounded-3">
+        <div class="row g-0 align-items-center">
+      
+          <!-- Kolom Voting -->
+          <div class="col-auto text-center px-3 py-4 border-end">
+            <i data-feather="chevrons-up" class="text-warning cursor-pointer mb-1"></i>
+            <div class="fw-bold">4</div>
+            <i data-feather="chevrons-down" class="text-warning cursor-pointer mt-1"></i>
+          </div>
+      
+          <!-- Kolom Profil -->
+          <div class="col-auto px-3 py-3">
+            <img src="{{ $data->profile_picture 
+                          ? asset('profile_uploads/' . $data->profile_picture) 
+                          : asset('profile_uploads/profile_default.png') }}" 
+                 class="rounded-circle border" 
+                 alt="User" 
+                 style="width: 50px; height: 50px; object-fit: cover;">
+          </div>
+      
+          <!-- Konten Utama -->
+          <div class="col">
+            <div class="card-body py-3 px-3">
+      
+              <!-- Judul -->
+              <a href="{{ route('aduan-detail', $data->complaint_complaint_id) }}" class="text-decoration-none">
+                <h6 class="fw-bold text-dark mb-2">{{ $data->complaint_title }}</h6>
+              </a>
+      
+              <!-- Deskripsi -->
+              <p class="text-muted small mb-2" style="line-height: 1.4;">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+              </p>
+      
+              <!-- Info Bar -->
+              <div class="d-flex flex-wrap align-items-center gap-2 text-muted small">
+                <span>{{ \Carbon\Carbon::parse($data->complaint_created_at)->format('d/m/Y') }}</span>
+                <span class="badge bg-primary">{{ $data->proses }}</span>
+                <span class="badge bg-warning text-dark">sarpras</span>
+                <span class="me-1">{{ $data->name ?? 'Anonim' }}</span>
+                <span class="ms-auto me-4"><i data-feather="message-square" class="text-dark fs-3" style="scale: 0.7;"></i>{{ $data->total_comments ?? 0 }}</span>
+              </div>
+      
             </div>
+          </div>
+      
         </div>
+      </div>
+      
     @endforeach
 </div>
 @endsection

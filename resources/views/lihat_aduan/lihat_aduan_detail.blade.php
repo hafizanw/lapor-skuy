@@ -6,72 +6,89 @@
 
 {{-- Isi Konten --}}
 @section('content')
-    <div class="container py-4">
-
+<div class="container my-4">
     <!-- Judul Aduan -->
-    <h5 class="fw-bold mb-4">Saya mendapati AC ruang 5.3.2 tidak berfungsi</h5>
+    <h4 class="fw-bold mb-4">{{ $data->complaint_title }}</h4>
 
     <!-- Detail Aduan -->
-    <div class="card mb-4">
+    <div class="card mb-4 shadow-sm border-0">
         <div class="row g-0">
-            <!-- Vote -->
-            <div class="col-2 col-md-1 text-center py-3">
-                <div class="text-primary fw-bold">4</div>
-                <div><i class="bi bi-caret-up-fill text-purple fs-4"></i></div>
-                <div><i class="bi bi-caret-down-fill text-purple fs-4"></i></div>
-            </div>
-            <!-- Isi Aduan -->
+            <!-- Kolom Voting -->
+          <div class="col-auto text-center px-3 py-4 border-end">
+            <i data-feather="chevrons-up" class="text-warning cursor-pointer mb-1"></i>
+            <div class="fw-bold">4</div>
+            <i data-feather="chevrons-down" class="text-warning cursor-pointer mt-1"></i>
+          </div>
+
+            <!-- Konten Aduan -->
             <div class="col-10 col-md-11">
                 <div class="card-body">
+                    <!-- Profil & Tanggal -->
                     <div class="d-flex align-items-center mb-2">
-                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
+                        <img src="{{ $data->profile_picture 
+                                    ? asset('profile_uploads/' . $data->profile_picture) 
+                                    : asset('profile_uploads/profile_default.png') }}"
+                             class="rounded-circle me-2 border"
+                             width="40" height="40"
+                             alt="User">
                         <div>
-                            <h6 class="mb-0 fw-bold">
-                                {{ $data->complaint_title }}
-                            </h6>
-                            <small class="text-muted">23-05-2025</small>
+                            <strong class="d-block">{{ $data->name ?? 'User' }}</strong>
+                            <small class="text-muted">{{ \Carbon\Carbon::parse($data->complaint_created_at)->format('d-m-Y') }}</small>
                         </div>
                     </div>
-                    <p class="mt-2 mb-0">
-                        {{ $data->complaint_content }}
-                    </p>
+
+                    <!-- Isi Aduan -->
+                    <p class="mb-2">{{ $data->complaint_content }}</p>
+
+                    <!-- Gambar Aduan (jika ada) -->
+                    {{-- @if (!empty($data->complaint_image)) --}}
+                    <div class="my-3">
+                        <img src="{{ asset('images/background.jpg') }}"
+                            class="img-fluid rounded border"
+                            alt="Foto aduan">
+                    </div>
+                    {{-- @endif --}}
+
+                    <!-- Info tambahan -->
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="badge bg-primary">{{ $data->proses ?? 'Diproses' }}</span>
+                        <span class="badge bg-warning text-dark">{{ $data->kategori ?? 'Umum' }}</span>
+                        <small class="text-muted">
+                            <i class="bi bi-chat-left-text me-1"></i>2 komentar
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Komentar -->
-    <h6 class="fw-bold mb-3">1 Komentar</h6>
-
-    @foreach($datas as $data)
-    <div class="card mb-4">
-        <div class="card-body d-flex">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="User">
-            <div>
-                <h6 class="mb-1 fw-bold">
-                    {{ $data->name }}
-                </h6>
-                <small class="text-muted">
-                    @datetime($data->complaint_created_at)
-                </small>
-                <p class="mb-0 mt-2">
-                    {{ $data->complaint_content }}
-                </p>
+    <h6 class="fw-semibold mb-3">2 Komentar</h6>
+    @foreach ($datas as $data)
+        <div class="card mb-3 shadow-sm border-0">
+            <div class="card-body d-flex">
+                <img src="{{ $data->profile_picture 
+                            ? asset('profile_uploads/' . $data->profile_picture) 
+                            : asset('profile_uploads/profile_default.png') }}"
+                     alt="User" class="rounded-circle me-3 border" width="40" height="40">
+                <div>
+                    <strong class="mb-0">{{ $data->name }}</strong><br>
+                    <small class="text-muted">23/11/3333</small>
+                    <p class="mb-0 mt-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit, tenetur.</p>
+                </div>
             </div>
         </div>
-    </div>
     @endforeach
 
     <!-- Tambah Komentar -->
-    <h6 class="fw-bold">Tambah Komentar</h6>
-    <form>
+    <h6 class="fw-bold mt-4 mb-2">Tambah Komentar</h6>
+    <form action="{{ route('aduan-detail', $data->complaint_complaint_id) }}" method="POST">
+        @csrf
         <div class="mb-3">
-            <textarea id="description" class="form-control" rows="4" placeholder="Tulis komentar"></textarea>
+            <textarea name="comment_text" class="form-control" rows="3" placeholder="Tulis komentar..." required></textarea>
         </div>
-        <button id="kirimData" type="" class="btn btn-primary px-4" name="{{ $data->complaint_complaint_id }}">
-            Kirim
-        </button>
+        <button type="submit" class="btn btn-primary px-4">Kirim</button>
     </form>
-
 </div>
+
 @endsection
