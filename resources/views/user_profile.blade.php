@@ -74,11 +74,9 @@
                         <td></td>
                         <td>
                             <div class="mt-4">
-                                <form action="{{ route('logout') }}" method="POST">
+                                <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger px-4 fw-bold">
-                                        Logout
-                                    </button>
+                                    <button type="submit" class="btn btn-danger fw-semibold px-4">Logout</button>
                                 </form>
                             </div>
                         </td>
