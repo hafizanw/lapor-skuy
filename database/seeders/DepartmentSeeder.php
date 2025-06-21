@@ -18,16 +18,19 @@ class DepartmentSeeder extends Seeder
             'name' => 'Test',
             'description' => 'Test Department 1',
             'role' => 'test',
+            'password' => bcrypt('test123'),
         ]);
         Department::create([
             'name' => 'Agus Lapar',
             'description' => 'Test Department 2',
             'role' => 'daak',
+            'password' => bcrypt('test123'),
         ]);
         Department::create([
             'name' => 'Elyn',
             'description' => 'Test Department 3',
             'role' => 'administrasi_keuangan',
+            'password' => bcrypt('test123'),
         ]);
     }
 }

@@ -74,14 +74,11 @@
                         <td></td>
                         <td>
                             <div class="mt-4">
-                                <a href="#" class="text-dark fs-5"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <button class="btn btn-danger px-4 fw-bold" type="submit">
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger px-4 fw-bold">
                                         Logout
                                     </button>
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
                                 </form>
                             </div>
                         </td>

@@ -29,8 +29,15 @@
                             </div>
                             <button type="submit" class="btn btn-primary w-100 btn-login">Login</button>
                         </form>
+                        <div class="text-center my-3">
+                            <span class="text-muted">atau</span>
+                        </div>
+
+                        <a href="{{ route('google.redirect') }}" class="btn btn-danger w-100">
+                            <i class="fab fa-google me-2"></i>
+                            Masuk dengan Google
+                        </a>
                         <div class="text-center mt-3">
-                            @csrf
                             <a href="{{ route('password.email') }}">Lupa Password?</a>
                         </div>
                     </div>

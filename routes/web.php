@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\dashboard_controller;
 use App\Http\Controllers\faq_controller;
@@ -31,14 +32,18 @@ Route::get('/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
 Route::post('/reset', [ResetPasswordController::class, 'reset'])
     ->name('password.update');
 
+// Rute mengarahkan pengguna ke halaman autentikasi Google
+Route::get('/auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+// Rute menangani callback dari Google setelah autentikasi
+Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+
 // Route untuk halaman utama after login
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [dashboard_controller::class, 'index'])->name('dashboard');
 
-    Route::post('/aduan-umum', [lihat_aduan_umum_controller::class, 'store'])->name('aduan-umum');
-
-    Route::get('/aduan-umum', [lihat_aduan_umum_controller::class, 'index'])->name('aduan-umum');
+    Route::get('/aduan-umum', [lihat_aduan_umum_controller::class, 'index'])->name('aduan-umum.index');
+    Route::post('/aduan-umum', [lihat_aduan_umum_controller::class, 'store'])->name('aduan-umum.store');
 
     Route::get('/aduan-anda', [lihat_aduan_anda_controller::class, 'index'])->name('aduan-anda');
 
