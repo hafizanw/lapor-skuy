@@ -14,10 +14,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id(); // ID : int(11)
-            $table->string('nim', 50)->unique();
+            $table->string('nim', 50)->unique()->nullable();
             $table->string('name', 255);
             $table->string('email', 255)->unique();
+            $table->string('google_id')->nullable();
             $table->string('password', 255);
+            $table->enum('role', array_column(Role::cases(), 'value'));
             $table->string('phone_number', 20)->nullable();
             $table->string('profile_picture', 255)->nullable();
             $table->string('faculty', 100)->nullable();
@@ -36,6 +38,7 @@ return new class extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->id(); // ID : int(11)
             $table->string('name', 255)->unique();
+            $table->string('password', 255);
             $table->text('description', 255)->nullable();
             $table->string('email')->nullable();
             $table->string('phone_number', 20)->nullable();

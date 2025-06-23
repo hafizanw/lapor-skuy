@@ -18,7 +18,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('login')->with('message', 'Anda telah berhasil logout!');
+        return redirect()->route('home')->with('message', 'Anda telah berhasil logout!');
     }
 
     public function login(Request $request)
@@ -50,7 +50,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('home')->with('message', 'Anda telah berhasil login!');
+            return redirect()->route('dashboard')->with('message', 'Anda telah berhasil login!');
         }
 
         // PERUBAHAN: Jika autentikasi gagal, artinya password salah.

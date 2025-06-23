@@ -1,19 +1,11 @@
-{{-- Footer Component --}}
-<footer>
-    <div class="container-fluid p-0">
-        <div class="header-container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="company-name">LAPOR SKUY CORP</div>
-                    <div class="company-info">Basement 5, Ruang 4</div>
-                    <div class="company-info">YOGYAKARTA 92123</div>
-                    <div class="company-info">FAX 0812345689</div>
-
-                    <p class="text-center" style="margin-bottom: 0">
-                        COPYRIGHT LAPOR SKUY AMIKOM. All rights reserved
-                    </p>
-                </div>
-            </div>
-        </div>
+{{-- Footer --}}
+<footer class="text-white text-center py-4" style="background-color: #531DAB;">
+    <div class="container">
+      <p class="mb-1 fw-semibold">
+        @LaporSkuy Universitas Amikom Yogyakarta
+      </p>
+      <p class="mb-0 text-white-50">
+        Copyright @2025 All Right Reserved
+      </p>
     </div>
-</footer>
+  </footer>

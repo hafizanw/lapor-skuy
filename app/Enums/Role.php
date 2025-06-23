@@ -17,4 +17,5 @@ enum Role: string {
     case Hubungan_Masyarakat       = 'hubungan_masyarakat';
     case Pusat_Jaminan_Mutu        = 'pusat_jaminan_mutu';
     case Sarana_Prasarana          = 'sarana_prasarana';
+    case Mahasiswa                 = 'mahasiswa';
 }

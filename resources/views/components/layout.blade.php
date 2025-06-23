@@ -11,16 +11,16 @@
 
 <body>
 
-    @auth
+    {{-- @auth
         
     @else
-        {{-- Jika user belum login, maka akan diarahkan ke halaman login --}}
-    @endauth
+        Jika user belum login, maka akan diarahkan ke halaman login
+    @endauth --}}
     {{-- Memanggil component navbar --}}
     <x-navbar></x-navbar>
 
     {{-- Akan mengisi slot jika memanggil compomnen ini --}}
-    {{ $slot }} 
+    {{ $slot }}
 
     {{-- Memanggil component footer --}}
     <x-footer></x-footer>

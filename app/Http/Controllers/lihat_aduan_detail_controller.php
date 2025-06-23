@@ -4,34 +4,46 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
-class Lihat_aduan_detail_controller extends Controller
+class lihat_aduan_detail_controller extends Controller
 {
     public function store(Request $request) {
 
         $validated = $request->validate([
-            'Description' => 'required',
+            'complaint_id' => 'required',
+            'description' => 'required',
             'created_at' => 'required',
             'updated_at' => 'required',
         ]);
 
         // Mengambil user id
-        // $userId = auth()->id();
+        $userId = Auth::id();
 
-        Comment::create([
-            'Complaint_ID' => 1,
-            'User_ID' => 1,
-            'Description' => $validated['Description'],
-            'created_at' => $validated['created_at'],
-            'updated_at' => $validated['updated_at'],
+        DB::statement('CALL insert_comment(?, ?, ?)', [
+            $validated['complaint_id'],
+            $userId,
+            $validated['description']
         ]);
     }
 
-    public function index() {
+    public function index(Request $request) {
+        $datas = DB::select('CALL select_complaint_comment_user_vote(?)', [$request->complaint_id]);
+        $data = $datas[0];
+
+        $userId = Auth::id();
+        $profile = DB::select('CALL select_user(?)', [$userId])[0];
+
         return view('lihat_aduan.lihat_aduan_detail', [
-            'comments' => Comment::all(),
-            'titlePage' => 'Detail Aduan'
+            'datas' => $datas,
+            'data' => $data,
+            'titlePage' => 'Detail Aduan',
+            'username' => $profile->name,
+            'profile_picture' => $profile->profile_picture 
+            ? ('profile_uploads/'. $profile->profile_picture) 
+            : 'profile_uploads/profile_default.png'
         ]);
     }
 }

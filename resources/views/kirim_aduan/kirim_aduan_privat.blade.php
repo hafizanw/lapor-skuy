@@ -11,34 +11,27 @@
             Aduan privat bersifat rahasia dan hanya diakses oleh pihak berwenang dan akan dihubungi secara private apabila pengadu berkenan
         </div>
         <h1 class="text-center mb-1 mt-lg-4 fw-bold" style="color: #842FE3">Mari Buat Aduanmu!</h1>
-        <form action="{{ route('complaints.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('kirim-aduan-privat.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="mb-3">
-                <label for="name" class="form-label">nama</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
             <div class="mb-3">
                 <label for="title" class="form-label">Judul Aduan</label>
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Deskripsi Aduan</label>
-                <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                <label for="content" class="form-label">Deskripsi Aduan</label>
+                <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Lampiran (Opsional)</label>
-                <input type="text" class="form-control" id="image" name="image">
+                <input type="file" class="form-control" id="image" name="image" accept=".jpg, .jpeg, .png">
             </div>
-            <input type="hidden" id="type" name="type" value="privat">
+            @auth
+                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+            @endauth
+            {{-- 1 untuk privat --}}
+            <input type="hidden" name="visibility_type" value="1">  
             <button type="submit" class="btn btn-primary">Kirim Aduan</button>
         </form>
     </section>
 @endsection
 
-{{-- Footer --}}
-@section('footer')
-    <footer class="bg-dark text-light text-center py-3 position-fixed-bottom w-100">
-        <p class="mb-0">&copy; 2023 Lapor Skuy. All rights reserved.</p>
-        <p class="mb-0">Developed by <a href="">Lapor Skuy Team</a></p>
-    </footer>
-@endsection

@@ -6,78 +6,143 @@
 
 {{-- Isi Konten --}}
 @section('content')
-    <div class="container py-4">
-
+<div class="container my-4">
     <!-- Judul Aduan -->
-    <h5 class="fw-bold mb-4">Saya mendapati AC ruang 5.3.2 tidak berfungsi</h5>
+    <h4 class="fw-bold mb-4">{{ $data->complaint_title }}</h4>
 
     <!-- Detail Aduan -->
-    <div class="card mb-4">
+    <div class="card mb-4 shadow-sm border-0">
         <div class="row g-0">
-            <!-- Vote -->
-            <div class="col-2 col-md-1 text-center py-3">
-                <div class="text-primary fw-bold">4</div>
-                <div><i class="bi bi-caret-up-fill text-purple fs-4"></i></div>
-                <div><i class="bi bi-caret-down-fill text-purple fs-4"></i></div>
-            </div>
-            <!-- Isi Aduan -->
+            <!-- Kolom Voting -->
+            <div class="col-auto text-center px-3 py-4 border-end">
+                <!-- Form Upvote -->
+                <form action="{{ route('aduan-umum') }}" method="POST" style="display:inline;">
+                  @csrf
+                  <input type="hidden" name="complaint_id" value="{{ $data->complaint_complaint_id }}">
+                  <input type="hidden" name="vote_type" value="upvote">
+                  <button type="submit" class="btn p-0 border-0 bg-transparent">
+                    <i data-feather="chevrons-up" class="text-warning"></i>
+                  </button>
+                </form>
+    
+                <!-- Jumlah Vote -->
+                <div class="fw-bold">{{ $data->total_votes ?? 0 }}</div>
+    
+                <!-- Form Downvote -->
+                <form action="{{ route('aduan-umum') }}" method="POST" style="display:inline;">
+                  @csrf
+                  <input type="hidden" name="complaint_id" value="{{ $data->complaint_complaint_id }}">
+                  <input type="hidden" name="vote_type" value="downvote">
+                  <button type="submit" class="btn p-0 border-0 bg-transparent">
+                    <i data-feather="chevrons-down" class="text-warning"></i>
+                  </button>
+                </form>
+              </div>
+
+            <!-- Konten Aduan -->
             <div class="col-10 col-md-11">
                 <div class="card-body">
+                    <!-- Profil & Tanggal -->
                     <div class="d-flex align-items-center mb-2">
-                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
+                        <img src="{{ $data->profile_picture 
+                                    ? asset('profile_uploads/' . $data->profile_picture) 
+                                    : asset('profile_uploads/profile_default.png') }}"
+                             class="rounded-circle me-2 border"
+                             width="40" height="40"
+                             alt="User">
                         <div>
-                            <h6 class="mb-0 fw-bold">Naufal Latif</h6>
-                            <small class="text-muted">23-05-2025</small>
+                            <strong class="d-block">{{ $data->name ?? 'User' }}</strong>
+                            <small class="text-muted">{{ \Carbon\Carbon::parse($data->complaint_created_at)->format('d-m-Y') }}</small>
                         </div>
                     </div>
-                    <p class="mt-2 mb-0">
-                        Saya mendapati AC di ruang 5.3.2 tidak berfungsi saat digunakan dalam kegiatan perkuliahan.
-                        Kondisi ruangan menjadi panas dan tidak nyaman, sehingga mengganggu konsentrasi mahasiswa dan dosen selama proses belajar mengajar.
-                        Saya berharap kerusakan ini dapat segera ditindaklanjuti agar aktivitas di ruang tersebut kembali berjalan dengan optimal.
-                    </p>
+
+                    <!-- Isi Aduan -->
+                    <p class="mb-2">{{ $data->complaint_content }}</p>
+
+                    <!-- Gambar Aduan (jika ada) -->
+                    @if(Storage::exists('public/' . $data->path_file))
+                    <div class="my-3">
+                        <img src="{{ asset('storage/' . $data->path_file) }}"
+                            class="img-fluid rounded border"
+                            alt="Foto aduan">
+                    </div>
+                    @endif
+
+                    <!-- Info tambahan -->
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="badge bg-primary">{{ $data->proses ?? 'Pending' }}</span>
+                        <span class="badge bg-warning text-dark">{{ $data->kategori ?? 'Umum' }}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Komentar -->
-    <h6 class="fw-bold mb-3">1 Komentar</h6>
-    <div class="card mb-4">
-        <div class="card-body d-flex">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="User">
-            <div>
-                <h6 class="mb-1 fw-bold">Hafiz Anwar</h6>
-                <small class="text-muted">23-05-2025</small>
-                <p class="mb-0 mt-2">
-                    Saya sangat mendukung laporan ini karena saya juga mendapati AC di ruang 5.3.2 tidak terlalu dingin
-                </p>
+    <h6 class="fw-semibold mb-3"><span>{{ $data->total_comments }}</span> Komentar</h6>
+    @foreach ($datas as $data)
+        <div class="card mb-3 shadow-sm border-0">
+            <div class="card-body d-flex">
+                <img src="{{ $data->profile_picture 
+                            ? asset('profile_uploads/' . $data->profile_picture) 
+                            : asset('profile_uploads/profile_default.png') }}"
+                     alt="User" class="rounded-circle me-3 border" width="40" height="40">
+                <div>
+                    <strong class="mb-0">{{ $data->name }}</strong><br>
+                    <small class="text-muted">{{ \Carbon\Carbon::parse($data->comment_created_at)->format('d-m-Y') }}</small>
+                    <p class="mb-0 mt-2">{{ $data->description }}</p>
+                </div>
             </div>
         </div>
-    </div>
-
-    @foreach($comments as $comment)
-    <div class="card mb-4">
-        <div class="card-body d-flex">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="User">
-            <div>
-                <h6 class="mb-1 fw-bold">Hafiz Anwar</h6>
-                <small class="text-muted">{{ $comment->created_at }}</small>
-                <p class="mb-0 mt-2">
-                    {{ $comment->Description }}
-                </p>
-            </div>
-        </div>
-    </div>
     @endforeach
 
-    <!-- Tambah Komentar -->
-    <h6 class="fw-bold">Tambah Komentar</h6>
-    <form>
-        <div class="mb-3">
-            <textarea id="description" class="form-control" rows="4" placeholder="Tulis komentar"></textarea>
-        </div>
-        <button id="kirimData" type="" class="btn btn-primary px-4">Kirim</button>
-    </form>
+   <!-- Tambah Komentar -->
+   <h6 class="fw-bold">Tambah Komentar</h6>
+   <form>
+       <div class="mb-3">
+           <textarea id="description" class="form-control" rows="4" placeholder="Tulis komentar"></textarea>
+       </div>
+       <button id="kirimData" type="" name="{{ $data->complaint_complaint_id }}" class="btn btn-primary px-4">Kirim</button>
+   </form>
 
+   <!-- Modal kirim comment berhasil -->
+    <div class="modal fade" id="commentModalBerhasil" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+            <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Notifikasi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+            <p>Komentar anda berhasil dikirim. Silakan refresh halaman.</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn text-light" style="background: linear-gradient(to right, #531fa7, #6826b4);" data-bs-dismiss="modal">Kembali</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal kirim comment gagal -->
+    <div class="modal fade" id="commentModalGagal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+            <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Notifikasi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+            <p>Gagal mengirim komentar</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn text-light" style="background: linear-gradient(to right, #531fa7, #6826b4);" data-bs-dismiss="modal">Kembali</button>
+            </div>
+        </div>
+        </div>
+    </div>
 </div>
 @endsection
+
+@push('script')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@endpush
