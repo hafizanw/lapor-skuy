@@ -18,7 +18,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/')->with('message', 'Anda telah berhasil logout!');
+        return redirect()->route('home')->with('message', 'Anda telah berhasil logout!');
     }
 
     public function login(Request $request)

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class faq_controller extends Controller
 {
     public function index() {
-
         $userId = Auth::id();
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
         $faqs = DB::table('faq')->get();

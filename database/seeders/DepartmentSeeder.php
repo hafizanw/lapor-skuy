@@ -18,6 +18,7 @@ class DepartmentSeeder extends Seeder
             'name' => 'Test',
             'password' => bcrypt('123'),
             'description' => 'Test Department 1',
+            'password' => '123',
             'role' => 'test',
             'password' => bcrypt('test123'),
         ]);
@@ -25,6 +26,7 @@ class DepartmentSeeder extends Seeder
             'name' => 'Agus Lapar',
             'password' => bcrypt('123'),
             'description' => 'Test Department 2',
+            'password' => '123',
             'role' => 'daak',
             'password' => bcrypt('test123'),
         ]);
@@ -32,6 +34,7 @@ class DepartmentSeeder extends Seeder
             'name' => 'Elyn',
             'password' => bcrypt('123'),
             'description' => 'Test Department 3',
+            'password' => '123',
             'role' => 'administrasi_keuangan',
             'password' => bcrypt('test123'),
         ]);

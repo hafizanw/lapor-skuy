@@ -25,63 +25,64 @@
                         id="profilePreview" class="profile-img" alt="Profile Picture">
                 </div>
 
-                <!-- Info User -->
-                <table class="table table-borderless">
+            <!-- Info User -->
+            <table class="table table-borderless">
 
-                    <tr>
-                        <th scope="row" style="width: 20%;">NIM</th>
-                        <td style="width: 10%;">:</td>
-                        <td>
-                            <input value="{{ $data->nim }}" class="border border-secondary-subtle rounded p-2" readonly>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" style="width: 20%;">Nama</th>
-                        <td style="width: 10%;">:</td>
-                        <td>
-                            <input value="{{ $data->name }}" class="border border-secondary-subtle rounded p-2" readonly>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Email</th>
-                        <td style="width: 10%;">:</td>
-                        <td>
-                            <input value="{{ $data->email }}" class="border border-secondary-subtle rounded p-2" readonly>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">No.Telp</th>
-                        <td style="width: 10%;">:</td>
-                        <td>
-                            <input value="{{ $data->phone_number }}" class="border border-secondary-subtle rounded p-2"
-                                readonly>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"></th>
-                        <td></td>
-                        <td>
-                            <div class="mt-4">
-                                <button class="btn btn-primary px-4 fw-bold" data-bs-toggle="modal"
-                                    data-bs-target="#editModal">
-                                    Edit Profil
+                <tr>
+                    <th scope="row" style="width: 20%;">NIM</th>
+                    <td style="width: 10%;">:</td>
+                    <td>
+                        <input value="{{ $data->nim }}" class="border border-secondary-subtle rounded p-2" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width: 20%;">Nama</th>
+                    <td style="width: 10%;">:</td>
+                    <td>
+                        <input value="{{ $data->name }}" class="border border-secondary-subtle rounded p-2" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td style="width: 10%;">:</td>
+                    <td>
+                        <input value="{{ $data->email }}" class="border border-secondary-subtle rounded p-2" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">No.Telp</th>
+                    <td style="width: 10%;">:</td>
+                    <td>
+                        <input value="{{ $data->phone_number }}" class="border border-secondary-subtle rounded p-2" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td>
+                        <div class="mt-4">
+                            <button class="btn btn-primary px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#editModal">
+                                Edit Profil
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td>
+                        <div class="mt-4">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button class="btn btn-danger px-4 fw-bold" type="submit">
+                                    Logout
                                 </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"></th>
-                        <td></td>
-                        <td>
-                            <div class="mt-4">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger fw-semibold px-4">Logout</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                            </form>
+                        </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>   
 
                 <!-- Modal -->
                 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -95,7 +96,6 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-
                                 <div class="mb-3 text-center">
                                     <img id="imagePreview" src="" class="profile-img mb-2">
                                     <input class="form-control" type="file" name="profile_picture" accept="image/*"

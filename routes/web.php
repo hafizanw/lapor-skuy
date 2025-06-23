@@ -15,7 +15,7 @@ use App\Http\Controllers\user_profile_controller;
 use Illuminate\Support\Facades\Route;
 
 // Route untuk halaman utama tanpa login
-Route::get('/', [home_controller::class, 'index']);
+Route::get('/', [home_controller::class, 'index'])->name('home');
 
 // Grup Rute Autentikasi
 Route::get('/login', [UserController::class, 'index']);
@@ -45,11 +45,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/aduan-umum', [lihat_aduan_umum_controller::class, 'index'])->name('aduan-umum.index');
     Route::post('/aduan-umum', [lihat_aduan_umum_controller::class, 'store'])->name('aduan-umum.store');
 
+    Route::post('/aduan-anda', [lihat_aduan_anda_controller::class, 'store'])->name('aduan-anda');
+
     Route::get('/aduan-anda', [lihat_aduan_anda_controller::class, 'index'])->name('aduan-anda');
 
     Route::post('/aduan-detail', [lihat_aduan_detail_controller::class, 'store'])->name('aduan-detail');
 
-    Route::get('/aduan-detail/{complaint_id}', [lihat_aduan_detail_controller::class, 'index'])->name('aduan-detail');
+    Route::get('/aduan-detail', [lihat_aduan_detail_controller::class, 'index'])->name('aduan-detail');
 
     Route::get('/user-profile', [user_profile_controller::class, 'index'])->name('user-profile');
 

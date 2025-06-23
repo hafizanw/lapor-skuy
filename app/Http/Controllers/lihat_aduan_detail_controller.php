@@ -22,17 +22,15 @@ class lihat_aduan_detail_controller extends Controller
         // Mengambil user id
         $userId = Auth::id();
 
-        Comment::create([
-            'complaint_id' => $validated['complaint_id'],
-            'user_id' => $userId,
-            'description' => $validated['description'],
-            'created_at' => $validated['created_at'],
-            'updated_at' => $validated['updated_at'],
+        DB::statement('CALL insert_comment(?, ?, ?)', [
+            $validated['complaint_id'],
+            $userId,
+            $validated['description']
         ]);
     }
 
-    public function index($complaint_id) {
-        $datas = DB::select('CALL select_complaint_comment_user_vote(?)', [$complaint_id]);
+    public function index(Request $request) {
+        $datas = DB::select('CALL select_complaint_comment_user_vote(?)', [$request->complaint_id]);
         $data = $datas[0];
 
         $userId = Auth::id();
