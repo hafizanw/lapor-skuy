@@ -20,7 +20,7 @@
     <x-navbar></x-navbar>
 
     {{-- Akan mengisi slot jika memanggil compomnen ini --}}
-    {{ $slot }} 
+    {{ $slot }}
 
     {{-- Memanggil component footer --}}
     <x-footer></x-footer>
