@@ -17,25 +17,25 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();       // Direferensikan ke users.id
-            $table->unsignedBigInteger('category_id')->index();   // Direferensikan ke complaint_category.id
-            $table->unsignedBigInteger('attachment_id')->index(); // Contoh jika nullable
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('attachment_id')->index();
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
-            $table->enum('proses', array_column(Proses::cases(), 'value'))->default('draft'); // Gunakan nilai default dari Enum
+            $table->enum('proses', array_column(Proses::cases(), 'value'))->default('draft');
             $table->timestamps();
         });
 
         Schema::create('complaints_department', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();                   // Direferensikan ke users.id
-            $table->unsignedBigInteger('category_id')->index();               // Direferensikan ke complaint_category.id
-            $table->unsignedBigInteger('attachment_id')->index();             // Contoh jika nullable
-            $table->unsignedBigInteger('department_id')->index()->nullable(); // Direferensikan ke departments.id
-            $table->unsignedBigInteger('response_id')->index()->nullable();   // Direferensikan ke complaint_response.id
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('attachment_id')->index();
+            $table->unsignedBigInteger('department_id')->index()->nullable();
+            $table->unsignedBigInteger('response_id')->index()->nullable();
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
-            $table->enum('proses', array_column(Proses::cases(), 'value')); // Gunakan nilai default dari Enum
+            $table->enum('proses', array_column(Proses::cases(), 'value'));
             $table->timestamps();
         });
 

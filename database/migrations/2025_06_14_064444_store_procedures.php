@@ -10,7 +10,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // SELECT user => user_profile
         DB::unprepared('
             CREATE PROCEDURE select_user(
             IN userID INT
@@ -30,7 +29,6 @@ return new class extends Migration
             END
         ');
 
-        // SELECT complaint, user, vote => aduan_umum / aduan anda
         DB::unprepared(<<<SQL
         DROP PROCEDURE IF EXISTS select_complaint_user_vote;
 
@@ -97,50 +95,71 @@ return new class extends Migration
         END
         SQL);
 
-        // SELECT complaint, comment, user, vote => aduan_detail
+        DB::unprepared('DROP PROCEDURE IF EXISTS select_complaint_comment_user_vote;');
         DB::unprepared('
             CREATE PROCEDURE select_complaint_comment_user_vote(
                 IN complaintID INT
             )
             BEGIN
                 SELECT
-                c.id AS complaint_complaint_id,
-                c.complaint_title,
-                c.complaint_content,
-                c.proses,
-                c.created_at AS complaint_created_at,
-                c.updated_at AS complaint_updated_at,
-                m.description,
-                m.created_at AS comment_created_at,
-                m.updated_at AS comment_updated_at,
-                u.name,
-                u.profile_picture,
-                a.path_file,
-                (
-                    SELECT
-                    SUM(
-                    CASE
-                        WHEN vote_type = "upvote" THEN 1
-                        WHEN vote_type = "downvote" THEN -1
-                        ELSE 0
-                    END)
-                    FROM complaint_vote v
-                    WHERE v.complaint_id = c.id
-                ) AS total_votes,
-                (
-                    SELECT COUNT(id)
-                    FROM comment
-                    WHERE complaint_id = c.id
-                ) AS total_comments
-                FROM complaints c
-                LEFT JOIN comment m ON c.id = m.complaint_id
-                LEFT JOIN users u ON m.user_id = u.id
-                LEFT JOIN complaint_attachment a ON c.attachment_id = a.id
-                WHERE c.id = complaintID;
+                    c.id AS complaint_complaint_id,
+                    c.complaint_title,
+                    c.complaint_content,
+                    c.proses,
+                    c.created_at AS complaint_created_at,
+
+                    -- Get the Complaint Author details by joining complaints.user_id
+                    complaint_author.name AS complaint_author_name,
+                    complaint_author.profile_picture AS complaint_author_profile_picture,
+
+                    -- Get the Comment details from the `comment` table
+                    m.id as comment_id,
+                    m.description AS comment_description,
+                    m.created_at AS comment_created_at,
+
+                    -- Get the Commenter details by joining comment.user_id
+                    comment_author.name AS comment_author_name,
+                    comment_author.profile_picture AS comment_author_profile_picture,
+
+                    -- Get attachment and vote details
+                    a.path_file,
+                    (
+                        SELECT
+                        SUM(
+                        CASE
+                            WHEN vote_type = "upvote" THEN 1
+                            WHEN vote_type = "downvote" THEN -1
+                            ELSE 0
+                        END)
+                        FROM complaint_vote v
+                        WHERE v.complaint_id = c.id
+                    ) AS total_votes,
+                    (
+                        SELECT COUNT(id)
+                        FROM comment
+                        WHERE complaint_id = c.id
+                    ) AS total_comments
+                FROM
+                    complaints c
+                -- Join users table for the complaint author
+                LEFT JOIN
+                    users complaint_author ON c.user_id = complaint_author.id
+                -- Join to get the comments
+                LEFT JOIN
+                    comment m ON c.id = m.complaint_id
+                -- Join users table again for the comment author
+                LEFT JOIN
+                    users comment_author ON m.user_id = comment_author.id
+                -- Join to get attachments
+                LEFT JOIN
+                    complaint_attachment a ON c.attachment_id = a.id
+                WHERE
+                    c.id = complaintID
+                ORDER BY
+                    m.created_at ASC;
             END
         ');
 
-        // SELECT complaint, user => home / dashboard
         DB::unprepared('
             CREATE PROCEDURE select_complaint_user()
             BEGIN
@@ -166,7 +185,6 @@ return new class extends Migration
             END
         ');
 
-        // UPDATE user
         DB::unprepared('
             CREATE PROCEDURE update_user(
                 IN userID INT,
@@ -186,7 +204,6 @@ return new class extends Migration
             END
         ');
 
-        // UPDATE, INSERT, SELECT vote
         DB::unprepared('
             CREATE PROCEDURE update_insert_select_vote(
                 IN userID INT,
@@ -212,7 +229,6 @@ return new class extends Migration
             END;
         ');
 
-        // INSERT Comment
         DB::unprepared('
             CREATE PROCEDURE insert_comment(
                 IN complaintID INT,
@@ -233,32 +249,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared('
-            DROP PROCEDURE IF EXISTS select_complaint_user_vote
-        ');
-
-        DB::unprepared('
-            DROP PROCEDURE IF EXISTS select_complaint_comment_user_vote
-        ');
-
-        DB::unprepared('
-            DROP PROCEDURE IF EXISTS select_user
-        ');
-
-        DB::unprepared('
-            DROP PROCEDURE IF EXISTS select_complaint_user
-        ');
-
-        DB::unprepared('
-            DROP PROCEDURE IF EXISTS update_user
-        ');
-
-        DB::unprepared('
-            DROP PROCEDURE IF EXISTS update_insert_select_vote
-        ');
-
-        DB::unprepared('
-        DROP PROCEDURE IF EXISTS insert_comment
-    ');
+        DB::unprepared('DROP PROCEDURE IF EXISTS select_complaint_user_vote');
+        DB::unprepared('DROP PROCEDURE IF EXISTS select_complaint_comment_user_vote');
+        DB::unprepared('DROP PROCEDURE IF EXISTS select_user');
+        DB::unprepared('DROP PROCEDURE IF EXISTS select_complaint_user');
+        DB::unprepared('DROP PROCEDURE IF EXISTS update_user');
+        DB::unprepared('DROP PROCEDURE IF EXISTS update_insert_select_vote');
+        DB::unprepared('DROP PROCEDURE IF EXISTS insert_comment');
     }
 };
