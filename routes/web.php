@@ -42,8 +42,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [dashboard_controller::class, 'index'])->name('dashboard');
 
-    Route::get('/aduan-umum', [lihat_aduan_umum_controller::class, 'index'])->name('aduan-umum.index');
-    Route::post('/aduan-umum', [lihat_aduan_umum_controller::class, 'store'])->name('aduan-umum.store');
+    Route::get('/aduan-umum', [lihat_aduan_umum_controller::class, 'index'])->name('aduan-umum');
+    Route::post('/aduan-umum', [lihat_aduan_umum_controller::class, 'store'])->name('aduan-umum');
 
     Route::post('/aduan-anda', [lihat_aduan_anda_controller::class, 'store'])->name('aduan-anda');
 
