@@ -2,31 +2,33 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Admin;
 use App\Models\Complaint;
+use App\Models\Department;
+use App\Models\ComplaintHistory;
 use App\Models\ComplaintDepartment;
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Illuminate\Foundation\Auth\User;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 class StatsDashboard extends BaseWidget
 {
     protected function getStats(): array
     {
-        $jumlahaduan = Complaint::count();
-        $aduanSelesai = ComplaintDepartment::where('proses', 'selesai')->count();
-        $aduanPending = ComplaintDepartment::where('proses', 'diajukan')->count(); 
+        $jumlaadmin = Admin::count();
+        $jumlahuser = User::count();
+        $jumlahdepartemen = Department::distinct('role')->count('role');
         return [
-            Stat::make('Jumlah Aduan', $jumlahaduan . ' Aduan')
-                ->description('Jumlah total yang belum direview')
-                ->icon('heroicon-o-document-text')
+            Stat::make('Administrator', $jumlaadmin . ' Admin')
+                ->icon('heroicon-o-wrench-screwdriver')
                 ->color('info'),
-            Stat::make('Aduan Selesai', $aduanSelesai . ' Aduan')
-                ->description('Jumlah aduan yang telah selesai diproses')
-                ->color('success')
-                ->icon('heroicon-o-check-circle'),
-            Stat::make('Diajukan', $aduanPending . ' Aduan')
-                ->description('Jumlah aduan yang masih dalam proses')
+            Stat::make('Pengguna', $jumlahuser . ' User')
                 ->color('danger')
-                ->icon('heroicon-o-clock'),
+                ->icon('heroicon-o-user'),
+            Stat::make('Penanggung Jawab', $jumlahdepartemen . ' Departemen')
+                ->color('success')
+                ->icon('heroicon-o-building-office'),
         ];
+
     }
 }
