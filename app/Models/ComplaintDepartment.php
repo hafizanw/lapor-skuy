@@ -23,6 +23,7 @@ class ComplaintDepartment extends Model
         'category_id',
         'attachment_id',
         'department_id',
+        'response_id',
         'complaint_title',
         'complaint_content',
         'proses',
@@ -53,6 +54,10 @@ class ComplaintDepartment extends Model
     }
     public function department()
     {
-        return $this->belongsTo(ComplaintDepartment::class, 'department_id', 'id');
+        return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+    public function response()
+    {
+        return $this->belongsTo(ComplaintResponse::class, 'response_id', 'id');
     }
 }

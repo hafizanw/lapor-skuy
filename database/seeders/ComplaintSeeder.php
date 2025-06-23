@@ -40,7 +40,7 @@ class ComplaintSeeder extends Seeder
                 'attachment_id' => 3,
                 'complaint_title' => 'ffefcewce',
                 'complaint_content' => 'efvwegwhgrhreherheh',
-                'proses' => 'diproses',
+                'proses' => 'draft',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
