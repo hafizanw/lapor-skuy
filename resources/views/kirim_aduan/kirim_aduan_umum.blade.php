@@ -27,8 +27,44 @@
             @endauth
             {{-- // 2 untuk publik --}}
             <input type="hidden" name="visibility_type" value="2"> 
-            <button type="submit" class="btn btn-primary">Kirim Aduan</button>
+            <button id="kirimButton" type="submit" class="btn btn-primary">Kirim Aduan</button>
         </form>
     </section>
+
+    <!-- Modal kirim aduan berhasil -->
+    <div class="modal fade" id="kirimAduanBerhasil" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+            <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Notifikasi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+            <p>Aduan anda berhasil dikirim, Terima kasih.</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn text-light" style="background: linear-gradient(to right, #531fa7, #6826b4);" data-bs-dismiss="modal">Kembali</button>
+            </div>
+        </div>
+        </div>
+    </div>
 @endsection
 
+{{-- @push('script')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const button = document.getElementById('kirimButton');
+        if(button) {
+            button.addEventListener('click', () => {
+                try {
+                const myModal = new bootstrap.Modal(
+                        document.getElementById("kirimAduanBerhasil")
+                    );
+                    myModal.show();
+            } catch (error) {
+                alert(error);
+            }
+            })
+        }
+    </script>
+@endpush --}}

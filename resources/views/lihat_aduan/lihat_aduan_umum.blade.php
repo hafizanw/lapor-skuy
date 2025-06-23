@@ -20,10 +20,15 @@
 
     <!-- Search dan Sorting -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
-        <input type="text" class="form-control w-100 w-md-50" placeholder="Search...">
-        <div class="btn-group">
-            <button class="btn btn-outline-primary btn-sm">Terbaru</button>
-            <button class="btn btn-primary btn-sm">Teratas</button>
+        <input id="inputSearch" type="text" class="form-control w-100 w-md-50" placeholder="Search..." value="{{ request('searchKeyword') }}"
+        onkeydown="if (event.key === 'Enter') searchOnly()">
+        <div class="btn-group align-self-end">
+            <a href="{{ route('aduan-umum', ['filterType' => 'terbaru']) }}">
+              <button id="btnTerbaru" class="btn btn-outline-primary btn-sm">Terbaru</button>
+            </a>
+            <a href="{{ route('aduan-umum', ['filterType' => 'teratas']) }}">
+              <button id="btnTeratas" class="btn btn-primary btn-sm">Teratas</button>
+            </a>
         </div>
     </div>
 
@@ -36,9 +41,28 @@
       
           <!-- Kolom Voting -->
           <div class="col-auto text-center px-3 py-4 border-end">
-            <i data-feather="chevrons-up" class="text-warning cursor-pointer mb-1"></i>
-            <div class="fw-bold">4</div>
-            <i data-feather="chevrons-down" class="text-warning cursor-pointer mt-1"></i>
+            <!-- Form Upvote -->
+            <form action="{{ route('aduan-umum') }}" method="POST" style="display:inline;">
+              @csrf
+              <input type="hidden" name="complaint_id" value="{{ $data->complaint_complaint_id }}">
+              <input type="hidden" name="vote_type" value="upvote">
+              <button type="submit" class="btn p-0 border-0 bg-transparent">
+                <i data-feather="chevrons-up" class="text-warning"></i>
+              </button>
+            </form>
+
+            <!-- Jumlah Vote -->
+            <div class="fw-bold">{{ $data->total_votes ?? 0 }}</div>
+
+            <!-- Form Downvote -->
+            <form action="{{ route('aduan-umum') }}" method="POST" style="display:inline;">
+              @csrf
+              <input type="hidden" name="complaint_id" value="{{ $data->complaint_complaint_id }}">
+              <input type="hidden" name="vote_type" value="downvote">
+              <button type="submit" class="btn p-0 border-0 bg-transparent">
+                <i data-feather="chevrons-down" class="text-warning"></i>
+              </button>
+            </form>
           </div>
       
           <!-- Kolom Profil -->
@@ -56,13 +80,18 @@
             <div class="card-body py-3 px-3">
       
               <!-- Judul -->
-              <a href="{{ route('aduan-detail', $data->complaint_complaint_id) }}" class="text-decoration-none">
+              <a href="#" onclick="submitComplaint({{ $data->complaint_complaint_id }})" class="text-decoration-none">
                 <h6 class="fw-bold text-dark mb-2">{{ $data->complaint_title }}</h6>
               </a>
+
+              <form id="complaintForm" method="GET" action="{{ route('aduan-detail') }}">
+                @csrf
+                <input type="hidden" name="complaint_id" id="complaint_id">
+              </form>
       
               <!-- Deskripsi -->
               <p class="text-muted small mb-2" style="line-height: 1.4;">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                {{ $data->complaint_content }} 
               </p>
       
               <!-- Info Bar -->
@@ -83,4 +112,22 @@
     @endforeach
 </div>
 @endsection
+
+@push('script')
+<script>
+  axios.defaults.headers.common['X-CSRF-TOKEN'] = 
+  document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+  function submitComplaint(complaintId) {
+      document.getElementById('complaint_id').value = complaintId;
+      document.getElementById('complaintForm').submit();
+  }
+
+  function searchOnly() {
+        const keyword = document.getElementById('inputSearch').value;
+        const url = `/aduan-umum?searchKeyword=${encodeURIComponent(keyword)}`;
+        window.location.href = url;
+    }
+</script>
+@endpush
 

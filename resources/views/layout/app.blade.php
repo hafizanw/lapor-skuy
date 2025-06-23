@@ -131,12 +131,15 @@
                             <small class="text-muted">Mahasiswa</small>
                         </div>
                     </a>
-                    <a href="#" class="text-dark fs-5 ms-2" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i data-feather="log-out"></i>
-                    </a>
-                    <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                        <!-- @csrf -->
-                    </form>
+                    <div class="mt-4">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="btn px-4 fw-bold" type="submit">
+                                <i data-feather="log-out"></i>
+                            </button>
+                        </form>
+                    </div>
+                   
                 </div>
               </div>
         </div>

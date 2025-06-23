@@ -16,10 +16,16 @@ import axios from "axios";
 
                 try {
                     const response = await axios.post('/aduan-detail', data);
-                    alert("Komentar anda berhasil di kirim");
+                    const myModal = new bootstrap.Modal(
+                        document.getElementById("commentModalBerhasil")
+                    );
+                    myModal.show();
                     console.log(response.data);
                 } catch (error) {
-                    alert("Gagal mengirim komentar");
+                    const myModal = new bootstrap.Modal(
+                        document.getElementById("commentModalGagal")
+                    );
+                    myModal.show();
                     console.log(error);
                 }
             })

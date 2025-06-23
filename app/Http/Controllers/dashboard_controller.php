@@ -12,8 +12,12 @@ class dashboard_controller extends Controller
     {
         $userId = Auth::id();
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
+        $datas = DB::select('CALL select_complaint_user()');
+        $data = $datas[0];
 
         return view('dashboard', [
+            'data' => $data,
+            'datas' => $datas,
             'titlePage' => 'Dashboard',
             'username' => $profile->name,
             'profile_picture' => $profile->profile_picture 

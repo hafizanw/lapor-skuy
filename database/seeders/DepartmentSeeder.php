@@ -17,16 +17,19 @@ class DepartmentSeeder extends Seeder
         Department::create([
             'name' => 'Test',
             'description' => 'Test Department 1',
+            'password' => '123',
             'role' => 'test',
         ]);
         Department::create([
             'name' => 'Agus Lapar',
             'description' => 'Test Department 2',
+            'password' => '123',
             'role' => 'daak',
         ]);
         Department::create([
             'name' => 'Elyn',
             'description' => 'Test Department 3',
+            'password' => '123',
             'role' => 'administrasi_keuangan',
         ]);
     }
