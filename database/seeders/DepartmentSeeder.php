@@ -16,21 +16,27 @@ class DepartmentSeeder extends Seeder
         // PERBAIKAN: Menggunakan model User yang sudah menunjuk ke tabel 'users'
         Department::create([
             'name' => 'Test',
+            'password' => bcrypt('123'),
             'description' => 'Test Department 1',
             'password' => '123',
             'role' => 'test',
+            'password' => bcrypt('test123'),
         ]);
         Department::create([
             'name' => 'Agus Lapar',
+            'password' => bcrypt('123'),
             'description' => 'Test Department 2',
             'password' => '123',
             'role' => 'daak',
+            'password' => bcrypt('test123'),
         ]);
         Department::create([
             'name' => 'Elyn',
+            'password' => bcrypt('123'),
             'description' => 'Test Department 3',
             'password' => '123',
             'role' => 'administrasi_keuangan',
+            'password' => bcrypt('test123'),
         ]);
     }
 }

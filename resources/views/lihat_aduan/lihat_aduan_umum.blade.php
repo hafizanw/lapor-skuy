@@ -8,16 +8,16 @@
 @section('content')
     <div class="container py-4">
 
-    <!-- Tab -->
-    <ul class="nav nav-tabs mb-3">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Aduan Umum</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('/aduan-anda') }}">Aduan Anda</a>
-        </li>
-    </ul>
-
+        <!-- Tab -->
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Aduan Umum</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/aduan-anda') }}">Aduan Anda</a>
+            </li>
+        </ul>
+        
     <!-- Search dan Sorting -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
         <input id="inputSearch" type="text" class="form-control w-100 w-md-50" placeholder="Search..." value="{{ request('searchKeyword') }}"
@@ -30,9 +30,8 @@
               <button id="btnTeratas" class="btn btn-primary btn-sm">Teratas</button>
             </a>
         </div>
-    </div>
 
-    <h5 class="fw-bold">Aduan Umum</h5>
+        <h5 class="fw-bold">Aduan Umum</h5>
 
     <!-- Aduan Cards -->
     @foreach ($datas as $data)
@@ -130,4 +129,3 @@
     }
 </script>
 @endpush
-
