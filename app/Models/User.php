@@ -28,7 +28,6 @@ class User extends Authenticatable
         'profile_picture',
         'faculty',
         'major',
-        'role',
     ];
 
     /**

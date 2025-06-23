@@ -24,8 +24,8 @@ class ComplaintResource extends Resource
     protected static ?string $navigationGroup = 'Kelola Aduan';
     protected static ?int $navigationSort = 1;
     protected static ?string $slug = 'under-review';
-    protected static ?string $navigationLabel = 'Under Review';
-    protected static ?string $modelLabel = 'List Aduan';
+    protected static ?string $navigationLabel = 'Belum Direview';
+    protected static ?string $modelLabel = 'Belum Direview';
 
     public static function form(Form $form): Form
     {
@@ -79,8 +79,26 @@ class ComplaintResource extends Resource
                 ->alignCenter(),
             Tables\Columns\TextColumn::make('voteCount')
                 ->counts('votes')
-                ->label('Jumlah Upvote')
-                ->sortable()
+                ->label('Jumlah Vote')
+                // Hitung jumlah upvote dan downvote, lalu tampilkan selisihnya
+                ->getStateUsing(function ($record) {
+                    $upvotes = $record->votes()->where('vote_type', 'upvote')->count();
+                    $downvotes = $record->votes()->where('vote_type', 'downvote')->count();
+                    return $upvotes - $downvotes;
+                })
+                ->sortable(query: function (Builder $query, string $direction): Builder {
+                    // Urutkan berdasarkan selisih upvote dan downvote
+                    return $query
+                        ->withCount([
+                            'votes as upvotes_count' => function ($q) {
+                                $q->where('vote_type', 'upvote');
+                            },
+                            'votes as downvotes_count' => function ($q) {
+                                $q->where('vote_type', 'downvote');
+                            },
+                        ])
+                        ->orderByRaw('(upvotes_count - downvotes_count) ' . $direction);
+                })
                 ->badge()
                 ->alignCenter()
                 ->icon('heroicon-o-user'),
