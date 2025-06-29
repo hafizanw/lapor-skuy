@@ -54,7 +54,7 @@ class lihat_aduan_umum_controller extends Controller
         $searchKeyword = $request->input('searchKeyword', '');
         $filterType = $request->input('filterType', '');
 
-        $datas = DB::select('CALL select_complaint_user_vote(?, ?, ?)',[
+        $datas = DB::select('CALL select_cser_omplaint_uvote(?, ?, ?)',[
             $searchKeyword,
             $filterType,
             0
