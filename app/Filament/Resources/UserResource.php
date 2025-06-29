@@ -46,8 +46,7 @@ class UserResource extends Resource
                     ->label('Kata Sandi')
                     ->password()
                     ->required()
-                    ->dehydrateStateUsing(fn ($state) => bcrypt($state))
-                    ->visibleOn('create'),
+                    ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
                 Forms\Components\TextInput::make('phone_number')
                     ->label('Nomor Telepon Pengguna')
                     ->tel()
@@ -65,6 +64,12 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('profile_picture')
+                    ->label('Photo Profil')
+                    ->url(fn ($record) => $record->profile_picture ? asset('profile_uploads/' . $record->profile_picture) : asset('profile_default.png'))
+                    ->circular()
+                    ->size(50)
+                    ->alignCenter(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Pengguna')
                     ->searchable()
