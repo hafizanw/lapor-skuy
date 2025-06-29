@@ -5,6 +5,7 @@ namespace Database\Seeders;
 
 use App\Models\ComplaintAttachment;
 use App\Models\ComplaintCategory;
+use App\Models\Faq;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CommentSeeder::class,
             DepartmentSeeder::class,
             AdminSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }
