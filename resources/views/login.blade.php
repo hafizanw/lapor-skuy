@@ -21,140 +21,140 @@
         .nav-mobile.active:hover {
           background-color: #5c636a; /* lebih gelap saat hover aktif */
         }
+
+        /* jquery shake login form */
+              @keyframes shake {
+          0% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          50% { transform: translateX(5px); }
+          75% { transform: translateX(-5px); }
+          100% { transform: translateX(0); }
+        }
+
+        .shake {
+          animation: shake 0.4s ease-in-out;
+        }
       </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-md navbar-dark px-3" style="background: linear-gradient(to right, #531DAB, #842FE3);">
-        <div class="container-fluid">
-            <!-- Left -->
-            <div class="">
-                <img src="{{ asset('assets/logo.png') }}">
+<body style="background-color: #f6f7ff">
+  <main class="min-vh-100 d-flex justify-content-center align-items-center px-3">
+    <div class="w-100" style="max-width: 420px;">
+        <div class="bg-white rounded shadow p-4 p-md-5 text-center">
+            
+            {{-- Logo --}}
+            <div class="mb-4">
+              <a href="{{ route('home') }}">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 48px;">
+              </a>
             </div>
-    
-            <!-- Hamburger Menu (Mobile Only) -->
-            <button class="navbar-toggler d-md-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <!-- Desktop Menu (Hidden on Mobile) -->
-            <div class="collapse navbar-collapse justify-content-end d-none d-md-flex">
-                <ul class="navbar-nav me-3">
-                    <li class="nav-item"><a class="nav-link text-white fw-semibold me-1" href="#">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-semibold me-1" href="" data-bs-toggle="modal" 
-                        data-bs-target="#loginModal">KIRIM ADUAN</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-semibold me-1" href="" data-bs-toggle="modal" 
-                        data-bs-target="#loginModal">LIHAT ADUAN</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-semibold me-1" href="" data-bs-toggle="modal" 
-                        data-bs-target="#loginModal">FAQ</a></li>
-                </ul>
-                <div class="d-flex align-items-center rounded-pill px-2 py-2 mx-2 shadow-md">
-                    <a href="{{ route('home') }}" class="btn btn-light fw-semibold px-4 rounded-pill shadow-sm">
-                        Home
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Sidebar (Mobile Only) -->
-    <div class="offcanvas offcanvas-end d-md-none text-bg-light" style="width: 50vw" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
-        <div class="offcanvas-body d-flex flex-column justify-content-between p-0">
-  
-            <!-- Logo & Menu -->
-            <div>
-              <!-- Logo -->
-              <div class="d-flex flex-column align-items-start px-3 py-4">
-                <h5 class="mx-2 fw-bold text-dark">Lapor Skuy</h5>
-                <div class="mx-2" style="width: 50%; border-bottom: 2px solid rgb(194, 194, 194); margin: 10px 0;"></div>
-              </div>
-        
-              <!-- Navigation -->
-              <ul class="nav flex-column mb-4">
-                <li class="nav-item">
-                  <a class="nav-link nav-mobile text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="#">
-                    <i data-feather="home" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> Home
-                  </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-mobile text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="#">
-                      <i data-feather="send" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> Kirim Aduan
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link nav-mobile text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="#">
-                      <i data-feather="file-text" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> Lihat Aduan
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link nav-mobile text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="#">
-                      <i data-feather="pocket" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> FAQ
-                    </a>
-                  </li>
-              </ul>
-        
-              <!-- Market List -->
-              <div class="px-3">
-                <div class="d-flex align-items-center mb-3">
-                    <a href="{{ route('home') }}" class="btn fw-semibold px-4 rounded-pill shadow-sm text-light" style="background: linear-gradient(to right, #531fa7, #6826b4);">
-                        Home
-                    </a>
+            {{-- Judul --}}
+            <h3 class="fw-bold">Welcome to Lapor Skuy</h3>
+            <p class="text-muted mb-4 small">Sistem Informasi Aduan Kampus</p>
+
+            {{-- Error --}}
+            @if ($errors->has('password_error'))
+                <div class="alert alert-warning mb-3" id="alert-box">
+                    {!! $errors->first('password_error') !!}
                 </div>
+            @elseif ($errors->any())
+                <div class="alert alert-danger mb-3" id="alert-box">
+                    {{ $errors->first('nim') ?: $errors->first() }}
+                </div>
+            @endif
+
+            {{-- Form --}}
+            <form action="{{ route('login') }}" method="POST" class="text-start">
+                @csrf
+                <div class="mb-3">
+                    <label for="nim" class="form-label">NIM</label>
+                    <input type="text" name="nim" class="form-control textbox" placeholder="NIM" required autofocus>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control textbox" placeholder="Password" required>
               </div>
+
+              <button type="submit" id="loginButton" class="btn w-100 text-white mb-3 btn-login position-relative"
+              style="background: linear-gradient(to right, #531DAB, #842FE3);">
+                  <span class="spinner-border spinner-border-sm me-2 d-none" id="loginSpinner" role="status" aria-hidden="true"></span>
+                  Login
+              </button>
+              
+            </form>
+
+            <div class="mb-3 small">
+                <span class="text-muted">Klik untuk lupa password</span>
+                <a href="{{ route('password.email') }}">Lupa Password</a>
             </div>
-          </div>
+
+            <div class="mb-3 small">
+              @csrf
+              
+            </div>
+
+            <hr class="my-3">
+
+            <p class="text-muted small mb-2">Masuk dengan google</p>
+            <a href="{{ route('google.redirect') }}" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2">
+                <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
+                Google account
+            </a>
+        </div>
     </div>
+</main>
 
-    <main>
-        <div class="container">
-            <div class="row justify-content-center align-items-center min-vh-100">
-                <div class="col-md-6 col-lg-4">
-                    <div class="login-container p-4 shadow rounded">
-                        <div class="form-box" id="login-form">
-                            {{-- Logika untuk menampilkan pesan error yang berbeda --}}
-                            @if ($errors->has('password_error'))
-                                <div class="alert alert-warning mb-3">
-                                    {{-- Menggunakan {!! !!} agar tag <a> bisa dirender sebagai HTML --}}
-                                    {!! $errors->first('password_error') !!}
-                                </div>
-                            @elseif ($errors->any())
-                                <div class="alert alert-danger mb-3">
-                                    {{ $errors->first('nim') ?: $errors->first() }}
-                                </div>
-                            @endif
-                            {{-- PERBAIKAN: Menggunakan helper route() untuk action form --}}
-                            <form action="{{ route('login') }}" method="POST">
-                                @csrf
-                                <h2 class="text-center mb-4">Login</h2>
-                                <div class="mb-3">
-                                    <input type="text" name="nim" class="form-control textbox"
-                                        placeholder="NIM / NIDN" required autofocus>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="password" name="password" class="form-control textbox"
-                                        placeholder="Password" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 btn-login">Login</button>
-                            </form>
-                            <div class="text-center mt-3">
-                                @csrf
-                                <a href="{{ route('password.email') }}">Lupa Password?</a>
-                            </div>
-                        <div class="text-center my-3">
-                            <span class="text-muted">atau</span>
-                        </div>
+  
 
-                        <a href="{{ route('google.redirect') }}" class="btn btn-danger w-100">
-                            <i class="fab fa-google me-2"></i>
-                            Masuk dengan Google
-                        </a>
-                        <div class="text-center mt-3">
-                            <a href="{{ route('password.email') }}">Lupa Password?</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    {{-- Script jquery login form--}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Fade in seluruh wrapper saat load
+        $('.login-wrapper').hide().fadeIn(800);
+
+        // Fade in form
+        $('.login-container').hide().fadeIn(600);
+
+        // Error alert slide
+        $('#alert-box').hide().slideDown(400);
+
+        // Input glow
+        $('.textbox').focus(function () {
+          $(this).css('box-shadow', '0 0 0 0.2rem rgba(132, 47, 227, 0.25)');
+        }).blur(function () {
+          $(this).css('box-shadow', 'none');
+        });
+
+        // Tombol efek
+        $('.btn-login').hover(
+          function () {
+            $(this).css('box-shadow', '0 0 10px rgba(132, 47, 227, 0.5)');
+          },
+          function () {
+            $(this).css('box-shadow', 'none');
+          }
+        ).on('mousedown', function () {
+          $(this).css('transform', 'scale(0.97)');
+        }).on('mouseup mouseleave', function () {
+          $(this).css('transform', 'scale(1)');
+        });
+
+        // Spinner on submit
+        $('form').on('submit', function () {
+          $('#loginSpinner').removeClass('d-none');
+          $('#loginButton').prop('disabled', true);
+        });
+
+        // Shake jika error
+        if ($('#alert-box').length) {
+          setTimeout(function () {
+            $('.login-container').addClass('shake');
+          }, 400);
+        }
+      });
+    </script>
+
 
   <script>
     feather.replace();

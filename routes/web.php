@@ -4,6 +4,11 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\dashboard_controller;
+use App\Http\Controllers\Departemen\departemen_aduan_detail;
+use App\Http\Controllers\Departemen\departemen_dashboard_controller;
+use App\Http\Controllers\Departemen\departemen_list_aduan_controller;
+use App\Http\Controllers\Departemen\departemen_list_history_controller;
+use App\Http\Controllers\Departemen\departemen_selesaikan_aduan;
 use App\Http\Controllers\faq_controller;
 use App\Http\Controllers\home_controller;
 use App\Http\Controllers\kirim_aduan_controller;
@@ -72,3 +77,14 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/faq', [faq_controller::class, 'index'])->name('faq');
 Route::get('/about', function () {return view('about');});
 Route::get('/panduan', function () {return view('panduan');});
+
+// Departemen
+Route::get('/departemen-dashboard', [departemen_dashboard_controller::class, 'index'])->name('departemen-dashboard');
+
+Route::get('/departemen-list-aduan', [departemen_list_aduan_controller::class, 'index'])->name('departemen-list-aduan');
+
+Route::get('/departemen-list-history', [departemen_list_history_controller::class, 'index'])->name('departemen-list-history');
+
+Route::get('/departemen-aduan-detail', [departemen_aduan_detail::class, 'index'])->name('departemen-aduan-detail');
+
+Route::get('/departemen-selesaikan-aduan', [departemen_selesaikan_aduan::class, 'index'])->name('departemen-selesaikan-aduan');
