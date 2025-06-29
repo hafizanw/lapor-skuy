@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Aduan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-purple: #6A0DAD;
+            --brand-purple-light: #e8dff1;
+            /* Warna baru untuk kotak feedback */
+            --feedback-bg: #e6f7e6; 
+            --feedback-text: #056605;
+        }
+
+        /* Header */
+        .app-header {
+            background-color: var(--brand-purple);
+            color: white;
+            padding: 1rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            display: flex;
+            align-items: center;
+        }
+
+        .app-header .back-arrow {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+        .app-header .header-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        /* Konten Utama */
+        .container-main {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Styling Card */
+        .aduan-detail-card,
+        .comment-card,
+        .feedback-card { /* Menambahkan .feedback-card ke grup */
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            border: none;
+        }
+        
+        /* CSS KHUSUS UNTUK KOTAK FEEDBACK */
+        .feedback-card.sarpras-feedback {
+             background-color: var(--feedback-bg);
+             color: var(--feedback-text);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-info .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 0.75rem;
+        }
+
+        .user-info .user-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0;
+        }
+        
+        /* Menyesuaikan warna nama user di dalam kotak feedback hijau */
+        .sarpras-feedback .user-name {
+            color: var(--feedback-text);
+        }
+
+        .user-info .post-date {
+            font-size: 0.875rem;
+            color: #777;
+        }
+        
+        .sarpras-feedback .post-date {
+            color: #555;
+        }
+
+
+        .aduan-description {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .sarpras-feedback .aduan-description {
+            color: var(--feedback-text);
+            font-weight: 500;
+        }
+
+
+        /* Judul Komentar */
+        .comment-count-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="app-header">
+        <div class="container d-flex align-items-center">
+            <a href="#" class="back-arrow me-3">&larr;</a>
+            <h1 class="h4 mb-0 fw-bold">Feedback </h1>
+        </div>
+    </div>
+
+    <div class="container container-main">
+        <h2 class="section-title">Saya mendapati AC ruang 5.3.2 tidak berfungsi</h2>
+
+        <!-- Detail Aduan Utama -->
+        <div class="aduan-detail-card">
+            <div class="user-info">
+                <!-- Gunakan URL gambar yang sesuai -->
+                <img src="https://placehold.co/48x48/e8dff1/6A0DAD?text=NL" alt="Avatar" class="avatar">
+                <div>
+                    <p class="user-name mb-0">Naufal Latif</p>
+                    <p class="post-date">23-05-2025</p>
+                </div>
+            </div>
+            <p class="aduan-description">Saya mendapati AC di ruang 5.3.2 tidak berfungsi saat digunakan dalam kegiatan perkuliahan. Kondisi ruangan menjadi panas dan tidak nyaman, sehingga mengganggu konsentrasi mahasiswa dan dosen selama proses belajar mengajar. Saya berharap kerusakan ini dapat segera ditindaklanjuti agar aktivitas di ruang tersebut kembali berjalan dengan optimal.</p>
+        </div>
+
+        <!-- Judul Bagian Komentar -->
+        <h3 class="comment-count-title">1 Komentar</h3>
+
+        <!-- Kartu Komentar -->
+        <div class="comment-card">
+            <div class="user-info">
+                <img src="https://placehold.co/48x48/e8dff1/6A0DAD?text=HA" alt="Avatar" class="avatar">
+                <div>
+                    <p class="user-name mb-0">Hafiz Anwar</p>
+                    <p class="post-date">23-05-2025</p>
+                </div>
+            </div>
+            <p class="aduan-description">Saya sangat mendukung laporan ini karena saya juga mendapati AC di ruang 5.3.2 tidak terlalu dingin</p>
+        </div>
+        
+        <!-- Judul Bagian Feedback -->
+        <h3 class="section-title">Feedback</h3>
+        
+        <!-- Kartu Feedback dari Sarpras -->
+        <div class="feedback-card sarpras-feedback">
+             <div class="user-info">
+                <img src="https://placehold.co/48x48/e6f7e6/056605?text=DS" alt="Avatar" class="avatar">
+                <div>
+                    <p class="user-name mb-0">Departemen UPT-Sarpras</p>
+                    <p class="post-date">23-05-2025</p>
+                </div>
+            </div>
+            <p class="aduan-description">Aduan anda sudah kami tangani, terima kasih atas aduan yang telah dikirimkan</p>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
