@@ -54,7 +54,7 @@ class lihat_aduan_umum_controller extends Controller
         $searchKeyword = $request->input('searchKeyword', '');
         $filterType = $request->input('filterType', '');
 
-        $datas = DB::select('CALL select_cser_omplaint_uvote(?, ?, ?)',[
+        $datas = DB::select('CALL select_complaint_user_vote(?, ?, ?)',[
             $searchKeyword,
             $filterType,
             0
@@ -68,6 +68,7 @@ class lihat_aduan_umum_controller extends Controller
             'data' => $data,
             'datas' => $datas,
             'titlePage' => 'Lihat Aduan',
+            'displayLogo' => 'd-none',
             'username' => $profile->name,
             'profile_picture' => $profile->profile_picture 
             ? ('profile_uploads/'. $profile->profile_picture) 

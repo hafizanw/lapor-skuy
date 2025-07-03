@@ -13,7 +13,7 @@ use App\Http\Controllers\faq_controller;
 use App\Http\Controllers\home_controller;
 use App\Http\Controllers\kirim_aduan_controller;
 use App\Http\Controllers\lihat_aduan_anda_controller;
-use App\Http\Controllers\Lihat_aduan_detail_controller;
+use App\Http\Controllers\lihat_aduan_detail_controller;
 use App\Http\Controllers\lihat_aduan_umum_controller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\user_profile_controller;
