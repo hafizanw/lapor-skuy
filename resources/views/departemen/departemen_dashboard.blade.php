@@ -59,7 +59,7 @@
           <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
             <!-- Card DAAK -->
             <div class="col animate__animated animate__fadeInUp animate__delay-0_2s">
-              <a href="#" class="text-decoration-none">
+              <a href="{{ route('daak-aduan') }}" class="text-decoration-none">
                 <div class="departemen-card h-100 text-center p-4">
                   <div class="departemen-icon mb-2"><i class="bi bi-person-badge"></i></div>
                   <h5>DAAK</h5>

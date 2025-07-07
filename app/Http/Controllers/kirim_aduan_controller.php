@@ -124,16 +124,6 @@ class kirim_aduan_controller extends Controller
                 $validatedData['content'],
                 "diajukan"
             ]);
-
-            $complaint = new Complaint();
-            $complaint->user_id = $validatedData['user_id'];
-            $complaint->category_id = $validatedData['visibility_type'];
-            $complaint->attachment_id = $attachmentId; // bisa null
-            $complaint->complaint_title = $validatedData['title'];
-            $complaint->complaint_content = $validatedData['content'];
-            $complaint->proses = 'diajukan';
-            $complaint->save();
-
         } else {
             $complaint = new Complaint();
             $complaint->user_id = $validatedData['user_id'];

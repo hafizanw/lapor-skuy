@@ -90,8 +90,6 @@ Route::get('/departemen-selesaikan-aduan', [departemen_selesaikan_aduan::class, 
 
 
 
-
-
 // Route untuk masing-masing departemen
 use App\Http\Controllers\Departemen\DAAKController;
 use App\Http\Controllers\Departemen\SarprasController;
@@ -101,7 +99,13 @@ use App\Http\Controllers\Departemen\PengajaranController;
 use App\Http\Controllers\Departemen\KeamananController;
 use App\Http\Controllers\Departemen\UPTLabController;
 
-Route::get('/departemen/daak', [DAAKController::class, 'index'])->name('departemen.daak');
+Route::get('/departemen/daak/aduan', [DAAKController::class, 'index'])->name('daak-aduan');
+Route::get('/departemen/daak/history-aduan', [DAAKController::class, 'index'])->name('daak-history-aduan');
+Route::get('/departemen/daak/selesaikan-aduan', [DAAKController::class, 'selesaikanAduan'])->name('daak-selesaikan-aduan');
+Route::post('/departemen/daak/selesaikan-aduan', [DAAKController::class, 'store'])->name('daak-selesaikan-aduan');
+
+
+
 Route::get('/departemen/sarpras', [SarprasController::class, 'index'])->name('departemen.sarpras');
 Route::get('/departemen/kemahasiswaan', [KemahasiswaanController::class, 'index'])->name('departemen.kemahasiswaan');
 Route::get('/departemen/perpus', [PerpusController::class, 'index'])->name('departemen.perpus');
