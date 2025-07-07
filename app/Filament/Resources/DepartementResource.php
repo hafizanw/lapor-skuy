@@ -41,9 +41,13 @@ class DepartementResource extends Resource
                 Forms\Components\Select::make('role')
                     ->label('Bertugas Sebagai')
                     ->options([
-                        'test' => 'Test',
-                        'daak' => 'DAAK',
-                        'administrasi_keuangan' => 'Keuangan',
+                        'KEMAHASISWAAN' => 'Kemahasiswaan',
+                        'DAAK' => 'DAAK',
+                        'SARPRAS' => 'SARPRAS',
+                        'PENGAJARAN' => 'Pengajaran',
+                        'PERPUS' => 'Perpus',
+                        'KEAMANAN' => 'Keamanan',
+                        'UPT_LAB' => 'UPT_LAB',
                     ])
                     ->required(),
                 Forms\Components\TextInput::make('password')
