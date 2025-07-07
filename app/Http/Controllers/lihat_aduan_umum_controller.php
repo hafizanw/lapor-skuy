@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class lihat_aduan_umum_controller extends Controller
 {
@@ -29,7 +28,7 @@ class lihat_aduan_umum_controller extends Controller
             if ($vote->vote_type == $voteType) {
                 return back()->with('message', 'Kamu sudah memberikan vote ini sebelumnya.');
             }
-        
+
             DB::statement('CALL update_insert_select_vote(?, ?, ?, ?)', [
                 $user->id,
                 $complaintId,
@@ -61,17 +60,23 @@ class lihat_aduan_umum_controller extends Controller
         ]);
         $data = $datas[0];
 
-        $userId = Auth::id();
-        $profile = DB::select('CALL select_user(?)', [$userId])[0];
+        // Tambahkan pengecekan keamanan untuk memastikan profil ditemukan
+        if (empty($profileResult)) {
+            // Anda bisa mengarahkan ke halaman login atau menampilkan error
+            // jika pengguna tidak terautentikasi atau datanya tidak ada
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        $profile = $profileResult[0];
 
+        // Variabel 'data' tidak lagi dikirim karena tidak aman.
+        // View akan langsung menggunakan 'datas'.
         return view('lihat_aduan.lihat_aduan_umum', [
-            'data' => $data,
-            'datas' => $datas,
-            'titlePage' => 'Lihat Aduan',
-            'username' => $profile->name,
-            'profile_picture' => $profile->profile_picture 
-            ? ('profile_uploads/'. $profile->profile_picture) 
-            : 'profile_uploads/profile_default.png'
+            'datas'           => $datas,
+            'titlePage'       => 'Lihat Aduan',
+            'username'        => $profile->name,
+            'profile_picture' => $profile->profile_picture
+            ? ('profile_uploads/' . $profile->profile_picture)
+            : 'profile_uploads/profile_default.png',
         ]);
     }
 }

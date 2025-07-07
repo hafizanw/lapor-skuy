@@ -158,6 +158,7 @@
     <main>
         <section id="home">
             <div class="position-relative overflow-hidden vh-100">
+            
               <!-- Background image -->
               <div class="position-absolute top-0 start-0 w-100 h-100 z-n1">
                 <img
@@ -341,6 +342,7 @@
         
                     <!-- Informasi Statistik -->
                   <div class="row row-cols-1 row-cols-md-2 g-5">
+                  
                     <!-- Total aduan -->
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0 hover-shadow transition">
@@ -355,7 +357,7 @@
                             </div>
                         </div>
                     </div>
-        
+
                     <!-- Aduan diproses -->
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0 hover-shadow transition">
@@ -370,7 +372,7 @@
                             </div>
                         </div>
                     </div>
-        
+                    
                     <!-- Aduan selesai -->
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0 hover-shadow transition">
@@ -385,7 +387,7 @@
                             </div>
                         </div>
                     </div>
-        
+
                     <!-- Total pengadu -->
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0 hover-shadow transition">
@@ -438,6 +440,7 @@
       </p>
     </div>
   </footer>
+
 
   <script>
     feather.replace();

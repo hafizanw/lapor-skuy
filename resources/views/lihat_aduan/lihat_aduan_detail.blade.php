@@ -1,11 +1,12 @@
-{{-- Template Kerangka Site --}}
+{{-- Template Kerangka Situs --}}
 @extends('layout.app')
 
-{{-- Title Site --}}
+{{-- Judul Situs --}}
 @section('title', 'Detail Aduan')
 
 {{-- Isi Konten --}}
 @section('content')
+
 <div class="container my-4">
     <!-- Judul Aduan -->
     <h4 class="fw-bold mb-4">{{ $data->complaint_title }}</h4>
@@ -76,7 +77,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Komentar -->
     <h6 class="fw-semibold mb-3"><span>{{ $data->total_comments }}</span> Komentar</h6>
