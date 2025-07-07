@@ -110,7 +110,16 @@ class kirim_aduan_controller extends Controller
             'UPT_LAB'       => 7,
         ];
         $departemen_id = $departemen_map[strtoupper($departemen)] ?? null;
-        $nextId = DB::table('complaints')->max('id') + 1;
+        $nextId = 0;
+
+        $idComplaints = DB::table('complaints')->max('id');
+        $idComplaints_departement = DB::table('complaints_department')->max('id');
+
+        if($idComplaints >= $idComplaints_departement) {
+            $nextId = DB::table('complaints')->max('id') + 1;
+        } else {
+            $nextId = DB::table('complaints_department')->max('id') + 1;
+        }
 
         if($confidence > 0.5) {
             DB::statement('CALL insert_into_complaints_departement(?, ?, ?, ?, ?, ?, ?, ?, ?)',[
@@ -119,16 +128,18 @@ class kirim_aduan_controller extends Controller
                 $validatedData['visibility_type'],
                 $attachmentId,
                 $departemen_id,
-                null,
+                $nextId,
                 $validatedData['title'],
                 $validatedData['content'],
                 "diajukan"
             ]);
         } else {
             $complaint = new Complaint();
+            $complaint->id = $nextId;
             $complaint->user_id = $validatedData['user_id'];
             $complaint->category_id = $validatedData['visibility_type'];
             $complaint->attachment_id = $attachmentId; // bisa null
+            $complaint->response_id = $nextId;
             $complaint->complaint_title = $validatedData['title'];
             $complaint->complaint_content = $validatedData['content'];
             $complaint->proses = 'draft';

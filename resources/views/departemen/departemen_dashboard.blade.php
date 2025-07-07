@@ -69,7 +69,7 @@
             </div>
             <!-- Card Sarpras -->
             <div class="col animate__animated animate__fadeInUp animate__delay-0_3s">
-              <a href="#" class="text-decoration-none">
+              <a href="{{ route('sarpras-aduan') }}" class="text-decoration-none">
                 <div class="departemen-card h-100 text-center p-4">
                   <div class="departemen-icon mb-2"><i class="bi bi-building"></i></div>
                   <h5>Sarpras</h5>
@@ -79,7 +79,7 @@
             </div>
             <!-- Card Kemahasiswaan -->
             <div class="col animate__animated animate__fadeInUp animate__delay-0_4s">
-              <a href="#" class="text-decoration-none">
+              <a href="{{ route('kemahasiswaan-aduan') }}" class="text-decoration-none">
                 <div class="departemen-card h-100 text-center p-4">
                   <div class="departemen-icon mb-2"><i class="bi bi-people"></i></div>
                   <h5>Kemahasiswaan</h5>
@@ -89,7 +89,7 @@
             </div>
             <!-- Card Perpus -->
             <div class="col animate__animated animate__fadeInUp animate__delay-0_5s">
-              <a href="#" class="text-decoration-none">
+              <a href="{{ route('perpus-aduan') }}" class="text-decoration-none">
                 <div class="departemen-card h-100 text-center p-4">
                   <div class="departemen-icon mb-2"><i class="bi bi-journal-bookmark"></i></div>
                   <h5>Perpus</h5>
@@ -99,7 +99,7 @@
             </div>
             <!-- Card Pengajaran -->
             <div class="col animate__animated animate__fadeInUp animate__delay-0_6s">
-              <a href="#" class="text-decoration-none">
+              <a href="{{ route('pengajaran-aduan') }}" class="text-decoration-none">
                 <div class="departemen-card h-100 text-center p-4">
                   <div class="departemen-icon mb-2"><i class="bi bi-easel"></i></div>
                   <h5>Pengajaran</h5>
@@ -109,7 +109,7 @@
             </div>
             <!-- Card Keamanan -->
             <div class="col animate__animated animate__fadeInUp animate__delay-0_7s">
-              <a href="#" class="text-decoration-none">
+              <a href="{{ route('keamanan-aduan') }}" class="text-decoration-none">
                 <div class="departemen-card h-100 text-center p-4">
                   <div class="departemen-icon mb-2"><i class="bi bi-shield-lock"></i></div>
                   <h5>Keamanan</h5>
@@ -119,7 +119,7 @@
             </div>
             <!-- Card UPT Lab -->
             <div class="col animate__animated animate__fadeInUp animate__delay-0_8s">
-              <a href="#" class="text-decoration-none">
+              <a href="{{ route('uptlab-aduan') }}" class="text-decoration-none">
                 <div class="departemen-card h-100 text-center p-4">
                   <div class="departemen-icon mb-2"><i class="bi bi-cpu"></i></div>
                   <h5>UPT Lab</h5>

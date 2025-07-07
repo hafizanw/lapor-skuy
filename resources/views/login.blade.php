@@ -97,8 +97,8 @@
             <form action="{{ route('login') }}" method="POST" class="text-start animate__animated animate__fadeIn animate__delay-2s">
                 @csrf
                 <div class="mb-3">
-                    <label for="nim" class="form-label">NIM</label>
-                    <input type="text" name="nim" class="form-control textbox" placeholder="NIM" required autofocus>
+                    <label for="identifier" class="form-label">NIM</label>
+                    <input type="text" name="identifier" class="form-control textbox" placeholder="NIM" required autofocus>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Password</label>

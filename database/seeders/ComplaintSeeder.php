@@ -13,6 +13,7 @@ class ComplaintSeeder extends Seeder
     {
         Complaint::insert([
             [
+                'id' => 1,
                 'user_id' => 1,
                 'category_id' => 1,
                 'attachment_id' => 1,
@@ -23,6 +24,7 @@ class ComplaintSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id' => 2,
                 'user_id' => 2,
                 'category_id' => 2,
                 'attachment_id' => 3,
@@ -33,6 +35,7 @@ class ComplaintSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id' => 3,
                 'user_id' => 3,
                 'category_id' => 1,
                 'attachment_id' => 3,

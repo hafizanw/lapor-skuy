@@ -29,10 +29,10 @@
         <input id="inputSearch" type="text" class="form-control w-100 w-md-50" placeholder="Search..." value="{{ request('searchKeyword') }}"
         onkeydown="if (event.key === 'Enter') searchOnly()">
         <div class="btn-group align-self-end">
-            <a href="{{ route('daak-aduan', ['filterType' => 'terbaru']) }}">
+            <a href="{{ route('perpus-aduan', ['filterType' => 'terbaru']) }}">
               <button id="btnTerbaru" class="btn btn-outline-primary btn-sm">Terbaru</button>
             </a>
-            <a href="{{ route('daak-aduan', ['filterType' => 'teratas']) }}">
+            <a href="{{ route('perpus-aduan', ['filterType' => 'teratas']) }}">
               <button id="btnTeratas" class="btn btn-primary btn-sm">Teratas</button>
             </a>
         </div>
@@ -82,7 +82,7 @@
             </div>
           </a>
 
-          <form id="complaintForm" method="GET" action="{{ route('daak-selesaikan-aduan') }}">
+          <form id="complaintForm" method="GET" action="{{ route('perpus-selesaikan-aduan') }}">
             @csrf
             <input type="hidden" name="complaint_id" id="complaint_id">
           </form>

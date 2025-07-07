@@ -25,6 +25,7 @@ class DAAKController extends Controller
             'datas' => $datas,
             'titlePage' => 'Lihat Aduan',
             'displayLogo' => 'd-none d-md-inline',
+            'departemen' => 'DAAK'
         ]);
     }
 
@@ -41,6 +42,7 @@ class DAAKController extends Controller
             'complaint_data' => $complaint_data,
             'titlePage' => 'Detail Aduan',
             'displayLogo' => 'd-none d-md-inline',
+            'departemen' => 'DAAK'
         ]);
     }
 
@@ -64,5 +66,15 @@ class DAAKController extends Controller
             $validated['feedback_content'],
             $feedback_image
         ]);
+
+        DB::statement('CALL update_complaint_status(?)', [
+            $validated['complaint_id']
+        ]);
+
+        DB::statement('CALL delete_complaint(?)', [
+            $validated['complaint_id']
+        ]);
+
+        return redirect()->route('daak-aduan');
     }
 }

@@ -47,18 +47,6 @@ class lihat_aduan_detail_controller extends Controller
             'profile_picture' => $profile->profile_picture 
             ? ('profile_uploads/'. $profile->profile_picture) 
             : 'profile_uploads/profile_default.png'
-          
-        $userId  = Auth::id();
-        $profile = DB::select('CALL select_user(?)', [$userId])[0];
-
-        return view('lihat_aduan.lihat_aduan_detail', [
-            'datas'           => $datas,
-            'data'            => $data,
-            'titlePage'       => 'Detail Aduan',
-            'username'        => $profile->name,
-            'profile_picture' => $profile->profile_picture
-            ? ('profile_uploads/' . $profile->profile_picture)
-            : 'profile_uploads/profile_default.png',
         ]);
     }
 }

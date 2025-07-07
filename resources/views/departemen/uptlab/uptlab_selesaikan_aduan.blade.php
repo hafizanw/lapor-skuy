@@ -66,7 +66,7 @@
     <div class="card shadow-sm border-0 mb-5">
         <div class="card-body">
             <h5 class="fw-semibold mb-4">Kirim Feedback</h5>
-            <form method="POST" action="{{ route('daak-selesaikan-aduan') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('uptlab-selesaikan-aduan') }}" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" name="complaint_id" value="{{ $data->complaint_complaint_id }}">
@@ -155,7 +155,7 @@
         // Saat tombol OK di modal ditekan, submit form dan kembali ke halaman sebelumnya setelah submit sukses
         document.getElementById('btnKonfirmasiOK').addEventListener('click', function() {
             // Submit form
-            document.querySelector('form[action="{{ route('daak-selesaikan-aduan') }}"]').submit();
+            document.querySelector('form[action="{{ route('uptlab-selesaikan-aduan') }}"]').submit();
         });
     });
     </script>

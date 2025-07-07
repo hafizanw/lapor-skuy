@@ -2,7 +2,7 @@
 @extends('layout.app_departemen')
 
 {{-- Title Site --}}
-@section('title', 'List Aduan')
+@section('title', 'List History')
 
 {{-- styles --}}
 @push('styles')
@@ -17,10 +17,10 @@
     <!-- Tab -->
     <ul class="nav nav-tabs mb-3">
         <li class="nav-item">
-            <a class="nav-link active" href="#">Daftar Aduan</a>
+            <a class="nav-link" href="{{ route('daak-aduan') }}">Daftar Aduan</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="">History</a>
+            <a class="nav-link active" href="{{ route('daak-history-aduan') }}">History</a>
         </li>
     </ul>
 
@@ -29,16 +29,16 @@
         <input id="inputSearch" type="text" class="form-control w-100 w-md-50" placeholder="Search..." value="{{ request('searchKeyword') }}"
         onkeydown="if (event.key === 'Enter') searchOnly()">
         <div class="btn-group align-self-end">
-            <a href="{{ route('daak-aduan', ['filterType' => 'terbaru']) }}">
+            <a href="{{ route('aduan-umum', ['filterType' => 'terbaru']) }}">
               <button id="btnTerbaru" class="btn btn-outline-primary btn-sm">Terbaru</button>
             </a>
-            <a href="{{ route('daak-aduan', ['filterType' => 'teratas']) }}">
+            <a href="{{ route('aduan-umum', ['filterType' => 'teratas']) }}">
               <button id="btnTeratas" class="btn btn-primary btn-sm">Teratas</button>
             </a>
         </div>
     </div>
 
-    <h5 class="fw-bold">Daftar Aduan</h5>
+    <h5 class="fw-bold">Aduan Umum</h5>
 
     <!-- Aduan Cards -->
     @foreach ($datas as $data)
@@ -74,18 +74,16 @@
                 <span>{{ \Carbon\Carbon::parse($data->complaint_created_at)->format('d/m/Y') }}</span>
                 <span class="ms-2">{{ $data->name ?? 'Anonim' }}</span>
               </div>
-           
+            </a>
+
+              <form id="complaintForm" method="GET" action="{{ route('aduan-detail') }}">
+                @csrf
+                <input type="hidden" name="complaint_id" id="complaint_id">
+              </form>
             
               <div class="mt-3">
-                <button class="btn btn-sm text-dark" style="padding: 2px 8px; background-color: #e8dff1;">Vote : {{ $data->total_votes ?? 0 }}</button>
-                <button class="btn btn-sm ml-2 text-light" style="background: linear-gradient(to right, #531DAB, #842FE3); padding: 2px 8px;">Selesaikan</button>
+                <button class="btn btn-sm text-dark" style="padding: 2px 8px; background-color: #e8dff1;">Diselesaikan pada : <span>23/06/2025</span></button>
             </div>
-          </a>
-
-          <form id="complaintForm" method="GET" action="{{ route('daak-selesaikan-aduan') }}">
-            @csrf
-            <input type="hidden" name="complaint_id" id="complaint_id">
-          </form>
             </div>
           </div>
         </div>
@@ -103,11 +101,6 @@
     function submitComplaint(complaintId) {
         document.getElementById('complaint_id').value = complaintId;
         document.getElementById('complaintForm').submit();
-    }
-
-    function selesaikanComplaint(complaintId) {
-        document.getElementById('selesaikan_id').value = complaintId;
-        document.getElementById('selesaikanForm').submit();
     }
   
     function searchOnly() {

@@ -16,6 +16,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ url('/aduan-anda') }}">Aduan Anda</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('/aduan-history') }}">History</a>
+      </li>
     </ul>
 
     <!-- Search dan Sorting -->

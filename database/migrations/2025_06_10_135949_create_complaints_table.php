@@ -16,7 +16,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('complaints', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('category_id')->index();
             $table->unsignedBigInteger('attachment_id')->index()->nullable();
@@ -54,8 +54,8 @@ return new class extends Migration
         });
 
         Schema::create('complaint_response', function (Blueprint $table) {
-            $table->id();
-            $table->text('response');
+            $table->unsignedBigInteger('id')->primary();
+            $table->text('response')->nullable();
             $table->text('descriptions')->nullable();
             $table->string('attachment', 255)->nullable();
             $table->timestamps();
@@ -72,12 +72,14 @@ return new class extends Migration
 
         Schema::create('complaint_history', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->string('user_name', 255);
-            $table->text('response')->nullable();
-            $table->string('attachment_path', 255)->nullable();
-            $table->string('department_role', 255)->nullable();
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('attachment_id')->index()->nullable();
+            $table->unsignedBigInteger('department_id')->index()->nullable();
+            $table->unsignedBigInteger('response_id')->index()->nullable();
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
+            $table->enum('proses', array_column(Proses::cases(), 'value'));
             $table->timestamps();
         });
 
@@ -120,6 +122,13 @@ return new class extends Migration
             $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
         });
 
+        Schema::table('complaint_history', function ($table) {
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('complaint_category')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('attachment_id')->references('id')->on('complaint_attachment')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
+        });
+
         Schema::table('complaint_vote', function ($table) {
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
@@ -145,25 +154,6 @@ return new class extends Migration
                     VALUES (OLD.id, OLD.user_id, OLD.category_id, OLD.attachment_id, NULL, NULL, OLD.complaint_title, OLD.complaint_content, 'diajukan', NOW(), NOW());
                 END IF;
         ");
-
-        DB::unprepared("
-            CREATE TRIGGER throw_complaint_history
-            BEFORE DELETE
-            ON complaints_department
-            FOR EACH ROW
-                IF OLD.proses = 'selesai' THEN
-
-                    set @v_user_name = (select name from users where id = OLD.user_id);
-                    set @v_complaint_response = (select response from complaint_response where id = OLD.response_id);
-                    set @v_attachment_path = (select path_file from complaint_attachment where id = OLD.attachment_id);
-                    set @v_department_role = (select role from departments where id = OLD.department_id);
-
-                    INSERT INTO complaint_history (user_name, response, attachment_path, department_role, complaint_title, complaint_content, created_at, updated_at)
-                    VALUES (@v_user_name, @v_complaint_response, @v_attachment_path, @v_department_role, OLD.complaint_title, OLD.complaint_content, NOW(), NOW());
-
-                END IF;
-            ");
-
     }
 
     /**

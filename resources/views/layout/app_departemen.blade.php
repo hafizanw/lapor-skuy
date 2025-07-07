@@ -50,10 +50,9 @@
                     <img src="{{ asset('assets/logo.png') }}">
                 </div>
                 <div class="d-flex align-items-center d-md-none">
-                    <a class="fw-bold text-light" href="{{ url()->previous() }}">
-                    <i data-feather="chevron-left"></i>
+                    <a class="fw-bold text-light text-decoration-none" href="{{ url()->previous() }}">
+                        <h3 class="my-0 mx-2 text-light">{{ $titlePage }}</h3>
                     </a>
-                    <h3 class="my-0 mx-2 text-light">{{ $titlePage }}</h3>
                 </div>
         
                 <!-- Hamburger Menu (Mobile Only) -->
@@ -65,9 +64,9 @@
                 <div class="collapse navbar-collapse justify-content-end d-none d-md-flex">
                     <div class="d-flex align-items-center rounded px-3 py-1 mx-2" style="background: linear-gradient(to right, #6826b4, #6826b4);">
                         <a href="{{ route('user-profile') }}" class="d-flex align-items-center text-decoration-none text-dark">
-                            <img src="" class=" profileImg rounded-circle me-1" alt="User">
+                            <img src="{{ asset('profile_uploads/profile_default.png') }}" class=" profileImg rounded-circle me-1" alt="User">
                             <div class="ms-2">
-                                <small class="fw-bold text-light">Departemen ABC</small><br>
+                                <small class="fw-bold text-light">{{ $departemen }}</small><br>
                                 <small class="text-light">Departemen</small>
                             </div>
                         </a>
@@ -91,12 +90,12 @@
                   <!-- Navigation -->
                   <ul class="nav flex-column mb-4">
                     <li class="nav-item">
-                      <a class="nav-link nav-mobile {{ request()->is('dashboard') ? 'active' : '' }} text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="{{ route('dashboard') }}">
+                      <a class="nav-link nav-mobile {{ request()->is('dashboard') ? 'active' : '' }} text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="{{ route('departemen-dashboard') }}">
                         <i data-feather="home" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> Home
                       </a>
                     </li>
                       <li class="nav-item">
-                        <a class="nav-link nav-mobile {{ request()->is('aduan-umum') ? 'active' : '' }} text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="{{ route('aduan-umum') }}">
+                        <a class="nav-link nav-mobile {{ request()->is('aduan-umum') ? 'active' : '' }} text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="{{ route('departemen-dashboard') }}">
                           <i data-feather="file-text" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> Lihat Aduan
                         </a>
                       </li>
@@ -110,7 +109,7 @@
             
                 <!-- Profile & Logout -->
                 <div class="border-top p-3 d-flex align-items-center bg-light">
-                    <a href="{{ route('user-profile') }}" class="d-flex align-items-center text-decoration-none text-dark">
+                    <a href="" class="d-flex align-items-center text-decoration-none text-dark">
                         <img src="" 
                              alt="User" 
                              class="profileImg rounded-circle me-2" 
