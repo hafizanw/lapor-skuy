@@ -13,7 +13,6 @@ class DepartmentSeeder extends Seeder
      */
     public function run(): void
     {
-        // PERBAIKAN: Menggunakan model User yang sudah menunjuk ke tabel 'users'
         Department::create([
             'name' => 'Agus Kemahasiswaan',
             'password' => bcrypt('123'),
@@ -49,7 +48,8 @@ class DepartmentSeeder extends Seeder
             'password' => bcrypt('123'),
             'description' => 'Departemen Keamanan',
             'role' => 'KEAMANAN',
-        ]);        Department::create([
+        ]);
+        Department::create([
             'name' => 'Dian UPT_LAB',
             'password' => bcrypt('123'),
             'description' => 'Departemen UPT_LAB',

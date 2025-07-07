@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('profile_picture', 255)->nullable();
             $table->string('faculty', 100)->nullable();
             $table->string('major', 100)->nullable();
-            $table->timestamp('email_verified_at')->nullable(); // Standard Laravel
-            $table->rememberToken();                            // Standard Laravel
-            $table->timestamps();                               // created_at and updated_at
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

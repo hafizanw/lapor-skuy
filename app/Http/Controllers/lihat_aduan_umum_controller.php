@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class lihat_aduan_umum_controller extends Controller
 {
@@ -29,7 +28,7 @@ class lihat_aduan_umum_controller extends Controller
             if ($vote->vote_type == $voteType) {
                 return back()->with('message', 'Kamu sudah memberikan vote ini sebelumnya.');
             }
-        
+
             DB::statement('CALL update_insert_select_vote(?, ?, ?, ?)', [
                 $user->id,
                 $complaintId,
@@ -62,7 +61,7 @@ class lihat_aduan_umum_controller extends Controller
         $data = $datas[0];
 
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
-
+      
         return view('lihat_aduan.lihat_aduan_umum', [
             'data' => $data,
             'datas' => $datas,

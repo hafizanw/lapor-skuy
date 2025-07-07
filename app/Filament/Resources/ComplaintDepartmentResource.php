@@ -93,19 +93,23 @@ class ComplaintDepartmentResource extends Resource
                     ->label('Status')
                     ->badge() // mengubah kolom menjadi badge
                     ->color(fn(string $state): string => match ($state) {
-                        'draft'                           => 'gray',    // Warna abu-abu untuk status 'draft'
-                        'diajukan'                        => 'info',    // Warna biru muda untuk 'diajukan'
-                        'diproses'                        => 'warning', // Warna kuning untuk 'diproses'
-                        'selesai'                         => 'success', // Warna hijau untuk 'selesai'
-                        'ditolak'                         => 'danger',  // Warna merah untuk 'ditolak'
-                        default                           => 'gray',    // Warna default jika status tidak dikenal
+                        'draft'                           => 'gray',    
+                        'diajukan'                        => 'info',    
+                        'diproses'                        => 'warning',
+                        'selesai'                         => 'success', 
+                        'ditolak'                         => 'danger',  
+                        default                           => 'gray',    
                     }),
                 Tables\Columns\SelectColumn::make('department_id')
                     ->label('Penangung Jawab')
                     ->options([
-                        '1' => 'Test',
+                        '1' => 'Kemahasiswaan',
                         '2' => 'DAAK',
-                        '3' => 'Keuangan',
+                        '3' => 'SARPRAS',
+                        '4' => 'Pengajaran',
+                        '5' => 'Perpus',
+                        '6' => 'Keamanan',
+                        '7' => 'UPT_LAB',
                     ])
                     ->sortable()
                     ->searchable(),
@@ -114,9 +118,13 @@ class ComplaintDepartmentResource extends Resource
                 SelectFilter::make('department_id')
                     ->label('Department')
                     ->options([
-                        '1' => 'Test',
+                        '1' => 'Kemahasiswaan',
                         '2' => 'DAAK',
-                        '3' => 'Keuangan',
+                        '3' => 'SARPRAS',
+                        '4' => 'Pengajaran',
+                        '5' => 'Perpus',
+                        '6' => 'Keamanan',
+                        '7' => 'UPT_LAB',
                     ]),
                 SelectFilter::make('category.visibility_type')
                     ->label('Kategori Pengaduan')
