@@ -17,21 +17,21 @@ class CommentSeeder extends Seeder
         [
             'complaint_id' => 1,
             'user_id' => 1,
-            'description' => 'jchjsvhfuiewr',
+            'description' => 'Saya juga sangat setuju setuju dengan aduan tersebut',
             'created_at' => now(),
             'updated_at' => now(),
         ],
         [
             'complaint_id' => 2,
             'user_id' => 2,
-            'description' => 'fvvwvvfejchjsvhfuiewr',
+            'description' => 'Saya juga mendapati hal yang sama',
             'created_at' => now(),
             'updated_at' => now(),
         ],
         [
             'complaint_id' => 3,
             'user_id' => 3,
-            'description' => 'dfewfwgfwgwg',
+            'description' => 'Setuju',
             'created_at' => now(),
             'updated_at' => now(),
         ]

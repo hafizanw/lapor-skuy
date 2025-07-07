@@ -50,7 +50,7 @@ class lihat_aduan_umum_controller extends Controller
 
     public function index(Request $request) {
         
-        $user = Auth::user();
+        $userId = Auth::id();
         $searchKeyword = $request->input('searchKeyword', '');
         $filterType = $request->input('filterType', '');
 
@@ -61,14 +61,13 @@ class lihat_aduan_umum_controller extends Controller
         ]);
         $data = $datas[0];
 
-        $userId = Auth::id();
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
 
         return view('lihat_aduan.lihat_aduan_umum', [
             'data' => $data,
             'datas' => $datas,
             'titlePage' => 'Lihat Aduan',
-            'displayLogo' => 'd-none',
+            'displayLogo' => 'd-none d-md-inline',
             'username' => $profile->name,
             'profile_picture' => $profile->profile_picture 
             ? ('profile_uploads/'. $profile->profile_picture) 

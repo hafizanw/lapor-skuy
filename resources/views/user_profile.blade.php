@@ -11,6 +11,10 @@
             border-radius: 50%;
             border: 2px solid #ccc;
         }
+        /* Hilangkan background putih pada table profil */
+        .table, .table-borderless, .table > :not(caption) > * > * {
+            background: transparent !important;
+        }
     </style>
 @endpush
 

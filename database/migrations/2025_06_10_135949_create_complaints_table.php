@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->index();       // Direferensikan ke users.id
             $table->unsignedBigInteger('category_id')->index();   // Direferensikan ke complaint_category.id
-            $table->unsignedBigInteger('attachment_id')->index(); // Contoh jika nullable
+            $table->unsignedBigInteger('attachment_id')->nullable()->index(); // Contoh jika nullable
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
             $table->enum('proses', array_column(Proses::cases(), 'value'))->default('draft'); // Gunakan nilai default dari Enum
@@ -27,10 +27,10 @@ return new class extends Migration
         });
 
         Schema::create('complaints_department', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('user_id')->index();       // Direferensikan ke users.id
             $table->unsignedBigInteger('category_id')->index();   // Direferensikan ke complaint_category.id
-            $table->unsignedBigInteger('attachment_id')->index(); // Contoh jika nullable
+            $table->unsignedBigInteger('attachment_id')->nullable()->index(); // Contoh jika nullable
             $table->unsignedBigInteger('department_id')->index()->nullable(); // Direferensikan ke departments.id
             $table->unsignedBigInteger('response_id')->index()->nullable(); // Direferensikan ke complaint_response.id
             $table->string('complaint_title', 255);

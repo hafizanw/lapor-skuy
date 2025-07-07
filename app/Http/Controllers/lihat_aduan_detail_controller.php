@@ -33,13 +33,17 @@ class lihat_aduan_detail_controller extends Controller
         $datas = DB::select('CALL select_complaint_comment_user_vote(?)', [$request->complaint_id]);
         $data = $datas[0];
 
+        $complaint_data = DB::select('CALL select_users_name(?)', [$request->complaint_id])[0];
+
         $userId = Auth::id();
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
 
         return view('lihat_aduan.lihat_aduan_detail', [
             'datas' => $datas,
             'data' => $data,
+            'complaint_data' => $complaint_data,
             'titlePage' => 'Detail Aduan',
+            'displayLogo' => 'd-none d-md-inline',
             'username' => $profile->name,
             'profile_picture' => $profile->profile_picture 
             ? ('profile_uploads/'. $profile->profile_picture) 

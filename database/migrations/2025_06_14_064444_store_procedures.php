@@ -86,11 +86,18 @@ return new class extends Migration
                         SELECT COUNT(id)
                         FROM comment
                         WHERE complaint_id = c.id
-                    ) AS total_comments
+                    ) AS total_comments,
+                    (
+                        SELECT d.role
+                        FROM departments d
+                        INNER JOIN complaints_department cd ON d.id = cd.department_id
+                        WHERE cd.id = c.id
+                        LIMIT 1
+                    ) AS complaint_role
                 FROM complaints c
                 LEFT JOIN users u ON c.user_id = u.id
                 WHERE (c.complaint_title LIKE ''', keyword, ''' OR c.complaint_content LIKE ''', keyword, ''')
-                AND (', userID, ' = 0 OR c.user_id = ', userID, ')
+                AND (', userID, ' = 0 OR c.user_id = ', userID, ') AND (c.category_id = 2)
                 ORDER BY ', order_by_clause
             );
     
@@ -135,12 +142,32 @@ return new class extends Migration
                     SELECT COUNT(id)
                     FROM comment
                     WHERE complaint_id = c.id
-                ) AS total_comments
+                ) AS total_comments,
+                (
+                    SELECT d.role
+                    FROM departments d
+                    INNER JOIN complaints_department cd ON d.id = cd.department_id
+                    WHERE cd.id = c.id
+                    LIMIT 1
+                ) AS complaint_role
                 FROM complaints c
                 LEFT JOIN comment m ON c.id = m.complaint_id
                 LEFT JOIN users u ON m.user_id = u.id
                 LEFT JOIN complaint_attachment a ON c.attachment_id = a.id
                 WHERE c.id = complaintID;
+            END
+        ');
+        DB::unprepared('
+            CREATE PROCEDURE select_users_name(
+                IN complaintID INT
+            )
+            BEGIN
+                SELECT 
+                users.name,
+                users.profile_picture
+                FROM users
+                INNER JOIN complaints ON users.id = complaints.user_id
+                WHERE complaints.id = complaintID;
             END
         ');
 
@@ -244,6 +271,10 @@ return new class extends Migration
 
         DB::unprepared('
             DROP PROCEDURE IF EXISTS select_complaint_comment_user_vote
+        ');
+
+        DB::unprepared('
+            DROP PROCEDURE IF EXISTS select_users_name
         ');
 
         DB::unprepared('

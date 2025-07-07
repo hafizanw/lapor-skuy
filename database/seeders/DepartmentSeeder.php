@@ -15,28 +15,45 @@ class DepartmentSeeder extends Seeder
     {
         // PERBAIKAN: Menggunakan model User yang sudah menunjuk ke tabel 'users'
         Department::create([
-            'name' => 'Test',
+            'name' => 'Agus Kemahasiswaan',
             'password' => bcrypt('123'),
-            'description' => 'Test Department 1',
-            'password' => '123',
-            'role' => 'test',
-            'password' => bcrypt('test123'),
+            'description' => 'Departemen Kemahasiswaan',
+            'role' => 'KEMAHASISWAAN',
         ]);
         Department::create([
-            'name' => 'Agus Lapar',
+            'name' => 'Budi DAAK',
             'password' => bcrypt('123'),
-            'description' => 'Test Department 2',
-            'password' => '123',
+            'description' => 'Departemen DAAK',
             'role' => 'daak',
-            'password' => bcrypt('test123'),
         ]);
         Department::create([
-            'name' => 'Elyn',
+            'name' => 'Eko Sarpras',
             'password' => bcrypt('123'),
-            'description' => 'Test Department 3',
-            'password' => '123',
-            'role' => 'administrasi_keuangan',
-            'password' => bcrypt('test123'),
+            'description' => 'Departemen Sarpras',
+            'role' => 'SARPRAS',
+        ]);
+        Department::create([
+            'name' => 'Elyn Pengajaran',
+            'password' => bcrypt('123'),
+            'description' => 'Departemen Pengajaran',
+            'role' => 'PENGAJARAN',
+        ]);
+        Department::create([
+            'name' => 'Alya Perpus',
+            'password' => bcrypt('123'),
+            'description' => 'Departemen Perpus',
+            'role' => 'PERPUS',
+        ]);
+        Department::create([
+            'name' => 'Tegar Keamanan',
+            'password' => bcrypt('123'),
+            'description' => 'Departemen Keamanan',
+            'role' => 'KEAMANAN',
+        ]);        Department::create([
+            'name' => 'Dian UPT_LAB',
+            'password' => bcrypt('123'),
+            'description' => 'Departemen UPT_LAB',
+            'role' => 'UPT_LAB',
         ]);
     }
 }

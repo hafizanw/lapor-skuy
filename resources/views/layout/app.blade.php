@@ -93,7 +93,7 @@
         }
     </style>
 </head>
-<body style="background-color: #f6f7ff">
+<body style="background-color: #f6f7ff; margin-top: 50px;">
         <nav class="navbar navbar-expand-md navbar-dark px-3" style="background: linear-gradient(to right, #531DAB, #842FE3);">
             <div class="container-fluid">
                 <!-- Left -->

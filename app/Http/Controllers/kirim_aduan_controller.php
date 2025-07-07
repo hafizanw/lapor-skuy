@@ -6,6 +6,7 @@ use App\Models\ComplaintAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class kirim_aduan_controller extends Controller
 {
@@ -15,6 +16,7 @@ class kirim_aduan_controller extends Controller
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
 
         return view('kirim_aduan.kirim_aduan_umum', [
+            'displayLogo' => 'd-none d-md-inline',
             'titlePage'       => 'Kirim Aduan Umum',
             'username'        => $profile->name,
             'profile_picture' => $profile->profile_picture
@@ -28,6 +30,7 @@ class kirim_aduan_controller extends Controller
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
 
         return view('kirim_aduan.kirim_aduan_privat', [
+            'displayLogo' => 'd-none d-md-inline',
             'titlePage'       => 'Kirim Aduan Umum',
             'username'        => $profile->name,
             'profile_picture' => $profile->profile_picture
@@ -42,6 +45,7 @@ class kirim_aduan_controller extends Controller
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
 
         return view('kirim_aduan.kirim_aduan', [
+            'displayLogo' => 'd-none d-md-inline',
             'titlePage'       => 'Kirim Aduan',
             'username'        => $profile->name,
             'profile_picture' => $profile->profile_picture
@@ -67,33 +71,79 @@ class kirim_aduan_controller extends Controller
         // Mengambil file dari request
         $file = $request->file('image');
 
-        // Mendapatkan nama asli file
-        $realFileName = $file->getClientOriginalName();
+        if ($file) {
+            // Jika file ada, proses simpan file dan buat attachment
+            $realFileName = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '_' . uniqid() . '.' . $extension;
+            $filePath = $file->storeAs('uploads/complaints', $fileName, 'public');
 
-        // Mendapatkan ekstensi file
-        $extension = $file->getClientOriginalExtension();
+            $complaint_attachment = new ComplaintAttachment();
+            $complaint_attachment->real_name_file = $realFileName;
+            $complaint_attachment->path_file = $filePath;
+            $complaint_attachment->type_file = $file->getClientMimeType();
+            $complaint_attachment->save();
 
-        // Membuat nama file unik untuk menghindari konflik
-        $fileName = time() . '_' . uniqid() . '.' . $extension;
+            $attachmentId = $complaint_attachment->id;
+        } else {
+            // Jika tidak ada file diupload
+            $attachmentId = null;
+        }
 
-        // Menyimpan file ke storage (misalnya ke folder public/uploads/complaints)
-        $filePath = $file->storeAs('uploads/complaints', $fileName, 'public');
+        // API Neural Network
+        $response = Http::post('http://31.97.61.247:5000/klasifikasi', [
+            'judul' => $validatedData['title'],
+            'deskripsi' => $validatedData['content'],
+        ]);
 
-        // Simpan aduan ke database
-        $complaint_attachment                 = new ComplaintAttachment();
-        $complaint_attachment->real_name_file = $realFileName;
-        $complaint_attachment->path_file      = $filePath;
-        $complaint_attachment->type_file      = $file->getClientMimeType(); // atau $extension
-        $complaint_attachment->save();
+        $result = $response->json();
+        $departemen = (string) ($result['departemen'] ?? 'draft');
+        $confidence = (float) ($result['confidence'] ?? 0);
 
-        $complaint                    = new Complaint();
-        $complaint->user_id           = $validatedData['user_id'];
-        $complaint->category_id       = $validatedData['visibility_type'];
-        $complaint->attachment_id     = $complaint_attachment->id; // Menyimpan ID attachment
-        $complaint->complaint_title   = $validatedData['title'];
-        $complaint->complaint_content = $validatedData['content'];
-        $complaint->proses            = 'draft'; // Status awal aduan
-        $complaint->save();
+        $departemen_map = [
+            'KEMAHASISWAAN' => 1,
+            'DAAK'          => 2,
+            'SARPRAS'       => 3,
+            'PENGAJARAN'    => 4,
+            'PERPUS'        => 5,
+            'KEAMANAN'      => 6,
+            'UPT_LAB'       => 7,
+        ];
+        $departemen_id = $departemen_map[strtoupper($departemen)] ?? null;
+        $nextId = DB::table('complaints')->max('id') + 1;
+
+        if($confidence > 0.5) {
+            DB::statement('CALL insert_into_complaints_departement(?, ?, ?, ?, ?, ?, ?, ?, ?)',[
+                $nextId,
+                $validatedData['user_id'],
+                $validatedData['visibility_type'],
+                $attachmentId,
+                $departemen_id,
+                null,
+                $validatedData['title'],
+                $validatedData['content'],
+                "diajukan"
+            ]);
+
+            $complaint = new Complaint();
+            $complaint->user_id = $validatedData['user_id'];
+            $complaint->category_id = $validatedData['visibility_type'];
+            $complaint->attachment_id = $attachmentId; // bisa null
+            $complaint->complaint_title = $validatedData['title'];
+            $complaint->complaint_content = $validatedData['content'];
+            $complaint->proses = 'diajukan';
+            $complaint->save();
+
+        } else {
+            $complaint = new Complaint();
+            $complaint->user_id = $validatedData['user_id'];
+            $complaint->category_id = $validatedData['visibility_type'];
+            $complaint->attachment_id = $attachmentId; // bisa null
+            $complaint->complaint_title = $validatedData['title'];
+            $complaint->complaint_content = $validatedData['content'];
+            $complaint->proses = 'draft';
+            $complaint->save();
+        }
 
         return redirect()->route('kirim-aduan')->with('success', 'Aduan berhasil dikirim!');
     }
