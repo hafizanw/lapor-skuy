@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selesaikan Aduan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --brand-purple: #6A0DAD;
+            --brand-purple-light: #e8dff1;
+            --brand-blue: #761da9; /* This seems to be the color for the "Selesaikan" button */
+        }
+
+        /* Header */
+        .app-header {
+            background-color: var(--brand-purple);
+            color: white;
+            padding: 1rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            display: flex;
+            align-items: center;
+        }
+
+        .app-header .back-arrow {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+        .app-header .header-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        /* Main Content Styling */
+        .container-main {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Card Styling */
+        .aduan-detail-card,
+        .comment-card,
+        .feedback-card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-info .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 0.75rem;
+        }
+
+        .user-info .user-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0;
+        }
+
+        .user-info .post-date {
+            font-size: 0.875rem;
+            color: #777;
+        }
+
+        .aduan-description {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Comment Section */
+        .comment-count-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Feedback Section */
+        .feedback-textarea {
+            width: 100%;
+            height: 120px; /* Adjust height as needed */
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            font-size: 0.9375rem;
+            resize: vertical; /* Allow vertical resizing */
+            margin-bottom: 1rem;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+
+        .feedback-textarea::placeholder {
+            color: #bbb;
+        }
+
+        .btn-selesaikan-feedback {
+            background-color: var(--brand-blue);
+            color: white;
+            font-weight: 500;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            float: right; /* Aligns to the right */
+        }
+
+        .btn-selesaikan-feedback:hover {
+            background-color: #0069d9; /* Darker shade on hover */
+            color: white;
+        }
+        /* === BAGIAN CSS YANG DITAMBAHKAN UNTUK ALERT === */
+        .custom-alert-overlay {
+        position: fixed;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .custom-alert-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="app-header">
+    <div class="container d-flex align-items-center">
+        <a href="#" class="back-arrow me-3">&larr;</a>
+        <h1 class="h4 mb-0 fw-bold">Selesaikan Aduan</h1>
+    </div>
+    </div>
+
+    <div class="container container-main">
+        <h2 class="section-title">Saya mendapati AC ruang 5.3.2 tidak berfungsi</h2>
+
+        <div class="aduan-detail-card">
+            <div class="user-info">
+                <img src="https://via.placeholder.com/48" alt="Avatar" class="avatar">
+                <div>
+                    <p class="user-name mb-0">Hapis anwar</p>
+                    <p class="post-date">23-05-2025</p>
+                </div>
+            </div>
+            <p class="aduan-description">Saya mendapati AC di ruang 5.3.2 tidak berfungsi saat digunakan dalam kegiatan perkuliahan. Kondisi ruangan menjadi panas dan tidak nyaman, sehingga mengganggu konsentrasi mahasiswa dan dosen selama proses belajar mengajar. Saya berharap kerusakan ini dapat segera ditindaklanjuti agar aktivitas di ruang tersebut kembali berjalan dengan optimal.</p>
+        </div>
+
+        <h3 class="comment-count-title">1 Komentar</h3>
+
+        <div class="comment-card">
+            <div class="user-info">
+                <img src="https://via.placeholder.com/48" alt="Avatar" class="avatar">
+                <div>
+                    <p class="user-name mb-0">Hafiz Anwar</p>
+                    <p class="post-date">23-05-2025</p>
+                </div>
+            </div>
+            <p class="aduan-description">Saya sangat mendukung laporan ini karena saya juga mendapati AC di ruang 5.3.2 tidak terlalu dingin</p>
+        </div>
+
+        <div class="feedback-card">
+            <h3 class="section-title mb-3">Kirim Feedback</h3>
+            <textarea class="feedback-textarea" placeholder="Tulis komentar"></textarea>
+            <button class="btn btn-selesaikan-feedback">Selesaikan</button>
+            <div class="clearfix"></div> </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

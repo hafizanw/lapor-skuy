@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('category_id')->index();
-            $table->unsignedBigInteger('attachment_id')->index();
+            $table->unsignedBigInteger('attachment_id')->index()->nullable();
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
             $table->enum('proses', array_column(Proses::cases(), 'value'))->default('draft');
@@ -27,10 +27,10 @@ return new class extends Migration
         });
 
         Schema::create('complaints_department', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('category_id')->index();
-            $table->unsignedBigInteger('attachment_id')->index();
+            $table->unsignedBigInteger('attachment_id')->index()->nullable();
             $table->unsignedBigInteger('department_id')->index()->nullable();
             $table->unsignedBigInteger('response_id')->index()->nullable();
             $table->string('complaint_title', 255);
@@ -57,6 +57,7 @@ return new class extends Migration
             $table->id();
             $table->text('response');
             $table->text('descriptions')->nullable();
+            $table->string('attachment', 255)->nullable();
             $table->timestamps();
         });
 
@@ -70,11 +71,7 @@ return new class extends Migration
         });
 
         Schema::create('complaint_history', function (Blueprint $table) {
-            $table->id();
-            // $table->unsignedBigInteger('user_id')->index();
-            // $table->unsignedBigInteger('department_id')->index();
-            // $table->unsignedBigInteger('response_id')->index()->nullable();
-            // $table->unsignedBigInteger('attachment_id')->index();
+            $table->unsignedBigInteger('id')->primary();
             $table->string('user_name', 255);
             $table->text('response')->nullable();
             $table->string('attachment_path', 255)->nullable();
@@ -144,8 +141,8 @@ return new class extends Migration
             ON complaints
             FOR EACH ROW
                 IF OLD.proses = 'diajukan' THEN
-                    INSERT INTO complaints_department (user_id, category_id, attachment_id, department_id, response_id, complaint_title, complaint_content, proses, created_at, updated_at)
-                    VALUES (OLD.user_id, OLD.category_id, OLD.attachment_id, NULL, NULL, OLD.complaint_title, OLD.complaint_content, 'diajukan', NOW(), NOW());
+                    INSERT INTO complaints_department (id, user_id, category_id, attachment_id, department_id, response_id, complaint_title, complaint_content, proses, created_at, updated_at)
+                    VALUES (OLD.id, OLD.user_id, OLD.category_id, OLD.attachment_id, NULL, NULL, OLD.complaint_title, OLD.complaint_content, 'diajukan', NOW(), NOW());
                 END IF;
         ");
 

@@ -1,12 +1,11 @@
-{{-- Template Kerangka Situs --}}
-@extends('layout.app')
+{{-- Template Kerangka Site --}}
+@extends('layout.app_departemen')
 
-{{-- Judul Situs --}}
-@section('title', 'Detail Aduan')
+{{-- Title Site --}}
+@section('title', 'Departemen Detail Aduan')
 
 {{-- Isi Konten --}}
 @section('content')
-
 <div class="container my-4">
     <!-- Judul Aduan -->
     <h4 class="fw-bold mb-4">{{ $data->complaint_title }}</h4>
@@ -14,32 +13,6 @@
     <!-- Detail Aduan -->
     <div class="card mb-4 shadow-sm border-0">
         <div class="row g-0">
-            <!-- Kolom Voting -->
-            <div class="col-auto text-center px-3 py-4 border-end">
-                <!-- Form Upvote -->
-                <form action="{{ route('aduan-umum') }}" method="POST" style="display:inline;">
-                  @csrf
-                  <input type="hidden" name="complaint_id" value="{{ $data->complaint_complaint_id }}">
-                  <input type="hidden" name="vote_type" value="upvote">
-                  <button type="submit" class="btn p-0 border-0 bg-transparent">
-                    <i data-feather="chevrons-up" class="text-warning"></i>
-                  </button>
-                </form>
-    
-                <!-- Jumlah Vote -->
-                <div class="fw-bold">{{ $data->total_votes ?? 0 }}</div>
-    
-                <!-- Form Downvote -->
-                <form action="{{ route('aduan-umum') }}" method="POST" style="display:inline;">
-                  @csrf
-                  <input type="hidden" name="complaint_id" value="{{ $data->complaint_complaint_id }}">
-                  <input type="hidden" name="vote_type" value="downvote">
-                  <button type="submit" class="btn p-0 border-0 bg-transparent">
-                    <i data-feather="chevrons-down" class="text-warning"></i>
-                  </button>
-                </form>
-              </div>
-
             <!-- Konten Aduan -->
             <div class="col-10 col-md-11">
                 <div class="card-body">
@@ -77,6 +50,19 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Floating Button -->
+    <div class="container-fluid mb-4" style=" display: flex; align-items: center; justify-content: center;">
+        <a onclick="selesaikanComplaint({{ $data->complaint_complaint_id }})" class="btn shadow-lg text-light" style="width: 100%; max-width: 500px; background: linear-gradient(to right, #531fa7, #6826b4);">
+            Selesaikan
+        </a>
+    </div>
+
+    <form id="selesaikanForm" method="GET" action="{{ route('departemen-selesaikan-aduan') }}">
+        @csrf
+        <input type="hidden" name="selesaikan_id" id="selesaikan_id">
+      </form>
 
     <!-- Komentar -->
     <h6 class="fw-semibold mb-3"><span>{{ $data->total_comments }}</span> Komentar</h6>
@@ -95,15 +81,6 @@
             </div>
         </div>
     @endforeach
-
-   <!-- Tambah Komentar -->
-   <h6 class="fw-bold">Tambah Komentar</h6>
-   <form>
-       <div class="mb-3">
-           <textarea id="description" class="form-control" rows="4" placeholder="Tulis komentar"></textarea>
-       </div>
-       <button id="kirimData" type="" name="{{ $data->complaint_complaint_id }}" class="btn btn-primary px-4">Kirim</button>
-   </form>
 
    <!-- Modal kirim comment berhasil -->
     <div class="modal fade" id="commentModalBerhasil" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -144,5 +121,10 @@
 @endsection
 
 @push('script')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function selesaikanComplaint(complaintId) {
+            document.getElementById('selesaikan_id').value = complaintId;
+            document.getElementById('selesaikanForm').submit();
+        }
+    </script>
 @endpush

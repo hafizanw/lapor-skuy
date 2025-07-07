@@ -23,15 +23,13 @@ class lihat_aduan_detail_controller extends Controller
         DB::statement('CALL insert_comment(?, ?, ?)', [
             $validated['complaint_id'],
             $userId,
-            $validated['description'],
+            $validated['description']
         ]);
     }
 
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $datas = DB::select('CALL select_complaint_comment_user_vote(?)', [$request->complaint_id]);
-        $data  = $datas[0];
-
+        $data = $datas[0];
         $userId  = Auth::id();
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
 

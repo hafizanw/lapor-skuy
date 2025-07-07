@@ -33,15 +33,15 @@ class ComplaintSeeder extends Seeder
                 'updated_at'        => now(),
             ],
             [
-                'user_id'           => 3,
-                'category_id'       => 1,
-                'attachment_id'     => 3,
-                'complaint_title'   => 'Kualitas Wifi Buruk',
-                'complaint_content' => 'Wifi di ruang kelas sering putus, mohon perbaiki.',
-                'proses'            => 'draft',
-                'created_at'        => now(),
-                'updated_at'        => now(),
-            ],
+                'user_id' => 3,
+                'category_id' => 1,
+                'attachment_id' => 3,
+                'complaint_title' => 'ffefcewce',
+                'complaint_content' => 'efvwegwhgrhreherheh',
+                'proses' => 'draft',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
         ]);
     }
 }

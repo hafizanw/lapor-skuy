@@ -7,25 +7,24 @@ use Illuminate\Support\Facades\DB;
 
 class lihat_aduan_umum_controller extends Controller
 {
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         // VOTE
-        $user        = Auth::user();
+        $user = Auth::user();
         $complaintId = $request->input('complaint_id');
-        $voteType    = $request->input('vote_type');
+        $voteType = $request->input('vote_type');
 
         // Cek apakah user sudah pernah vote
         $votes = DB::select('CALL update_insert_select_vote(?, ?, ?, ?)', [
             $user->id,
             $complaintId,
             null,
-            "SELECT",
+            "SELECT"
         ]);
 
         // Jika ada vote sebelumnya
         if ($votes && count($votes) > 0) {
             $vote = $votes[0];
-
+        
             if ($vote->vote_type == $voteType) {
                 return back()->with('message', 'Kamu sudah memberikan vote ini sebelumnya.');
             }
@@ -34,40 +33,32 @@ class lihat_aduan_umum_controller extends Controller
                 $user->id,
                 $complaintId,
                 $voteType,
-                "UPDATE",
+                "UPDATE"
             ]);
         } else {
             DB::statement('CALL update_insert_select_vote(?, ?, ?, ?)', [
                 $user->id,
                 $complaintId,
                 $voteType,
-                "INSERT",
+                "INSERT"
             ]);
         }
 
         return redirect()->route('aduan-umum');
     }
 
-    public function index(Request $request)
-    {
-
-        $user          = Auth::user();
+    public function index(Request $request) {
+        
+        $user = Auth::user();
         $searchKeyword = $request->input('searchKeyword', '');
-        $filterType    = $request->input('filterType', '');
+        $filterType = $request->input('filterType', '');
 
-        // Query ini bisa mengembalikan array kosong jika tidak ada aduan
-        $datas = DB::select('CALL select_complaint_user_vote(?, ?, ?)', [
+        $datas = DB::select('CALL select_cser_omplaint_uvote(?, ?, ?)',[
             $searchKeyword,
             $filterType,
-            0,
+            0
         ]);
-
-        // HAPUS BARIS INI KARENA TIDAK AMAN DAN MENYEBABKAN ERROR
-        // $data = $datas[0];
-
-        // Ambil data profil pengguna yang sedang login
-        $userId        = Auth::id();
-        $profileResult = DB::select('CALL select_user(?)', [$userId]);
+        $data = $datas[0];
 
         // Tambahkan pengecekan keamanan untuk memastikan profil ditemukan
         if (empty($profileResult)) {

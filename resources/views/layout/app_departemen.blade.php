@@ -9,6 +9,7 @@
     @stack('styles')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         .profileImg {
             width: 40px;
@@ -41,7 +42,7 @@
 
     </style>
 </head>
-<body>
+<body style="background-color: #f6f7ff">
         <nav class="navbar navbar-expand-md navbar-dark px-3" style="background: linear-gradient(to right, #531DAB, #842FE3);">
             <div class="container-fluid">
                 <!-- Left -->
@@ -62,18 +63,12 @@
         
                 <!-- Desktop Menu (Hidden on Mobile) -->
                 <div class="collapse navbar-collapse justify-content-end d-none d-md-flex">
-                    <ul class="navbar-nav me-4">
-                        <li class="nav-item"><a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }} text-white fw-semibold me-1" href="{{ route('dashboard') }}">HOME</a></li>
-                        <li class="nav-item"><a class="nav-link {{ request()->is('kirim-aduan') ? 'active' : '' }} text-white fw-semibold me-1" href="{{ route('kirim-aduan') }}">KIRIM ADUAN</a></li>
-                        <li class="nav-item"><a class="nav-link text-white fw-semibold me-1 {{ request()->is('aduan-umum') ? 'active' : '' }}" href="{{ route('aduan-umum') }}">LIHAT ADUAN</a></li>
-                        <li class="nav-item"><a class="nav-link text-white fw-semibold me-1" href="{{ route('faq') }}">FAQ</a></li>
-                    </ul>
                     <div class="d-flex align-items-center rounded px-3 py-1 mx-2" style="background: linear-gradient(to right, #6826b4, #6826b4);">
                         <a href="{{ route('user-profile') }}" class="d-flex align-items-center text-decoration-none text-dark">
-                            <img src="{{ asset($profile_picture) }}" class=" profileImg rounded-circle me-1" alt="User">
+                            <img src="" class=" profileImg rounded-circle me-1" alt="User">
                             <div class="ms-2">
-                                <small class="fw-bold text-light">{{ $username }}</small><br>
-                                <small class="text-light">Mahasiswa</small>
+                                <small class="fw-bold text-light">Departemen ABC</small><br>
+                                <small class="text-light">Departemen</small>
                             </div>
                         </a>
                     </div>
@@ -100,11 +95,6 @@
                         <i data-feather="home" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> Home
                       </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-mobile {{ request()->is('kirim-aduan') ? 'active' : '' }} text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="{{ route('kirim-aduan') }}">
-                          <i data-feather="send" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> Kirim Aduan
-                        </a>
-                      </li>
                       <li class="nav-item">
                         <a class="nav-link nav-mobile {{ request()->is('aduan-umum') ? 'active' : '' }} text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="{{ route('aduan-umum') }}">
                           <i data-feather="file-text" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> Lihat Aduan
@@ -112,7 +102,7 @@
                       </li>
                       <li class="nav-item">
                         <a class="nav-link nav-mobile text-dark d-flex align-items-center px-3 pb-3 rounded-2 mx-2 fw-medium" href="{{ route('faq') }}">
-                          <i data-feather="pocket" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> FAQ
+                          <i data-feather="pocket" class="text-dark fs-3 me-2" style="scale: 0.9;"></i> History Aduan
                         </a>
                       </li>
                   </ul>
@@ -121,14 +111,14 @@
                 <!-- Profile & Logout -->
                 <div class="border-top p-3 d-flex align-items-center bg-light">
                     <a href="{{ route('user-profile') }}" class="d-flex align-items-center text-decoration-none text-dark">
-                        <img src="{{ asset($profile_picture) }}" 
+                        <img src="" 
                              alt="User" 
                              class="profileImg rounded-circle me-2" 
                              style="width: 40px; height: 40px; object-fit: cover;">
                         
                         <div class="flex-grow-1">
-                            <small class="fw-bold">{{ $username }}</small><br>
-                            <small class="text-muted">Mahasiswa</small>
+                            <small class="fw-bold">Departemen ABC</small><br>
+                            <small class="text-muted">Departemen</small>
                         </div>
                     </a>
                     <div class="mt-4">
