@@ -139,7 +139,7 @@
                                 @csrf
                                 <h2 class="text-center mb-4">Login</h2>
                                 <div class="mb-3">
-                                    <input type="text" name="nim" class="form-control textbox"
+                                    <input type="text" name="identifier" class="form-control textbox"
                                         placeholder="NIM / NIDN" required autofocus>
                                 </div>
                                 <div class="mb-3">
