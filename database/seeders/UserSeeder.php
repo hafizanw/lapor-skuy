@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
         User::insert([
             [
                 'nim'             => '1111',
-                'name'            => 'Budi Mahasiswa',
-                'email'           => '2ff4aa9d85-e8888b+user1@inbox.mailtrap.io',
+                'name'            => 'Budi Saputra',
+                'email'           => 'budi123@gmail.com',
                 'password'        => bcrypt('123'),
                 'phone_number'    => '081234567890',
                 'profile_picture' => '',
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'nim'             => '2222',
-                'name'            => 'Wawan Gacorr',
+                'name'            => 'Wawan Gunawan',
                 'email'           => 'wawan@gmail.com',
                 'password'        => bcrypt('2222'),
                 'phone_number'    => '08123456435890',
@@ -38,8 +38,8 @@ class UserSeeder extends Seeder
             ],
             [
                 'nim'             => '3333',
-                'name'            => 'Yanto',
-                'email'           => 'yanto123@gmail.com',
+                'name'            => 'Angelina',
+                'email'           => 'Angelina11@gmail.com',
                 'password'        => bcrypt('3333'),
                 'phone_number'    => '08123456435834',
                 'profile_picture' => '',

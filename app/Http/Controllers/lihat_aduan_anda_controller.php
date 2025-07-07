@@ -59,13 +59,14 @@ class lihat_aduan_anda_controller extends Controller
             $filterType,
             $userId
         ]);
-        $data = $datas[0];
+        $data = $datas[0] ?? null;
 
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
         return view('lihat_aduan.lihat_aduan_anda', [
             'data' => $data,
             'datas' => $datas,
             'titlePage' => 'Aduan Anda',
+            'displayLogo' => 'd-none d-md-inline',
             'username' => $profile->name,
             'profile_picture' => $profile->profile_picture 
             ? ('profile_uploads/'. $profile->profile_picture) 

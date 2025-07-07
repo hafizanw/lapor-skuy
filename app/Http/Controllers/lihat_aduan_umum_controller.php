@@ -49,34 +49,28 @@ class lihat_aduan_umum_controller extends Controller
 
     public function index(Request $request) {
         
-        $user = Auth::user();
+        $userId = Auth::id();
         $searchKeyword = $request->input('searchKeyword', '');
         $filterType = $request->input('filterType', '');
 
-        $datas = DB::select('CALL select_cser_omplaint_uvote(?, ?, ?)',[
+        $datas = DB::select('CALL select_complaint_user_vote(?, ?, ?)',[
             $searchKeyword,
             $filterType,
             0
         ]);
         $data = $datas[0];
 
-        // Tambahkan pengecekan keamanan untuk memastikan profil ditemukan
-        if (empty($profileResult)) {
-            // Anda bisa mengarahkan ke halaman login atau menampilkan error
-            // jika pengguna tidak terautentikasi atau datanya tidak ada
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
-        }
-        $profile = $profileResult[0];
-
-        // Variabel 'data' tidak lagi dikirim karena tidak aman.
-        // View akan langsung menggunakan 'datas'.
+        $profile = DB::select('CALL select_user(?)', [$userId])[0];
+      
         return view('lihat_aduan.lihat_aduan_umum', [
-            'datas'           => $datas,
-            'titlePage'       => 'Lihat Aduan',
-            'username'        => $profile->name,
-            'profile_picture' => $profile->profile_picture
-            ? ('profile_uploads/' . $profile->profile_picture)
-            : 'profile_uploads/profile_default.png',
+            'data' => $data,
+            'datas' => $datas,
+            'titlePage' => 'Lihat Aduan',
+            'displayLogo' => 'd-none d-md-inline',
+            'username' => $profile->name,
+            'profile_picture' => $profile->profile_picture 
+            ? ('profile_uploads/'. $profile->profile_picture) 
+            : 'profile_uploads/profile_default.png'
         ]);
     }
 }

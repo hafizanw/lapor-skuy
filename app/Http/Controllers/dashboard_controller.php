@@ -18,7 +18,8 @@ class dashboard_controller extends Controller
         return view('dashboard', [
             'data' => $data,
             'datas' => $datas,
-            'titlePage' => 'Dashboard',
+            'titlePage' => '',
+            'displayLogo' => 'inline',
             'username' => $profile->name,
             'profile_picture' => $profile->profile_picture 
                 ? ('profile_uploads/'. $profile->profile_picture) 

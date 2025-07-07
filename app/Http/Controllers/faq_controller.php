@@ -17,6 +17,7 @@ class faq_controller extends Controller
         return view('faq.faq', [
             'faqs' => $faqs,
             'titlePage' => 'FAQ',
+            'displayLogo' => 'd-none d-md-inline',
             'username' => $profile->name,
             'profile_picture' => $profile->profile_picture 
                 ? ('profile_uploads/'. $profile->profile_picture) 

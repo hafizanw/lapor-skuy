@@ -52,6 +52,7 @@ class user_profile_controller extends Controller
         return view('user_profile', [
             'data' => $data,
             'titlePage' => 'Profile',
+            'displayLogo' => 'd-none d-md-inline',
             'username' => $data->name,
             'profile_picture' => $data->profile_picture 
             ? ('profile_uploads/'. $data->profile_picture) 

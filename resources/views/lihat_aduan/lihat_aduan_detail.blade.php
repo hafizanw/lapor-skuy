@@ -45,14 +45,14 @@
                 <div class="card-body">
                     <!-- Profil & Tanggal -->
                     <div class="d-flex align-items-center mb-2">
-                        <img src="{{ $data->profile_picture 
-                                    ? asset('profile_uploads/' . $data->profile_picture) 
+                        <img src="{{ $complaint_data->profile_picture 
+                                    ? asset('profile_uploads/' . $complaint_data->profile_picture) 
                                     : asset('profile_uploads/profile_default.png') }}"
                              class="rounded-circle me-2 border"
                              width="40" height="40"
                              alt="User">
                         <div>
-                            <strong class="d-block">{{ $data->name ?? 'User' }}</strong>
+                            <strong class="d-block">{{ $complaint_data->name ?? 'User' }}</strong>
                             <small class="text-muted">{{ \Carbon\Carbon::parse($data->complaint_created_at)->format('d-m-Y') }}</small>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                     <!-- Info tambahan -->
                     <div class="d-flex flex-wrap gap-2 mt-3">
                         <span class="badge bg-primary">{{ $data->proses ?? 'Pending' }}</span>
-                        <span class="badge bg-warning text-dark">{{ $data->kategori ?? 'Umum' }}</span>
+                        <span class="badge bg-warning text-dark">{{ $data->complaint_role }}</span>
                     </div>
                 </div>
             </div>

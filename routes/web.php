@@ -13,7 +13,7 @@ use App\Http\Controllers\faq_controller;
 use App\Http\Controllers\home_controller;
 use App\Http\Controllers\kirim_aduan_controller;
 use App\Http\Controllers\lihat_aduan_anda_controller;
-use App\Http\Controllers\Lihat_aduan_detail_controller;
+use App\Http\Controllers\lihat_aduan_detail_controller;
 use App\Http\Controllers\lihat_aduan_umum_controller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\user_profile_controller;
@@ -71,7 +71,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/kirim-aduan-privat', [kirim_aduan_controller::class, 'index_privat'])->name('kirim-aduan-privat');
 
     Route::post('/kirim-aduan-privat', [kirim_aduan_controller::class, 'store'])->name('kirim-aduan-privat.store');
-
 });
 
 Route::get('/faq', [faq_controller::class, 'index'])->name('faq');
@@ -88,3 +87,28 @@ Route::get('/departemen-list-history', [departemen_list_history_controller::clas
 Route::get('/departemen-aduan-detail', [departemen_aduan_detail::class, 'index'])->name('departemen-aduan-detail');
 
 Route::get('/departemen-selesaikan-aduan', [departemen_selesaikan_aduan::class, 'index'])->name('departemen-selesaikan-aduan');
+
+
+
+// Route untuk masing-masing departemen
+use App\Http\Controllers\Departemen\DAAKController;
+use App\Http\Controllers\Departemen\SarprasController;
+use App\Http\Controllers\Departemen\KemahasiswaanController;
+use App\Http\Controllers\Departemen\PerpusController;
+use App\Http\Controllers\Departemen\PengajaranController;
+use App\Http\Controllers\Departemen\KeamananController;
+use App\Http\Controllers\Departemen\UPTLabController;
+
+Route::get('/departemen/daak/aduan', [DAAKController::class, 'index'])->name('daak-aduan');
+Route::get('/departemen/daak/history-aduan', [DAAKController::class, 'index'])->name('daak-history-aduan');
+Route::get('/departemen/daak/selesaikan-aduan', [DAAKController::class, 'selesaikanAduan'])->name('daak-selesaikan-aduan');
+Route::post('/departemen/daak/selesaikan-aduan', [DAAKController::class, 'store'])->name('daak-selesaikan-aduan');
+
+
+
+Route::get('/departemen/sarpras', [SarprasController::class, 'index'])->name('departemen.sarpras');
+Route::get('/departemen/kemahasiswaan', [KemahasiswaanController::class, 'index'])->name('departemen.kemahasiswaan');
+Route::get('/departemen/perpus', [PerpusController::class, 'index'])->name('departemen.perpus');
+Route::get('/departemen/pengajaran', [PengajaranController::class, 'index'])->name('departemen.pengajaran');
+Route::get('/departemen/keamanan', [KeamananController::class, 'index'])->name('departemen.keamanan');
+Route::get('/departemen/uptlab', [UPTLabController::class, 'index'])->name('departemen.uptlab');
