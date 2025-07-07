@@ -1,12 +1,12 @@
 <?php
 
 use App\Enums\Proses;
-use App\Enums\Vote_Type;
 use App\Enums\Visibility_Type;
+use App\Enums\Vote_Type;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -17,25 +17,25 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();       // Direferensikan ke users.id
-            $table->unsignedBigInteger('category_id')->index();   // Direferensikan ke complaint_category.id
-            $table->unsignedBigInteger('attachment_id')->index(); // Contoh jika nullable
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('attachment_id')->index()->nullable();
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
-            $table->enum('proses', array_column(Proses::cases(), 'value'))->default('draft'); // Gunakan nilai default dari Enum
+            $table->enum('proses', array_column(Proses::cases(), 'value'))->default('draft');
             $table->timestamps();
         });
 
         Schema::create('complaints_department', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->index();       // Direferensikan ke users.id
-            $table->unsignedBigInteger('category_id')->index();   // Direferensikan ke complaint_category.id
-            $table->unsignedBigInteger('attachment_id')->index(); // Contoh jika nullable
-            $table->unsignedBigInteger('department_id')->index()->nullable(); // Direferensikan ke departments.id
-            $table->unsignedBigInteger('response_id')->index()->nullable(); // Direferensikan ke complaint_response.id
+            $table->unsignedBigInteger('id')->primary();
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('attachment_id')->index()->nullable();
+            $table->unsignedBigInteger('department_id')->index()->nullable();
+            $table->unsignedBigInteger('response_id')->index()->nullable();
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
-            $table->enum('proses', array_column(Proses::cases(), 'value')); // Gunakan nilai default dari Enum
+            $table->enum('proses', array_column(Proses::cases(), 'value'));
             $table->timestamps();
         });
 
@@ -57,6 +57,7 @@ return new class extends Migration
             $table->id();
             $table->text('response');
             $table->text('descriptions')->nullable();
+            $table->string('attachment', 255)->nullable();
             $table->timestamps();
         });
 
@@ -70,11 +71,7 @@ return new class extends Migration
         });
 
         Schema::create('complaint_history', function (Blueprint $table) {
-            $table->id();
-            // $table->unsignedBigInteger('user_id')->index();
-            // $table->unsignedBigInteger('department_id')->index();
-            // $table->unsignedBigInteger('response_id')->index()->nullable();
-            // $table->unsignedBigInteger('attachment_id')->index();
+            $table->unsignedBigInteger('id')->primary();
             $table->string('user_name', 255);
             $table->text('response')->nullable();
             $table->string('attachment_path', 255)->nullable();
@@ -88,7 +85,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('complaint_id')->index();
             $table->unsignedBigInteger('user_id')->index();
-            $table->text('description'); // Dihilangkan parameter panjang yang salah
+            $table->text('description');
             $table->timestamps();
         });
 
@@ -115,7 +112,7 @@ return new class extends Migration
 
             $table->foreign('attachment_id')->references('id')->on('complaint_attachment')->onUpdate('cascade')->onDelete('cascade');
         });
-        
+
         Schema::table('complaints_department', function ($table) {
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('complaint_category')->onUpdate('cascade')->onDelete('cascade');
@@ -140,18 +137,18 @@ return new class extends Migration
 
         DB::unprepared("
             CREATE TRIGGER throw_complaint_department
-            BEFORE DELETE 
+            BEFORE DELETE
             ON complaints
             FOR EACH ROW
                 IF OLD.proses = 'diajukan' THEN
-                    INSERT INTO complaints_department (user_id, category_id, attachment_id, department_id, response_id, complaint_title, complaint_content, proses, created_at, updated_at)
-                    VALUES (OLD.user_id, OLD.category_id, OLD.attachment_id, NULL, NULL, OLD.complaint_title, OLD.complaint_content, 'diajukan', NOW(), NOW());
+                    INSERT INTO complaints_department (id, user_id, category_id, attachment_id, department_id, response_id, complaint_title, complaint_content, proses, created_at, updated_at)
+                    VALUES (OLD.id, OLD.user_id, OLD.category_id, OLD.attachment_id, NULL, NULL, OLD.complaint_title, OLD.complaint_content, 'diajukan', NOW(), NOW());
                 END IF;
         ");
 
         DB::unprepared("
             CREATE TRIGGER throw_complaint_history
-            BEFORE DELETE 
+            BEFORE DELETE
             ON complaints_department
             FOR EACH ROW
                 IF OLD.proses = 'selesai' THEN
@@ -189,7 +186,7 @@ return new class extends Migration
                 $table->dropForeign(['attachment_id']);
             }
         });
-            
+
         Schema::table('complaints_department', function (Blueprint $table) {
             if (Schema::hasColumn('complaints_department', 'user_id')) {
                 $table->dropForeign(['user_id']);
