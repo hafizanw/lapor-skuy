@@ -97,9 +97,11 @@
         <nav class="navbar navbar-expand-md navbar-dark px-3" style="background: linear-gradient(to right, #531DAB, #842FE3);">
             <div class="container-fluid">
                 <!-- Left -->
-                <div class="{{ $displayLogo }}">
+                <a href="{{ route('dashboard') }}">
+                  <div class="{{ $displayLogo }}">
                     <img src="{{ asset('assets/logo.png') }}">
-                </div>
+                  </div>
+                </a>
                 <div class="d-flex align-items-center d-md-none">
                     <a class="fw-bold text-light text-decoration-none" href="{{ url()->previous() }}">
                         <h3 class="my-0 mx-2 text-light">{{ $titlePage }}</h3>

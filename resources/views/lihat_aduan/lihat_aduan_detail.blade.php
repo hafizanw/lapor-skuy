@@ -44,14 +44,14 @@
                 <div class="card-body">
                     <!-- Profil & Tanggal -->
                     <div class="d-flex align-items-center mb-2">
-                        <img src="{{ $data->profile_picture 
+                        <img src="{{ $complaint_data->profile_picture 
                                     ? asset('profile_uploads/' . $data->profile_picture) 
                                     : asset('profile_uploads/profile_default.png') }}"
                              class="rounded-circle me-2 border"
                              width="40" height="40"
                              alt="User">
                         <div>
-                            <strong class="d-block">{{ $data->name ?? 'User' }}</strong>
+                            <strong class="d-block">{{ $complaint_data->name ?? 'User' }}</strong>
                             <small class="text-muted">{{ \Carbon\Carbon::parse($data->complaint_created_at)->format('d-m-Y') }}</small>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                     <p class="mb-2">{{ $data->complaint_content }}</p>
 
                     <!-- Gambar Aduan (jika ada) -->
-                    @if(Storage::exists('public/' . $data->path_file))
+                    @if(!empty($data->path_file))
                     <div class="my-3">
                         <img src="{{ asset('storage/' . $data->path_file) }}"
                             class="img-fluid rounded border"

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('category_id')->index();
             $table->unsignedBigInteger('attachment_id')->index()->nullable();
+            $table->unsignedBigInteger('response_id')->index()->nullable();
             $table->string('complaint_title', 255);
             $table->text('complaint_content');
             $table->enum('proses', array_column(Proses::cases(), 'value'))->default('draft');
@@ -129,15 +130,15 @@ return new class extends Migration
             $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
         });
 
-        Schema::table('complaint_vote', function ($table) {
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
-        });
+        // Schema::table('complaint_vote', function ($table) {
+        //     $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+        //     $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
+        // });
 
-        Schema::table('comment', function ($table) {
-            $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-        });
+        // Schema::table('comment', function ($table) {
+        //     $table->foreign('complaint_id')->references('id')->on('complaints')->onUpdate('cascade')->onDelete('cascade');
+        //     $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+        // });
 
         Schema::table('rating', function ($table) {
             $table->foreign('complaint_history_id')->references('id')->on('complaint_history')->onUpdate('cascade')->onDelete('cascade');

@@ -214,6 +214,7 @@ return new class extends Migration
                 FROM complaints c
                 LEFT JOIN comment m ON c.id = m.complaint_id
                 LEFT JOIN users u ON m.user_id = u.id
+                LEFT JOIN complaints_department cd ON c.id = cd.id
                 LEFT JOIN complaint_attachment a ON c.attachment_id = a.id
                 WHERE c.id = complaintID
 
@@ -260,6 +261,7 @@ return new class extends Migration
                 FROM complaints_department cd
                 LEFT JOIN comment m ON cd.id = m.complaint_id
                 LEFT JOIN users u ON m.user_id = u.id
+                LEFT JOIN complaints c ON c.id = cd.id
                 LEFT JOIN complaint_attachment a ON cd.attachment_id = a.id
                 WHERE cd.id = complaintID
             ) AS combined_results;
@@ -311,12 +313,12 @@ return new class extends Migration
                 ) AS total_aduan,
                 (
                     SELECT COUNT(id)
-                    FROM complaints
-                    WHERE proses = "diproses"
+                    FROM complaints_department
+                    WHERE proses = "diajukan"
                 ) AS aduan_diproses,
                 (
                     SELECT COUNT(id)
-                    FROM complaints
+                    FROM complaint_history
                     WHERE proses = "selesai"
                 ) AS aduan_selesai,
                 (

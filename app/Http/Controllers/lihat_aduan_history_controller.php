@@ -18,7 +18,7 @@ class lihat_aduan_history_controller extends Controller
             $filterType,
             0
         ]);
-        $data = $datas[0];
+        $data = $datas[0] ?? null;
 
         $profile = DB::select('CALL select_user(?)', [$userId])[0];
       
