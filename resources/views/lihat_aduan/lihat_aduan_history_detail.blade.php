@@ -35,7 +35,7 @@
                     <p class="mb-2">{{ $data->complaint_content }}</p>
 
                     <!-- Gambar Aduan (jika ada) -->
-                    @if(Storage::exists('public/' . $data->path_file))
+                    @if(!empty($data->path_file))
                     <div class="my-3">
                         <img src="{{ asset('storage/' . $data->path_file) }}"
                             class="img-fluid rounded border"
@@ -46,7 +46,7 @@
                     <!-- Info tambahan -->
                     <div class="d-flex flex-wrap gap-2 mt-3">
                         <span class="badge bg-primary">{{ $data->proses ?? 'Pending' }}</span>
-                        <span class="badge bg-warning text-dark">{{ $data->complaint_role ?? 'Umum' }}</span>
+                        <span class="badge bg-warning text-dark">{{ $data->complaint_role ?? 'draft' }}</span>
                     </div>
                 </div>
             </div>

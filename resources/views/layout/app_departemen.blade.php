@@ -6,6 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
+    <meta name="description" content="Sistem Informasi Aduan Kampus Amikom" />
+    <meta name="keywords" content="laporskuy, amikom, aduan kampus" />
+    <meta name="author" content="Laporskuy" />
+
+    <meta property="og:title" content="Lapor Skuy" />
+    <meta property="og:description" content="Sistem Informasi Aduan Kampus Amikom" />
+    <meta property="og:image" content="/images/logo.png" />
+    <link rel="icon" href="/images/logo.png" type="image/x-icon">
+
     @stack('styles')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/feather-icons"></script>

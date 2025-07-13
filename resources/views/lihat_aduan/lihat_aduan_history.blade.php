@@ -26,10 +26,10 @@
         <input id="inputSearch" type="text" class="form-control w-100 w-md-50" placeholder="Search..." value="{{ request('searchKeyword') }}"
         onkeydown="if (event.key === 'Enter') searchOnly()">
         <div class="btn-group align-self-end">
-            <a href="{{ route('aduan-umum', ['filterType' => 'terbaru']) }}">
+            <a href="{{ route('aduan-history', ['filterType' => 'terbaru']) }}">
               <button id="btnTerbaru" class="btn btn-outline-primary btn-sm">Terbaru</button>
             </a>
-            <a href="{{ route('aduan-umum', ['filterType' => 'teratas']) }}">
+            <a href="{{ route('aduan-history', ['filterType' => 'teratas']) }}">
               <button id="btnTeratas" class="btn btn-primary btn-sm">Teratas</button>
             </a>
         </div>

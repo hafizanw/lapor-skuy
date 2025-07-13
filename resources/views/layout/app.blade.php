@@ -6,6 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
+    <meta name="description" content="Sistem Informasi Aduan Kampus Amikom" />
+    <meta name="keywords" content="laporskuy, amikom, aduan kampus" />
+    <meta name="author" content="Laporskuy" />
+
+    <meta property="og:title" content="Lapor Skuy" />
+    <meta property="og:description" content="Sistem Informasi Aduan Kampus Amikom" />
+    <meta property="og:image" content="/images/logo.png" />
+    <link rel="icon" href="/images/logo.png" type="image/x-icon">
+
     @stack('styles')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/feather-icons"></script>
@@ -97,11 +106,12 @@
         <nav class="navbar navbar-expand-md navbar-dark px-3" style="background: linear-gradient(to right, #531DAB, #842FE3);">
             <div class="container-fluid">
                 <!-- Left -->
-                <a href="{{ route('dashboard') }}">
-                  <div class="{{ $displayLogo }}">
+                <div class="{{ $displayLogo }}">
+                  <a href="{{ route('dashboard') }}">
                     <img src="{{ asset('assets/logo.png') }}">
-                  </div>
-                </a>
+                  </a>
+                </div>
+               
                 <div class="d-flex align-items-center d-md-none">
                     <a class="fw-bold text-light text-decoration-none" href="{{ url()->previous() }}">
                         <h3 class="my-0 mx-2 text-light">{{ $titlePage }}</h3>
@@ -187,7 +197,7 @@
                 </div>
               </div>
         </div>
-    <main>
+    <main class="mt-md-3">
         @yield('content')
     </main>
 
