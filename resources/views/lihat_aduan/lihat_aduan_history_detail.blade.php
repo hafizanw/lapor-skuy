@@ -46,7 +46,6 @@
                     <!-- Info tambahan -->
                     <div class="d-flex flex-wrap gap-2 mt-3">
                         <span class="badge bg-primary">{{ $data->proses ?? 'Pending' }}</span>
-                        <span class="badge bg-warning text-dark">{{ $data->complaint_role ?? 'draft' }}</span>
                     </div>
                 </div>
             </div>
@@ -54,8 +53,11 @@
     </div>
 
     <!-- Komentar -->
-    <h6 class="fw-semibold mb-3"><span>{{ $data->total_comments }}</span> Komentar</h6>
+    @if(!empty($datas[0]->description))
+        <h6 class="fw-semibold mb-3"><span>{{ $data->total_comments }}</span> Komentar</h6>
+    @endif
     @foreach ($datas as $data)
+    @if(!empty($data->description))
         <div class="card mb-3 shadow-sm border-0">
             <div class="card-body d-flex">
                 <img src="{{ $data->profile_picture 
@@ -69,6 +71,7 @@
                 </div>
             </div>
         </div>
+    @endif
     @endforeach
 
     {{-- Card Feedback --}}

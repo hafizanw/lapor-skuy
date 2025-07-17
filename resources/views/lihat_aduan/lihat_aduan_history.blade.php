@@ -72,7 +72,6 @@
                 <div class="d-flex flex-wrap align-items-center gap-2 text-muted small">
                     <span>{{ \Carbon\Carbon::parse($data->complaint_created_at ?? now())->format('d/m/Y') }}</span>
                     <span class="badge bg-primary">{{ $data->proses ?? 'draft' }}</span>
-                    <span class="badge bg-warning text-dark">{{ $data->complaint_role ?? 'draft' }}</span>
                     <span class="me-1">{{ $data->name ?? 'Anonim' }}</span>
                     <span class="ms-auto me-4">
                         <i data-feather="message-square" class="text-dark fs-3" style="scale: 0.7;"></i>

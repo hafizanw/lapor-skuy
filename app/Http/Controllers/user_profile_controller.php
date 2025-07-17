@@ -13,7 +13,7 @@ class user_profile_controller extends Controller
             'name' => 'nullable',
             'email' => 'nullable',
             'phone_number' => 'nullable|numeric',
-            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:10240'
         ]);
 
         $userId = Auth::id();

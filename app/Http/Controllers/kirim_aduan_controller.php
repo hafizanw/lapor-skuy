@@ -65,7 +65,7 @@ class kirim_aduan_controller extends Controller
             'visibility_type' => 'required|in:1,2', // 1 untuk umum, 2 untuk privat
             'title'           => 'required|string|max:255',
             'content'         => 'required|string',
-            'image'           => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'image'           => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
         ]);
 
         // Mengambil file dari request
@@ -114,11 +114,16 @@ class kirim_aduan_controller extends Controller
 
         $idComplaints = DB::table('complaints')->max('id');
         $idComplaints_departement = DB::table('complaints_department')->max('id');
+        $idComplaints_history = DB::table('complaint_history')->max('id');
 
-        if($idComplaints >= $idComplaints_departement) {
+        if($idComplaints >= $idComplaints_departement && $idComplaints >= $idComplaints_history) {
             $nextId = DB::table('complaints')->max('id') + 1;
-        } else {
+        }
+        if($idComplaints_departement >= $idComplaints && $idComplaints_departement >= $idComplaints_history){
             $nextId = DB::table('complaints_department')->max('id') + 1;
+        }
+        if($idComplaints_history >= $idComplaints && $idComplaints_history >= $idComplaints_departement) {
+            $nextId = DB::table('complaint_history')->max('id') + 1;
         }
 
         if($confidence > 0.5) {

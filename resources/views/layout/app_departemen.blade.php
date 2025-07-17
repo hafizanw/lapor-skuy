@@ -56,7 +56,9 @@
             <div class="container-fluid">
                 <!-- Left -->
                 <div class="d-none d-md-inline">
-                    <img src="{{ asset('assets/logo.png') }}">
+                    <a href="{{ route('departemen-dashboard') }}">
+                        <img src="{{ asset('assets/logo.png') }}">
+                    </a>
                 </div>
                 <div class="d-flex align-items-center d-md-none">
                     <a class="fw-bold text-light text-decoration-none" href="{{ url()->previous() }}">
@@ -72,7 +74,7 @@
                 <!-- Desktop Menu (Hidden on Mobile) -->
                 <div class="collapse navbar-collapse justify-content-end d-none d-md-flex">
                     <div class="d-flex align-items-center rounded px-3 py-1 mx-2" style="background: linear-gradient(to right, #6826b4, #6826b4);">
-                        <a href="{{ route('user-profile') }}" class="d-flex align-items-center text-decoration-none text-dark">
+                        <a href="" class="d-flex align-items-center text-decoration-none text-dark">
                             <img src="{{ asset('profile_uploads/profile_default.png') }}" class=" profileImg rounded-circle me-1" alt="User">
                             <div class="ms-2">
                                 <small class="fw-bold text-light">{{ $departemen }}</small><br>

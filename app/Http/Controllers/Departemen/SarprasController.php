@@ -51,7 +51,7 @@ class SarprasController extends Controller
         $validated = $request->validate([
             'complaint_id' => 'required',
             'feedback_content' => 'required|string',
-            'feedback_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'feedback_image' => 'nullable|image|mimes:jpg,jpeg,png|max:10240'
         ]);
 
         if($request->hasFile('feedback_image')) {

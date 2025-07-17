@@ -23,7 +23,7 @@
                     <div class="d-flex align-items-center mb-2">
                         <img 
                             src="{{ $complaint_data->profile_picture 
-                                    ? asset('profile_uploads/' . $data->profile_picture) 
+                                    ? asset('profile_uploads/' . $complaint_data->profile_picture) 
                                     : asset('profile_uploads/profile_default.png') }}"
                             class="rounded-circle me-2 border"
                             width="40" height="40"
@@ -41,7 +41,7 @@
                     <p class="mb-2">{{ $data->complaint_content }}</p>
 
                     <!-- Gambar Aduan (jika ada) -->
-                    @if(Storage::exists('public/' . $data->path_file))
+                    @if(!empty($data->path_file))
                         <div class="my-3">
                             <img 
                                 src="{{ asset('storage/' . $data->path_file) }}"
@@ -109,8 +109,11 @@
     </div>
 
     <!-- Komentar -->
-    <h6 class="fw-semibold mb-3"><span>{{ $data->total_comments }}</span> Komentar</h6>
+    @if(!empty($datas[0]->description))
+        <h6 class="fw-semibold mb-3"><span>{{ $data->total_comments }}</span> Komentar</h6>
+    @endif
     @foreach ($datas as $data)
+    @if(!empty($data->description))
         <div class="card mb-3 shadow-sm border-0">
             <div class="card-body d-flex">
                 <img src="{{ $data->profile_picture 
@@ -124,6 +127,7 @@
                 </div>
             </div>
         </div>
+    @endif
     @endforeach
 
  {{-- Modal Konfirmasi --}}

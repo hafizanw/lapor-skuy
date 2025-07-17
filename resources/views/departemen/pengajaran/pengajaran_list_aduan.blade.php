@@ -41,7 +41,7 @@
     <h5 class="fw-bold">Daftar Aduan</h5>
 
     <!-- Aduan Cards -->
-    @foreach ($datas as $data)
+    @forelse ($datas as $data)
     <div class="card mb-3 shadow-sm border-0 rounded-3">
         <div class="row g-0 align-items-center">
       
@@ -90,8 +90,11 @@
           </div>
         </div>
       </div>
-      
-    @endforeach
+      @empty
+    <div class="alert alert-info text-center mt-4">
+        Tidak ada aduan yang tersedia.
+    </div>
+    @endforelse
 </div>
 @endsection
 
