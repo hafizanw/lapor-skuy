@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\ComplaintAttachment;
 use App\Models\ComplaintCategory;
 use App\Models\Faq;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,7 +19,8 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            UserSeeder::class,
+            // UserSeeder::class,
+            UserTableSeeder::class,
             VisibilitySeeder::class,
             ComplaintAttachmentSeeder::class,
             ComplaintSeeder::class,
